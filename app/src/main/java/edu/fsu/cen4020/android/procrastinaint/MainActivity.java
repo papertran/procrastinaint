@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     @Override
     public void onLoginButtonClicked() {
+        // Test change
         LoginFragment fragment = new LoginFragment();
         String tag = LoginFragment.class.getCanonicalName();
         getSupportFragmentManager()
