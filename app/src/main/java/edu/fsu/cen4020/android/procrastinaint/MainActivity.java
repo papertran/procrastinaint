@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // On startup it will inflate this fragment into view
         MainFragment fragment = new MainFragment();
         getSupportFragmentManager()
                 .beginTransaction()

@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class MainFragment extends Fragment {
+    // Initializes the items on the page, will be assigned when View is created
     private Button loginRegisterButton;
     private MainFragmentListener mListener;
     private final String TAG = MainFragment.class.getCanonicalName();
 
+    // Interface to allow for MainActivity to switch between fragments
     public interface MainFragmentListener{
         void onLoginRegisterButtonClicked();
     }
@@ -24,10 +26,12 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        // This inflates the view
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        // This assigns the loginButton and assigns a listener for when the user clicks on it
         loginRegisterButton = rootView.findViewById(R.id.loginRegisterButton);
-
         loginRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
