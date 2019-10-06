@@ -13,14 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class MainFragment extends Fragment {
-    private Button loginButton;
-    private Button registerButton;
+    private Button loginRegisterButton;
     private MainFragmentListener mListener;
     private final String TAG = MainFragment.class.getCanonicalName();
 
     public interface MainFragmentListener{
-        void onLoginButtonClicked();
-        void onRegisterButtonClicked();
+        void onLoginRegisterButtonClicked();
     }
 
     @Nullable
@@ -28,25 +26,18 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        loginButton = rootView.findViewById(R.id.loginButton);
-        registerButton = rootView.findViewById(R.id.registerButton);
+        loginRegisterButton = rootView.findViewById(R.id.loginRegisterButton);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        loginRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick: Login Button Called");
-                mListener.onLoginButtonClicked();
+                mListener.onLoginRegisterButtonClicked();
 
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "onClick: Register Button Called");
-                mListener.onRegisterButtonClicked();
-            }
-        });
+
         return rootView;
     }
 

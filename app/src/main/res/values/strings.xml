@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">procrastinaint</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="login_hint">Email Address</string>
+    <string name="password_hint">Password</string>
 </resources>

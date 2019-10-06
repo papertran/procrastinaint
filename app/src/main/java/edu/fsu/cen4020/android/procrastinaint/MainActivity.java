@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     }
 
     @Override
-    public void onLoginButtonClicked() {
+    public void onLoginRegisterButtonClicked() {
         // Test change
-        LoginFragment fragment = new LoginFragment();
-        String tag = LoginFragment.class.getCanonicalName();
+        LoginRegisterFragment fragment = new LoginRegisterFragment();
+        String tag = LoginRegisterFragment.class.getCanonicalName();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, fragment, tag)
@@ -33,14 +33,5 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                 .commit();
     }
 
-    @Override
-    public void onRegisterButtonClicked() {
-        RegisterFragment fragment = new RegisterFragment();
-        String tag = RegisterFragment.class.getCanonicalName();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment, tag)
-                .addToBackStack(null)
-                .commit();
-    }
+
 }
