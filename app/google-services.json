@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "763552344377",
+    "firebase_url": "https://procrastinaint-a2e41.firebaseio.com",
+    "project_id": "procrastinaint-a2e41",
+    "storage_bucket": "procrastinaint-a2e41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763552344377:android:3b0c51e03c50099233e0e8",
+        "android_client_info": {
+          "package_name": "edu.fsu.cen4020.android.procrastinaint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763552344377-hcre61d619gqavd5qu3313hqdo78j8kg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fsu.cen4020.android.procrastinaint",
+            "certificate_hash": "459bbd37f11527b413cd1e10ec272c5db8e47735"
+          }
+        },
+        {
+          "client_id": "763552344377-b8kpjgi2looir5jiaphl6rfug2jrv280.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPbeFkRSx9Nv_TGATuNrKeb_olq_HQzu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763552344377-b8kpjgi2looir5jiaphl6rfug2jrv280.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
