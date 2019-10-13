@@ -1,5 +1,6 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class LoginRegisterFragment extends Fragment {
+public class LoginRegisterFragment extends Fragment implements View.OnClickListener{
+
+    // TODO More options for password not long enough, change UI on signin
     private String TAG = LoginRegisterFragment.class.getCanonicalName();
 
     private EditText emailEditText;
@@ -57,19 +60,31 @@ public class LoginRegisterFragment extends Fragment {
             statusTextView.setText("No User Signed In");
         }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!validateForm()){
-                    return;
-                }
-                else{
-                }
-            }
-        });
+        loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
         return rootView;
     }
 
+    // Provides the actual onClick Implementation
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.loginButton){
+            if(!validateForm()){
+                return;
+            }
+            else{
+                LoginUser();
+            }
+        }
+        else if(view.getId() == R.id.registerButton){
+            if(!validateForm()){
+                return;
+            }
+            else{
+                RegisterUser();
+            }
+        }
+    }
     // Check if email and password fields are filled out
     private boolean validateForm(){
         boolean valid = true;
@@ -87,10 +102,53 @@ public class LoginRegisterFragment extends Fragment {
             passwordEditText.setError("Required.");
             valid = false;
         } else{
-            passwordEditText.setError("Required.");
+            passwordEditText.setError(null);
         }
 
         return valid;
     }
 
+    private void RegisterUser(){
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener( (Activity) getContext(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getContext(), "Registration Passed", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        }
+                        else{
+                            Toast.makeText(getContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void LoginUser(){
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) getContext(),
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getContext(), "Login Passed", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        }
+                        else{
+                            Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user){
+        if (user != null ){
+            statusTextView.setText(user.getUid());
+        }
+        else{
+            statusTextView.setText("Not signed in");
+        }
+    }
 }
