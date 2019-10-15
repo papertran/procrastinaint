@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Pattern;
+
 
 
 public class LoginRegisterFragment extends Fragment implements View.OnClickListener{
@@ -93,7 +97,11 @@ public class LoginRegisterFragment extends Fragment implements View.OnClickListe
         if (TextUtils.isEmpty(email)){
             emailEditText.setError("Required.");
             valid = false;
-        } else {
+        }
+        else if(validateEmail(emailEditText) == false){ //error check if email has valid format
+            emailEditText.setError("Enter valid email!");
+        }
+        else {
             emailEditText.setError(null);
         }
 
@@ -106,6 +114,12 @@ public class LoginRegisterFragment extends Fragment implements View.OnClickListe
         }
 
         return valid;
+    }
+
+    private boolean validateEmail(EditText text) //function that checks for email format
+    {
+        CharSequence tempEmail = text.getText().toString();
+        return(!TextUtils.isEmpty(tempEmail) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     private void RegisterUser(){
