@@ -78,6 +78,7 @@ public class LoginRegisterFragment extends Fragment implements View.OnClickListe
             }
             else{
                 LoginUser();
+
             }
         }
         else if(view.getId() == R.id.registerButton){
@@ -86,6 +87,8 @@ public class LoginRegisterFragment extends Fragment implements View.OnClickListe
             }
             else{
                 RegisterUser();
+                registerButton.setEnabled(false);   //makes register button inactive
+
             }
         }
     }
