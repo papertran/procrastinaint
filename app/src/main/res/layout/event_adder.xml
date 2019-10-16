@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,10 +16,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
                 android:hint="@string/title"
                 android:textSize="40sp">
+                
             </EditText>
 
 
@@ -26,13 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="28dp"
-                >
+                android:layout_marginRight="20dp">
+
                 <TextView
                     android:text="@string/reoccurring"
-                    android:textSize="16sp">
-                </TextView>
+                    android:textSize="16sp"></TextView>
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/reoccurringCheckBox"
@@ -43,10 +44,51 @@
 
                 </androidx.appcompat.widget.AppCompatCheckBox>
 
+                <!-- TODO IF checked addsection for start date and end date
+                     TODO ELSE have a selection for 1 date -->
+
             </TableRow>
 
-            
+            <!--For Date/Time Picker put in a dialog
+            https://stackoverflow.com/questions/2055509/datetime-picker-in-android-application -->
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp">
+
+                <TextView
+                    android:text="@string/start_time"
+                    android:textSize="16sp">
+                </TextView>
+
+                <TextView
+                    android:text="Time picker goes here"
+                    android:textSize="16sp">
+                </TextView>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp">
+
+                <TextView
+                    android:text="@string/end_time"
+                    android:textSize="16sp">
+                </TextView>
+
+                <TextView
+                    android:text="Time picker goes here"
+                    android:textSize="16sp">
+                </TextView>
+
+            </TableRow>
 
 
         </TableLayout>
