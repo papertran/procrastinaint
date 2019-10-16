@@ -34,5 +34,17 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                 .commit();
     }
 
+    public void onEventAdderButtonClicked(){
+        EventAdderFragment fragment = new EventAdderFragment();
+        String tag = LoginRegisterFragment.class.getCanonicalName();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, fragment, tag)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+
 
 }

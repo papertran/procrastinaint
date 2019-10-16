@@ -15,12 +15,14 @@ import androidx.fragment.app.Fragment;
 public class MainFragment extends Fragment {
     // Initializes the items on the page, will be assigned when View is created
     private Button loginRegisterButton;
+    private Button EventAdderButton;
     private MainFragmentListener mListener;
     private final String TAG = MainFragment.class.getCanonicalName();
 
     // Interface to allow for MainActivity to switch between fragments
     public interface MainFragmentListener{
         void onLoginRegisterButtonClicked();
+        void onEventAdderButtonClicked();
     }
 
     @Nullable
@@ -38,6 +40,15 @@ public class MainFragment extends Fragment {
                 Log.i(TAG, "onClick: Login Button Called");
                 mListener.onLoginRegisterButtonClicked();
 
+            }
+        });
+
+        EventAdderButton = rootView.findViewById(R.id.AddEventButton);
+        EventAdderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)  {
+                Log.i(TAG, "onClick: Event Add Button Called");
+                mListener.onEventAdderButtonClicked();
             }
         });
 
