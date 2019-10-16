@@ -20,7 +20,7 @@
                 android:layout_marginRight="20dp"
                 android:hint="@string/title"
                 android:textSize="40sp">
-                
+
             </EditText>
 
 
@@ -91,6 +91,29 @@
             </TableRow>
 
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp">
+
+                <TextView
+                    android:text="@string/fire_base_upload"
+                    android:textSize="16sp">
+
+                </TextView>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/firebase_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                </androidx.appcompat.widget.AppCompatCheckBox>
+
+            </TableRow>
         </TableLayout>
     </androidx.core.widget.NestedScrollView>
 
