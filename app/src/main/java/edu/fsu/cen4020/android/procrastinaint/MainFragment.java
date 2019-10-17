@@ -16,6 +16,7 @@ public class MainFragment extends Fragment {
     // Initializes the items on the page, will be assigned when View is created
     private Button loginRegisterButton;
     private Button EventAdderButton;
+    private Button notesButton;
     private MainFragmentListener mListener;
     private final String TAG = MainFragment.class.getCanonicalName();
 
@@ -23,6 +24,7 @@ public class MainFragment extends Fragment {
     public interface MainFragmentListener{
         void onLoginRegisterButtonClicked();
         void onEventAdderButtonClicked();
+        void onNotesButtonClicked();
     }
 
     @Nullable
@@ -52,7 +54,13 @@ public class MainFragment extends Fragment {
             }
         });
 
-
+        notesButton = rootView.findViewById(R.id.notesButton);
+        notesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onNotesButtonClicked();
+            }
+        });
         return rootView;
     }
 
