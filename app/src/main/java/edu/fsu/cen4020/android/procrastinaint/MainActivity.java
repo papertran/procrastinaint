@@ -44,7 +44,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                 .commit();
     }
 
-
-
-
+    @Override
+    public void onNotesButtonClicked() {
+        NotesFragment fragment = new NotesFragment();
+        String tag = NotesFragment.class.getCanonicalName();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, fragment, tag)
+                .addToBackStack(null)
+                .commit();
+    }
 }
