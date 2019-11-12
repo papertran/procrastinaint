@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.fsu.cen4020.android.procrastinaint">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +27,5 @@
             android:exported="true"></provider>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
