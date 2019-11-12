@@ -54,4 +54,17 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                 .addToBackStack(null)
                 .commit();
     }
+
+    @Override
+    public void onRWCalendarButtonClicked() {
+
+        // Switches to read and write fragment
+        RWFragment fragment = new RWFragment();
+        String tag = RWFragment.class.getCanonicalName();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, fragment, tag)
+                .addToBackStack(null)
+                .commit();
+    }
 }

@@ -52,6 +52,7 @@ public class LoginRegisterFragment extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflates the view so the components can be set and used
         View rootView = inflater.inflate(R.layout.fragment_login_register, container, false);
 
         emailEditText = (EditText) rootView.findViewById(R.id.emailEditText);

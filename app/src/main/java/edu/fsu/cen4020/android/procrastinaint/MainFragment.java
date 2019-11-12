@@ -17,6 +17,7 @@ public class MainFragment extends Fragment {
     private Button loginRegisterButton;
     private Button EventAdderButton;
     private Button notesButton;
+    private Button rwCalendarButton;
     private MainFragmentListener mListener;
     private final String TAG = MainFragment.class.getCanonicalName();
 
@@ -25,6 +26,7 @@ public class MainFragment extends Fragment {
         void onLoginRegisterButtonClicked();
         void onEventAdderButtonClicked();
         void onNotesButtonClicked();
+        void onRWCalendarButtonClicked();
     }
 
     @Nullable
@@ -59,6 +61,15 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.onNotesButtonClicked();
+            }
+        });
+
+
+        rwCalendarButton = rootView.findViewById(R.id.rwCalendarButton);
+        rwCalendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onRWCalendarButtonClicked();
             }
         });
         return rootView;
