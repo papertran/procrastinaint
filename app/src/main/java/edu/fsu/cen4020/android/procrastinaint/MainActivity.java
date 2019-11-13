@@ -3,68 +3,78 @@ package edu.fsu.cen4020.android.procrastinaint;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.MainFragmentListener {
+public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getCanonicalName();
+
+    private Button loginRegisterButton;
+    private Button EventAdderButton;
+    private Button notesButton;
+    private Button rwCalendarButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // On startup it will inflate this fragment into view
-        MainFragment fragment = new MainFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment)
-                .addToBackStack(null)
-                .commit();
+        // This assigns the loginButton and assigns a listener for when the user clicks on it
+        loginRegisterButton = (Button) findViewById(R.id.loginRegisterButton);
+        loginRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "onClick: Login Button Called");
+                onLoginRegisterButtonClicked();
 
+            }
+        });
+
+        EventAdderButton = (Button) findViewById(R.id.AddEventButton);
+        EventAdderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)  {
+                Log.i(TAG, "onClick: Event Add Button Called");
+                onEventAdderButtonClicked();
+            }
+        });
+
+        notesButton = (Button) findViewById(R.id.notesButton);
+        notesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onNotesButtonClicked();
+            }
+        });
+
+
+        rwCalendarButton = (Button) findViewById(R.id.rwCalendarButton);
+        rwCalendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRWCalendarButtonClicked();
+            }
+        });
     }
 
-    @Override
-    public void onLoginRegisterButtonClicked() {
-        // Test change
-        LoginRegisterFragment fragment = new LoginRegisterFragment();
-        String tag = LoginRegisterFragment.class.getCanonicalName();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment, tag)
-                .addToBackStack(null)
-                .commit();
+    public void onLoginRegisterButtonClicked(){
+
     }
 
     public void onEventAdderButtonClicked(){
-        EventAdderFragment fragment = new EventAdderFragment();
-        String tag = LoginRegisterFragment.class.getCanonicalName();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment, tag)
-                .addToBackStack(null)
-                .commit();
+
     }
 
-    @Override
-    public void onNotesButtonClicked() {
-        NotesFragment fragment = new NotesFragment();
-        String tag = NotesFragment.class.getCanonicalName();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment, tag)
-                .addToBackStack(null)
-                .commit();
+    public void onNotesButtonClicked(){
+
     }
 
-    @Override
-    public void onRWCalendarButtonClicked() {
+    public void onRWCalendarButtonClicked(){
 
-        // Switches to read and write fragment
-        RWFragment fragment = new RWFragment();
-        String tag = RWFragment.class.getCanonicalName();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, fragment, tag)
-                .addToBackStack(null)
-                .commit();
     }
+
+
 }
