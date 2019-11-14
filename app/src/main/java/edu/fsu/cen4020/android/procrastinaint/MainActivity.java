@@ -144,14 +144,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onEventAdderButtonClicked(View view){
-
+        Intent intent = new Intent(this, EventAdderActivity.class);
+        startActivity(intent);
     }
 
     public void onNotesButtonClicked(View view){
-
+        Intent intent = new Intent(this, NotesActivity.class);
+        startActivity(intent);
     }
 
     public void onRWCalendarButtonClicked(View view){
+        Intent intent = new Intent(this, RWCalendarActivity.class);
+        startActivity(intent);
     }
 
     public void signOut(){

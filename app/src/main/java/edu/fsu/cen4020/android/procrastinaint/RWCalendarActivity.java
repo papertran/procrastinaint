@@ -1,54 +1,47 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class RWFragment extends Fragment {
+public class RWCalendarActivity extends AppCompatActivity {
 
-    private String TAG = RWFragment.class.getCanonicalName();
+
+    private String TAG = RWCalendarActivity.class.getCanonicalName();
     private Button readCalander;
     private TextView showText;
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_rwcalendar, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rwcalendar);
 
-        readCalander = (Button) rootView.findViewById(R.id.readCalendarButton);
+        readCalander = (Button) findViewById(R.id.readCalendarButton);
         readCalander.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readCalendarEvent(getContext());
+                readCalendarEvent(RWCalendarActivity.this);
             }
         });
-        showText = (TextView) rootView.findViewById(R.id.readTextView);
+        showText = (TextView) findViewById(R.id.readTextView);
 
-        readCalendarEvent(getContext());
+        readCalendarEvent(RWCalendarActivity.this);
 
         String TestString = "";
         for(String event : nameOfEvent){
             Log.i(TAG, "onCreateView: " + event);
         }
-
-        return rootView;
-
     }
-
 
 
     // https://stackoverflow.com/questions/13232717/how-to-get-all-the-events-from-calendar
