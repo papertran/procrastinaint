@@ -12,21 +12,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_pomodoro_timer"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_timer"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_backupToCloud"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_cloud"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_tools"
+        android:id="@+id/nav_extras"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/menu_extras"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
@@ -36,8 +36,8 @@
         tools:layout="@layout/fragment_share" />
 
     <fragment
-        android:id="@+id/nav_send"
+        android:id="@+id/nav_export"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.send.SendFragment"
-        android:label="@string/menu_send"
+        android:label="@string/menu_export"
         tools:layout="@layout/fragment_send" />
 </navigation>
