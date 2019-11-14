@@ -52,6 +52,26 @@
 
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/nonreoccurringDatePickerRow">
+
+                <TextView
+                    android:text="@string/date"
+                    android:textSize="16sp">
+                </TextView>
+
+                <TextView
+                    android:text="Date picker goes here"
+                    android:textSize="16sp">
+                </TextView>
+
+            </TableRow>
+
             <!--For Date/Time Picker put in a dialog
             https://stackoverflow.com/questions/2055509/datetime-picker-in-android-application -->
 
