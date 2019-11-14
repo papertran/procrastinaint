@@ -29,6 +29,9 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     private String EndTimeMin="";
     private int datepick = 0;   // This is used to determine which date picker was last clicked
     private int start_or_end = 0;
+    private Button startButton;
+    private Button endButton;
+    private Button datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_event_adder);
 
         // This button is for the Solo date picker
-        final Button datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
+        datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +49,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-        Button startButton = (Button) findViewById(R.id.start_time);
+        startButton = (Button) findViewById(R.id.start_time);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +60,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-        Button endButton = (Button) findViewById(R.id.end_time);
+        endButton = (Button) findViewById(R.id.end_time);
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,8 +80,10 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-
+        String tempStr = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         CdateSolo = currentDateString;
+        datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
+        datePicker.setText(tempStr);
         Toast.makeText(getApplicationContext(), CdateSolo, Toast.LENGTH_LONG).show();
 
     }
@@ -89,12 +94,18 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         if (start_or_end == 0) {
             StartTimeHour = Integer.toString(hour);
             StartTimeMin = Integer.toString(minute);
+            endButton = (Button) findViewById(R.id.end_time);
+            String tempStr = StartTimeHour + ":" + StartTimeMin;
+            startButton.setText(tempStr);
             Toast.makeText(getApplicationContext(), "Start Time " + StartTimeHour + ":" + StartTimeMin, Toast.LENGTH_LONG).show();
         }
 
         else{
             EndTimeHour= Integer.toString(hour);
             EndTimeMin= Integer.toString(minute);
+            endButton = (Button) findViewById(R.id.end_time);
+            String tempStr = EndTimeHour + ":" + EndTimeMin;
+            endButton.setText(tempStr);
             Toast.makeText(getApplicationContext(), "End Time " + EndTimeHour + ":" + EndTimeMin, Toast.LENGTH_LONG).show();
 
         }
