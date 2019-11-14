@@ -40,6 +40,9 @@
     <string name="nav_header_subtitle">Temp SubTitle</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="date">Date</string>
+    <string name="days">Days of the Week</string>
+    <string name="days_of_week">Monday,    Tuesday,    Wednesday,    Thursday,    Friday,    Saturday,    Sunday</string>
 
 
 </resources>
