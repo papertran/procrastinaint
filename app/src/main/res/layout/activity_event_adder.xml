@@ -115,9 +115,12 @@
                     android:text="@string/start_time"
                     android:textSize="16sp"></TextView>
 
-                <TextView
-                    android:text="Time picker goes here"
-                    android:textSize="16sp"></TextView>
+                <Button
+                    android:id="@+id/start_time"
+                    android:text="Pick Time"
+                    android:textSize="16sp">
+
+                </Button>
 
             </TableRow>
 
@@ -132,9 +135,12 @@
                     android:text="@string/end_time"
                     android:textSize="16sp"></TextView>
 
-                <TextView
-                    android:text="Time picker goes here"
-                    android:textSize="16sp"></TextView>
+                <Button
+                    android:id="@+id/end_time"
+                    android:text="Pick Time"
+                    android:textSize="16sp">
+
+                </Button>
 
             </TableRow>
 
