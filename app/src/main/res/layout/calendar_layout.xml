@@ -10,7 +10,7 @@
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
         android:id="@+id/addassigmentbutton"
         android:layout_width="39dp"
         android:layout_height="39dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="200dp"
         android:clickable="true"
         android:focusable="true"
         android:padding="8dp"
@@ -65,4 +65,51 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/addassigmentbutton"
         app:srcCompat="@drawable/ic_add_circle_" />
+
+    <TextView
+        android:id="@+id/break_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="@string/AddBreak"
+        app:layout_constraintBottom_toBottomOf="@+id/addbreakbutton"
+        app:layout_constraintEnd_toStartOf="@+id/addbreakbutton"
+        app:layout_constraintTop_toTopOf="@+id/addbreakbutton" />
+
+    <TextView
+        android:id="@+id/assignment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/AddAssignment"
+        app:layout_constraintBottom_toBottomOf="@+id/addassigmentbutton"
+        app:layout_constraintEnd_toStartOf="@+id/addassigmentbutton"
+        app:layout_constraintTop_toTopOf="@+id/addassigmentbutton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/class_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="@string/AddClass"
+        app:layout_constraintBottom_toBottomOf="@+id/addclassbutton"
+        app:layout_constraintEnd_toStartOf="@+id/addclassbutton"
+        app:layout_constraintTop_toTopOf="@+id/addclassbutton"
+        app:layout_constraintVertical_bias="0.54" />
+
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:contentDescription="@string/menu_descriptor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RWCalendarActivity"></activity>
+        <activity
+            android:name=".DrawerActivity"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RWCalendarActivity" />
         <activity android:name=".NotesActivity" />
         <activity android:name=".EventAdderActivity" />
         <activity android:name=".SignupActivity" />
@@ -29,7 +33,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".calendar"></activity>
+        <activity android:name=".calendar" />
 
         <provider
             android:name=".MainCP"
