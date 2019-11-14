@@ -6,20 +6,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_calendar"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_pomodoro_timer"
+            android:icon="@drawable/ic_timer"
+            android:title="@string/menu_timer" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_backupToCloud"
+            android:icon="@drawable/ic_back_up"
+            android:title="@string/menu_cloud" />
         <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:id="@+id/nav_extras"
+            android:icon="@drawable/ic_extras"
+            android:title="@string/menu_extras" />
     </group>
 
     <item android:title="Communicate">
@@ -29,9 +29,22 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_share" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_export"
+                android:icon="@drawable/ic_export"
+                android:title="@string/menu_export" />
+        </menu>
+    </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_schedule_settings"
+                android:icon="@drawable/ic_schedule_settings"
+                android:title="@string/menu_schedule_settings" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/menu_settings" />
         </menu>
     </item>
 
