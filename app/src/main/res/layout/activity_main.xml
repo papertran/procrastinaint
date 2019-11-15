@@ -76,12 +76,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/timerButton"
+        android:layout_width="95dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="33dp"
+        android:text="Start Pomodoro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signOutButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/temp_go_to_calendar_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/signOutButton"
         app:layout_constraintStart_toStartOf="@+id/rwCalendarButton"
         app:layout_constraintTop_toBottomOf="@+id/rwCalendarButton"
-        tools:text="@string/go_to_calendar" />
-
+        tools:text="Go to Calander" />
 </androidx.constraintlayout.widget.ConstraintLayout>
