@@ -133,6 +133,7 @@ public class RWCalendarActivity extends AppCompatActivity {
         String[] mProjection =
                 {
                         "_id",
+                        CalendarContract.Events.CALENDAR_ID,
                         CalendarContract.Events.TITLE,
                         CalendarContract.Events.EVENT_LOCATION,
                         CalendarContract.Events.DTSTART,
@@ -140,17 +141,19 @@ public class RWCalendarActivity extends AppCompatActivity {
                 };
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
-        String selection = CalendarContract.Events.EVENT_LOCATION + " = ? ";
-        String[] selectionArgs = new String[]{"London"};
+        String selection = CalendarContract.Events.CALENDAR_ID + " = ? ";
+        String[] selectionArgs = new String[]{calanderID.toString()};
 
-        cur = cr.query(uri, mProjection, null, null, null);
+        cur = cr.query(uri, mProjection, selection, selectionArgs, null);
 
         while (cur.moveToNext()) {
             Log.i(TAG, "readEvent: Starting calander");
             String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
             String DTSTART = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
             String DTEND = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
-            Log.i(TAG, "readEvent: \n" + "Title = " + title + "\nDTSTART: " + DTSTART + "\nDTEND: " + DTEND);
+            String CalenderID = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
+            Log.i(TAG, "readEvent: \n" + "Title = " + title + "\nDTSTART: " + DTSTART + "\nDTEND: " + DTEND
+            + "\nCalenderID: " + CalenderID);
         }
     }
 }
