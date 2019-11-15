@@ -2,11 +2,15 @@ package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
+import java.util.HashSet;
 
 public class NoteEditorActivity extends AppCompatActivity {
 
@@ -44,6 +48,10 @@ public class NoteEditorActivity extends AppCompatActivity {
 
                 NotesActivity.notes.set(noteId, String.valueOf(s));
                 NotesActivity.arrayAdapter.notifyDataSetChanged();
+
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("edu.fsu.cen4020.android.procrastinaint", Context.MODE_PRIVATE);
+                HashSet<String> set = new HashSet(NotesActivity.notes);
+                sharedPreferences.edit().putStringSet("notes", set).apply();
             }
 
             @Override
