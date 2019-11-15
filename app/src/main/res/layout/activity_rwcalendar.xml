@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RWCalendarActivity">
+
+    <Spinner
+        android:id="@+id/calendarSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="82dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/readCalendarButton"
         android:layout_width="wrap_content"
