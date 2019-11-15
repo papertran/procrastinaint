@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button notesButton;
     private Button rwCalendarButton;
     private Button signOutButton;
+    private Button temp_go_to_calendar_view;
     private TextView emailTextView;
 
     // Firebase stuff to make sure user is signed in
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         rwCalendarButton = (Button) findViewById(R.id.rwCalendarButton);
         emailTextView = (TextView) findViewById(R.id.emailText);
         signOutButton = (Button) findViewById(R.id.signOutButton);
+        temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onNotesButtonClicked(view);
+            }
+        });
+
+        temp_go_to_calendar_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(MainActivity.this, calendar.class );
+                startActivity(I);
             }
         });
 
@@ -131,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
 //            auth.removeAuthStateListener(authListener);
         }
     }
+
+
 
     public void onLoginButtonClicked(View view){
 

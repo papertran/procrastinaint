@@ -20,32 +20,34 @@
             android:id="@+id/nav_extras"
             android:icon="@drawable/ic_extras"
             android:title="@string/menu_extras" />
+
+        <item android:title="@string/menu_communication">
+            <menu>
+                <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/menu_share" />
+                <item
+                    android:id="@+id/nav_export"
+                    android:icon="@drawable/ic_export"
+                    android:title="@string/menu_export" />
+            </menu>
+        </item>
+
+        <item android:title="@string/menu_settings">
+            <menu>
+                <item
+                    android:id="@+id/nav_schedule_settings"
+                    android:icon="@drawable/ic_schedule_settings"
+                    android:title="@string/menu_schedule_settings" />
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings"
+                    android:title="@string/menu_settings" />
+            </menu>
+        </item>
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_export"
-                android:icon="@drawable/ic_export"
-                android:title="@string/menu_export" />
-        </menu>
-    </item>
 
-    <item android:title="Settings">
-        <menu>
-            <item
-                android:id="@+id/nav_schedule_settings"
-                android:icon="@drawable/ic_schedule_settings"
-                android:title="@string/menu_schedule_settings" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_settings"
-                android:title="@string/menu_settings" />
-        </menu>
-    </item>
 
 </menu>
