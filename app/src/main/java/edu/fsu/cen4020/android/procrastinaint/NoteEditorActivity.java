@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 public class NoteEditorActivity extends AppCompatActivity {
 
+    int noteId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,11 +21,16 @@ public class NoteEditorActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.editText);
 
         Intent intent = getIntent();
-        final int noteId = intent.getIntExtra("noteId", -1);
+        noteId = intent.getIntExtra("noteId", -1);
 
         //The default value above make sure that we dont get passed an invalid noteId
         if(noteId != -1 ) {
             editText.setText(NotesActivity.notes.get(noteId));
+        }
+        else{
+            NotesActivity.notes.add("");
+            noteId = NotesActivity.notes.size()-1;
+            NotesActivity.arrayAdapter.notifyDataSetChanged();
         }
 
         editText.addTextChangedListener(new TextWatcher() {
