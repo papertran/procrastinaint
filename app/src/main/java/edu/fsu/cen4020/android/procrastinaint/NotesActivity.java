@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class NotesActivity extends AppCompatActivity {
 
     static ArrayList<String> notes = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
+
+    private Button adNote;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,6 +55,14 @@ public class NotesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
+
+        adNote = (Button) findViewById(R.id.adNote);
+        adNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNoteEditor();
+            }
+        });
 
         //Reference from: https://youtu.be/48EB4HeP1kI
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -111,5 +122,9 @@ public class NotesActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public void openNoteEditor() {
+        Intent intent = new Intent(this, NoteEditorActivity.class);
+        startActivity(intent);
     }
 }
