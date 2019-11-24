@@ -30,6 +30,7 @@ public class MainCP extends ContentProvider {
                     "TITLE TEXT, " +
                     "EVENT_LOCATION TEXT," +
                     "DESCRIPTION TEXT," +
+                    "DURATION TEXT," +
                     "DTSTART INTEGER," +
                     "DTEND INTEGER," +
                     "LAST_DATE INTEGER)";
