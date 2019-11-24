@@ -25,15 +25,19 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
     private String TAG = EventAdderActivity.class.getCanonicalName();
     private String CdateSolo="";   //This contains the date of the solo date of the event
+    private String CdateRepeatStart;    // Contains the starting date
+    private String CdateRepeatEnd;      // Contains the Ending date
     private String StartTimeHour="";
     private String StartTimeMin="";
     private String EndTimeHour="";
     private String EndTimeMin="";
-    private int datepick = 0;   // This is used to determine which date picker was last clicked
+    public int datepick = 0;   // This is used to determine which date picker was last clicked
     private int start_or_end = 0;
     private Button startButton;
     private Button endButton;
     private Button datePicker;
+    private Button startDate;
+    private Button endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,26 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 datepick = 0;
                 DialogFragment date = new DatePickerFragment();
                 date.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
+        startDate = (Button) findViewById(R.id.Date_picker_reoccurring_start);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datepick = 1;
+                DialogFragment date = new DatePickerFragment();
+                date.show(getSupportFragmentManager(), "date picker start");
+            }
+        });
+
+        endDate = (Button) findViewById(R.id.Date_picker_reoccurring_end);
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datepick = 2;
+                DialogFragment date = new DatePickerFragment();
+                date.show(getSupportFragmentManager(), "date picker end");
             }
         });
 
@@ -85,10 +109,27 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.DAY_OF_MONTH, day);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         String tempStr = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
-        CdateSolo = currentDateString;
-        datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
-        datePicker.setText(tempStr);
-        Toast.makeText(getApplicationContext(), CdateSolo, Toast.LENGTH_LONG).show();
+        if (datepick == 0) {
+            CdateSolo = currentDateString;
+            datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
+            datePicker.setText(tempStr);
+            Toast.makeText(getApplicationContext(), CdateSolo, Toast.LENGTH_LONG).show();
+        }
+
+        else if (datepick == 1){
+            CdateRepeatStart = currentDateString;
+            startDate = (Button) findViewById(R.id.Date_picker_reoccurring_start);
+            startDate.setText(tempStr);
+            Toast.makeText(getApplicationContext(), CdateRepeatStart, Toast.LENGTH_LONG).show();
+
+        }
+
+        else if (datepick == 2){
+            CdateRepeatEnd = currentDateString;
+            endDate = (Button) findViewById(R.id.Date_picker_reoccurring_end);
+            endDate.setText(tempStr);
+            Toast.makeText(getApplicationContext(), CdateRepeatEnd, Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -120,20 +161,25 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-        TableRow nonRe = (TableRow) findViewById(R.id.nonreoccurringDatePickerRow);
-        TableRow repeat = (TableRow) findViewById(R.id.reoccurringDatePickerText);
-        TableRow sunday = (TableRow) findViewById(R.id.sundayRow);
-        TableRow monday = (TableRow) findViewById(R.id.mondayRow);
-        TableRow tuesday = (TableRow) findViewById(R.id.tuesdayRow);
-        TableRow wednesday = (TableRow) findViewById(R.id.wednesdayRow);
-        TableRow thursday = (TableRow) findViewById(R.id.thursdayRow);
-        TableRow friday = (TableRow) findViewById(R.id.fridayRow);
-        TableRow saturday = (TableRow) findViewById(R.id.saturdayRow);
-
 
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.reoccurringCheckBox:
+            // This section handles the reoccurring checkbox visibility
+
+                TableRow nonRe = (TableRow) findViewById(R.id.nonreoccurringDatePickerRow);
+                TableRow reStart = (TableRow) findViewById(R.id.reoccurringDatePickerStart);
+                TableRow reEnd = (TableRow) findViewById(R.id.reoccurringDatePickerEnd);
+
+                TableRow repeat = (TableRow) findViewById(R.id.reoccurringDatePickerText);
+                TableRow sunday = (TableRow) findViewById(R.id.sundayRow);
+                TableRow monday = (TableRow) findViewById(R.id.mondayRow);
+                TableRow tuesday = (TableRow) findViewById(R.id.tuesdayRow);
+                TableRow wednesday = (TableRow) findViewById(R.id.wednesdayRow);
+                TableRow thursday = (TableRow) findViewById(R.id.thursdayRow);
+                TableRow friday = (TableRow) findViewById(R.id.fridayRow);
+                TableRow saturday = (TableRow) findViewById(R.id.saturdayRow);
+
                 if (checked) {
                     nonRe.setVisibility(View.GONE);
                     repeat.setVisibility(View.VISIBLE);
@@ -144,6 +190,8 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     thursday.setVisibility(View.VISIBLE);
                     friday.setVisibility(View.VISIBLE);
                     saturday.setVisibility(View.VISIBLE);
+                    reStart.setVisibility(View.VISIBLE);
+                    reEnd.setVisibility(View.VISIBLE);
 
                 }
                 else {
@@ -156,14 +204,15 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     thursday.setVisibility(View.GONE);
                     friday.setVisibility(View.GONE);
                     saturday.setVisibility(View.GONE);
-
-
+                    reStart.setVisibility(View.GONE);
+                    reEnd.setVisibility(View.GONE);
                 }
             case R.id.firebase_upload:
+            // This case is for the firebase upload
+
                 if (checked)
                 break;
             else
-                // I'm lactose intolerant
                 break;
         }
     }
