@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.TableRow;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -71,6 +73,8 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+
+
     }
 
     @Override
@@ -111,5 +115,56 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         }
 
 
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+        TableRow nonRe = (TableRow) findViewById(R.id.nonreoccurringDatePickerRow);
+        TableRow repeat = (TableRow) findViewById(R.id.reoccurringDatePickerText);
+        TableRow sunday = (TableRow) findViewById(R.id.sundayRow);
+        TableRow monday = (TableRow) findViewById(R.id.mondayRow);
+        TableRow tuesday = (TableRow) findViewById(R.id.tuesdayRow);
+        TableRow wednesday = (TableRow) findViewById(R.id.wednesdayRow);
+        TableRow thursday = (TableRow) findViewById(R.id.thursdayRow);
+        TableRow friday = (TableRow) findViewById(R.id.fridayRow);
+        TableRow saturday = (TableRow) findViewById(R.id.saturdayRow);
+
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.reoccurringCheckBox:
+                if (checked) {
+                    nonRe.setVisibility(View.GONE);
+                    repeat.setVisibility(View.VISIBLE);
+                    sunday.setVisibility(View.VISIBLE);
+                    monday.setVisibility(View.VISIBLE);
+                    tuesday.setVisibility(View.VISIBLE);
+                    wednesday.setVisibility(View.VISIBLE);
+                    thursday.setVisibility(View.VISIBLE);
+                    friday.setVisibility(View.VISIBLE);
+                    saturday.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    nonRe.setVisibility(View.VISIBLE);
+                    repeat.setVisibility(View.GONE);
+                    sunday.setVisibility(View.GONE);
+                    monday.setVisibility(View.GONE);
+                    tuesday.setVisibility(View.GONE);
+                    wednesday.setVisibility(View.GONE);
+                    thursday.setVisibility(View.GONE);
+                    friday.setVisibility(View.GONE);
+                    saturday.setVisibility(View.GONE);
+
+
+                }
+            case R.id.firebase_upload:
+                if (checked)
+                break;
+            else
+                // I'm lactose intolerant
+                break;
+        }
     }
 }
