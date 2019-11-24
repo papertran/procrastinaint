@@ -18,7 +18,9 @@
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme"            />
+<!--android:theme="@style/AppTheme.NoActionBar"-->
+<!--Temporary to fix notes app -->
         <activity android:name=".RWCalendarActivity" />
         <activity android:name=".NotesActivity" />
         <activity android:name=".EventAdderActivity" />
