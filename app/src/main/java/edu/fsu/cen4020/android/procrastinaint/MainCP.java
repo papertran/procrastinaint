@@ -26,14 +26,14 @@ public class MainCP extends ContentProvider {
 
     private static final String SQL_CREATE_MAIN =
             "CREATE TABLE " + TABLE_NAMESTABLE+" ( "+
-                    " _ID INTEGER PRIMARY KEY, " +
-                    "Title TEXT, " +
-                    "StartDay TEXT, " +
-                    "EndDay TEXT," +
-                    "StartDate TEXT," +
-                    "EndDate TEXT," +
-                    "Location TEXT," +
-                    "Notes TEXT," +
+                    " CALENDAR_ID INTEGER PRIMARY KEY, " +
+                    "ORGANIZER TEXT, " +
+                    "TITLE TEXT, " +
+                    "EVENT_LOCATION TEXT," +
+                    "DESCRIPTION TEXT," +
+                    "DTSTART TEXT," +
+                    "DTEND TEXT," +
+                    "LAST_DATE TEXT," +
                     "Invitee TEXT)";
 
     protected static final class MainDatabaseHelper extends SQLiteOpenHelper {
