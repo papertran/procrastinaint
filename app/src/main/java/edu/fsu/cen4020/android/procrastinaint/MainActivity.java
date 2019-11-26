@@ -2,6 +2,7 @@ package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.CountDownTimer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getCanonicalName();
+    public int counter;
 
     private Button loginButton;
     private Button registerButton;
@@ -24,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private Button signOutButton;
     private Button temp_go_to_calendar_view;
     private TextView emailTextView;
-
+    private Button timerButton;
+    
     // Firebase stuff to make sure user is signed in
     // Guide from https://www.androidlearning.com/android-login-registration-firebase-authentication/
     private FirebaseAuth.AuthStateListener authListener;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         rwCalendarButton = (Button) findViewById(R.id.rwCalendarButton);
         emailTextView = (TextView) findViewById(R.id.emailText);
         signOutButton = (Button) findViewById(R.id.signOutButton);
+        timerButton = (Button) findViewById(R.id.timerButton);
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
 
 
@@ -90,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onRWCalendarButtonClicked(view);
+            }
+        });
+
+        timerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTimerButtonClicked(view);
             }
         });
 
@@ -168,6 +179,12 @@ public class MainActivity extends AppCompatActivity {
     public void onRWCalendarButtonClicked(View view){
         Intent intent = new Intent(this, RWCalendarActivity.class);
         startActivity(intent);
+    }
+
+    public void onTimerButtonClicked(View view){
+        Intent intent = new Intent(this, timerActivity.class);
+        startActivity(intent);
+
     }
 
     public void signOut(){
