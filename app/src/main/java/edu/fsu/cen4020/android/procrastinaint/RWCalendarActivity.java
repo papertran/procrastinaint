@@ -29,6 +29,7 @@ public class RWCalendarActivity extends AppCompatActivity {
     private Button readCalander;
     private TextView showText;
     private Spinner calanderSpinner;
+    private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
 
 
@@ -40,7 +41,8 @@ public class RWCalendarActivity extends AppCompatActivity {
         readCalander = (Button) findViewById(R.id.readCalendarButton);
         showText = (TextView) findViewById(R.id.readTextView);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
-
+        currentTime = System.currentTimeMillis();
+        Log.i(TAG, "onCreate: time is " + currentTime.toString());
         // Query though the content provider and get the names of the calanders
         calanderValues = getCalanders();
 
@@ -117,6 +119,7 @@ public class RWCalendarActivity extends AppCompatActivity {
             Log.i(TAG, "CalID " + calID + "\ndisplayName: " + displayName
                     + "\naccountName" + accountName + "\nOwnderName: " +ownerName); }
 
+        Log.i(TAG, "readCalander finished");
         return calanderValues;
     }
 
@@ -142,12 +145,20 @@ public class RWCalendarActivity extends AppCompatActivity {
                         CalendarContract.Events.DURATION,
                         CalendarContract.Events.RRULE,
                         CalendarContract.Events.RDATE,
+                        CalendarContract.Events.LAST_DATE,
 
                 };
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
-        String selection = CalendarContract.Events.CALENDAR_ID + " = ?";
-        String[] selectionArgs = new String[]{calanderID.toString()};
+        String selection = CalendarContract.Events.CALENDAR_ID + " = ? AND (" +
+                CalendarContract.Events.DTSTART + " >= ? OR " +
+                CalendarContract.Events.LAST_DATE +
+                " >= ? )";
+        String[] selectionArgs = new String[]{
+                calanderID.toString(),
+                currentTime.toString(),
+                currentTime.toString()
+        };
 
         cur = cr.query(uri, mProjection, selection, selectionArgs, null);
 
@@ -156,6 +167,7 @@ public class RWCalendarActivity extends AppCompatActivity {
             String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
             String DTSTART = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
             String DTEND = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
+            String lasteDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.LAST_DATE));
             String CalenderID = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
             String duration = cur.getString(cur.getColumnIndex(CalendarContract.Events.DURATION));
             String rDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.RDATE));
@@ -170,10 +182,19 @@ public class RWCalendarActivity extends AppCompatActivity {
             if (DTEND != null){
                 endDate = epocToDateTime(DTEND);
             }
+            if (lasteDate != null){
+                lasteDate = epocToDateTime(lasteDate);
+            }
 
-
-            Log.i(TAG, "readEvent: \n" + "Title = " + title + "\nDTSTART: " + startDate + "\nDTEND: " + endDate
-            + "\nCalenderID: " + CalenderID + "\nDuration = " + duration + "\nRRule = " + rRule + "\nRdate = " + rDate);
+            Log.i(TAG, "readEvent: \n" +
+                    "Title = " + title +
+                    "\nDTSTART: " + startDate +
+                    "\nDTEND: " + endDate +
+                    "\nlast date: " + lasteDate +
+                    "\nCalenderID: " + CalenderID +
+                    "\nDuration = " + duration +
+                    "\nRRule = " + rRule +
+                    "\nRdate = " + rDate);
         }
     }
 
