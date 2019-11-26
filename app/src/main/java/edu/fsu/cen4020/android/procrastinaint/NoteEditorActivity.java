@@ -8,13 +8,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
+import java.io.FileOutputStream;
 import java.util.HashSet;
 
 public class NoteEditorActivity extends AppCompatActivity {
 
     int noteId;
+    private static final String FILE_NAME = "example.txt";
+    EditText mEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,5 +63,12 @@ public class NoteEditorActivity extends AppCompatActivity {
 
             }
         });
+
+        mEditText = findViewById(R.id.editText);
+    }
+
+    public void save(View v) {
+        String text = mEditText.getText().toString();
+        FileOutputStream fos = null;
     }
 }
