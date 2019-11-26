@@ -10,8 +10,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashSet;
 
 public class NoteEditorActivity extends AppCompatActivity {
@@ -67,8 +70,30 @@ public class NoteEditorActivity extends AppCompatActivity {
         mEditText = findViewById(R.id.editText);
     }
 
+    //Reference: https://www.youtube.com/watch?v=EcfUkjlL9RI
     public void save(View v) {
         String text = mEditText.getText().toString();
         FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            mEditText.getText().clear();
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 }
