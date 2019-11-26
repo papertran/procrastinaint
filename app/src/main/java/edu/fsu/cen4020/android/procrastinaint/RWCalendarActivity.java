@@ -3,7 +3,6 @@ package edu.fsu.cen4020.android.procrastinaint;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +16,11 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class RWCalendarActivity extends AppCompatActivity {
 
@@ -138,10 +139,14 @@ public class RWCalendarActivity extends AppCompatActivity {
                         CalendarContract.Events.EVENT_LOCATION,
                         CalendarContract.Events.DTSTART,
                         CalendarContract.Events.DTEND,
+                        CalendarContract.Events.DURATION,
+                        CalendarContract.Events.RRULE,
+                        CalendarContract.Events.RDATE,
+
                 };
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
-        String selection = CalendarContract.Events.CALENDAR_ID + " = ? ";
+        String selection = CalendarContract.Events.CALENDAR_ID + " = ?";
         String[] selectionArgs = new String[]{calanderID.toString()};
 
         cur = cr.query(uri, mProjection, selection, selectionArgs, null);
@@ -152,8 +157,31 @@ public class RWCalendarActivity extends AppCompatActivity {
             String DTSTART = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
             String DTEND = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
             String CalenderID = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
-            Log.i(TAG, "readEvent: \n" + "Title = " + title + "\nDTSTART: " + DTSTART + "\nDTEND: " + DTEND
-            + "\nCalenderID: " + CalenderID);
+            String duration = cur.getString(cur.getColumnIndex(CalendarContract.Events.DURATION));
+            String rDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.RDATE));
+            String rRule = cur.getString(cur.getColumnIndex(CalendarContract.Events.RRULE));
+            String startDate = "";
+            String endDate = "";
+
+            // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
+            if(DTSTART != null ) {
+                startDate = epocToDateTime(DTSTART);
+            }
+            if (DTEND != null){
+                endDate = epocToDateTime(DTEND);
+            }
+
+
+            Log.i(TAG, "readEvent: \n" + "Title = " + title + "\nDTSTART: " + startDate + "\nDTEND: " + endDate
+            + "\nCalenderID: " + CalenderID + "\nDuration = " + duration + "\nRRule = " + rRule + "\nRdate = " + rDate);
         }
+    }
+
+    public String epocToDateTime(String epocDate){
+
+        Date date = new Date(Long.parseLong(epocDate));
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy h:mm,a", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+        return sdf.format(date);
     }
 }

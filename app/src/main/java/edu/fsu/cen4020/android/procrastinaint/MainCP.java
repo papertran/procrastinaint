@@ -14,27 +14,26 @@ public class MainCP extends ContentProvider {
     public static final Uri CONTENT_URI = Uri.parse("content://edu.fsu.cen4020.android.procrasinaint.MainCP.provider");
     MainDatabaseHelper mOpenHelper;
 
-    public final static String _ID ="_ID";
-    public final static String Title = "Title";
-    public final static String StartDay = "StartDay";
-    public final static String EndDay = "EndDay";
-    public final static String StartDate = "StartDate";
-    public final static String EndDate = "EndDate";
-    public final static String Location = "Location";
-    public final static String Notes = "Notes";
-    public final static String Invitee = "Invitee";
+    public final static String CALENDAR_ID ="CALENDAR_ID";
+    public final static String ORGANIZER = "ORGANIZER";
+    public final static String TITLE = "TITLE";
+    public final static String EVENT_LOCATION = "EVENT_LOCATION";
+    public final static String DESCRIPTION = "DESCRIPTION";
+    public final static String DTSTART = "DTSTART";
+    public final static String DTEND = "DTEND";
+    public final static String LAST_DATE = "LAST_DATE";
 
     private static final String SQL_CREATE_MAIN =
             "CREATE TABLE " + TABLE_NAMESTABLE+" ( "+
-                    " _ID INTEGER PRIMARY KEY, " +
-                    "Title TEXT, " +
-                    "StartDay TEXT, " +
-                    "EndDay TEXT," +
-                    "StartDate TEXT," +
-                    "EndDate TEXT," +
-                    "Location TEXT," +
-                    "Notes TEXT," +
-                    "Invitee TEXT)";
+                    " CALENDAR_ID INTEGER PRIMARY KEY, " +
+                    "ORGANIZER TEXT, " +
+                    "TITLE TEXT, " +
+                    "EVENT_LOCATION TEXT," +
+                    "DESCRIPTION TEXT," +
+                    "DURATION TEXT," +
+                    "DTSTART INTEGER," +
+                    "DTEND INTEGER," +
+                    "LAST_DATE INTEGER)";
 
     protected static final class MainDatabaseHelper extends SQLiteOpenHelper {
         MainDatabaseHelper(Context context){

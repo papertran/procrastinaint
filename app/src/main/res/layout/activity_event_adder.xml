@@ -36,18 +36,20 @@
 
                 <TextView
                     android:text="@string/reoccurring"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="16sp">
+                </TextView>
 
-                <androidx.appcompat.widget.AppCompatCheckBox
+                <CheckBox
                     android:id="@+id/reoccurringCheckBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
+                    android:layout_marginRight="20dp"
+                    android:onClick="onCheckboxClicked">
 
-                </androidx.appcompat.widget.AppCompatCheckBox>
+                </CheckBox>
 
-                <!-- TODO IF checked addsection for start date and end date
+                <!-- TODO IF checked add section for start date and end date
                      TODO ELSE have a selection for 1 date -->
 
             </TableRow>
@@ -77,6 +79,9 @@
 
             </TableRow>
 
+
+            <!-- THIS IS THE SECTION WHERE THE REPEATING EVENTS ARE ADDED -->
+
             <TableRow
                 android:id="@+id/reoccurringDatePickerText"
                 android:layout_width="match_parent"
@@ -94,15 +99,248 @@
 
             </TableRow>
 
-            <TextView
-                android:text="@string/days_of_week"
-                android:textSize="12sp"
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sundayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/sunday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/sundayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mondayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/monday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/mondayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tuesdayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/tuesday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/tuesdayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/wednesdayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/wednesday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/wednesdayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/thursdayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/thursday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/thursdayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fridayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/friday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/fridayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/saturdayRow"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/saturday"
+                    android:textSize="16sp">
+                </TextView>
+
+                <CheckBox
+                    android:id="@+id/saturdayCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9">
+
+                </CheckBox>
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/reoccurringDatePickerStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
                 android:visibility="gone">
 
-            </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/start_date"
+                    android:textSize="16sp">
 
-            <!--For Date/Time Picker put in a dialog
-            https://stackoverflow.com/questions/2055509/datetime-picker-in-android-application -->
+                </TextView>
+
+                <Button
+                    android:id="@+id/Date_picker_reoccurring_start"
+                    android:text="Pick Date"
+                    android:textSize="16sp">
+
+                </Button>
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/reoccurringDatePickerEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/end_date"
+                    android:textSize="16sp">
+
+                </TextView>
+
+                <Button
+                    android:id="@+id/Date_picker_reoccurring_end"
+                    android:text="Pick Date"
+                    android:textSize="16sp">
+
+                </Button>
+
+            </TableRow>
+
+            <!-- THIS MARKS THE TIME PICKERS -->
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -113,7 +351,9 @@
 
                 <TextView
                     android:text="@string/start_time"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="16sp">
+
+                </TextView>
 
                 <Button
                     android:id="@+id/start_time"
@@ -133,7 +373,9 @@
 
                 <TextView
                     android:text="@string/end_time"
-                    android:textSize="16sp"></TextView>
+                    android:textSize="16sp">
+
+                </TextView>
 
                 <Button
                     android:id="@+id/end_time"
@@ -143,6 +385,18 @@
                 </Button>
 
             </TableRow>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp"
+                android:hint="@string/description">
+
+            </EditText>
 
 
             <TableRow
@@ -158,14 +412,14 @@
 
                 </TextView>
 
-                <androidx.appcompat.widget.AppCompatCheckBox
+                <CheckBox
                     android:id="@+id/firebase_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp">
 
-                </androidx.appcompat.widget.AppCompatCheckBox>
+                </CheckBox>
 
             </TableRow>
 
