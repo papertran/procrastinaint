@@ -34,6 +34,7 @@ public class RWCalendarActivity extends AppCompatActivity {
     private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
     private ArrayList<String[]> eventArrayList = new ArrayList<String[]>();
+    private Button saveEventsButton;
 
 
     @Override
@@ -43,6 +44,7 @@ public class RWCalendarActivity extends AppCompatActivity {
 
         readCalander = (Button) findViewById(R.id.readCalendarButton);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
+        saveEventsButton = (Button) findViewById(R.id.saveEventsButton);
         currentTime = System.currentTimeMillis();
         Log.i(TAG, "onCreate: time is " + currentTime.toString());
         // Query though the content provider and get the names of the calanders
@@ -75,6 +77,13 @@ public class RWCalendarActivity extends AppCompatActivity {
                 } else {
                     initRecyclerView();
                 }
+            }
+        });
+
+        saveEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -212,12 +221,12 @@ public class RWCalendarActivity extends AppCompatActivity {
 
 
             // Items to store into eventRecyclerView dataset
-            Log.i(TAG, "readEvent: \n" +
-                    "Title = " + title +
-                    "\nStart Date = " + startDate +
-                    "\nEnd Date = " + endDate +
-                    "\nStart Time= " + startTime +
-                    "\nEnd Time = " + endTime);
+//            Log.i(TAG, "readEvent: \n" +
+//                    "Title = " + title +
+//                    "\nStart Date = " + startDate +
+//                    "\nEnd Date = " + endDate +
+//                    "\nStart Time= " + startTime +
+//                    "\nEnd Time = " + endTime);
 
             // Add this to the dataset for the recyclerview
             String[] recylerViewItems = new String[]{
@@ -226,18 +235,25 @@ public class RWCalendarActivity extends AppCompatActivity {
                     endDate,
                     startTime,
                     endTime,
+                    DTSTART,
+                    DTEND,
+                    lasteDate,
+                    CalenderID,
+                    duration,
+                    rDate,
+                    rRule
             };
             eventArrayList.add(recylerViewItems);
 
-//            Log.i(TAG, "readEvent: \n" +
-//                    "Title = " + title +
-//                    "\nDTSTART: " + startDate +
-//                    "\nDTEND: " + endDate +
-//                    "\nlast date: " + lasteDate +
-//                    "\nCalenderID: " + CalenderID +
-//                    "\nDuration = " + duration +
-//                    "\nRRule = " + rRule +
-//                    "\nRdate = " + rDate);
+            Log.i(TAG, "readEvent: \n" +
+                    "Title = " + title +
+                    "\nDTSTART: " + startDate +
+                    "\nDTEND: " + endDate +
+                    "\nlast date: " + lasteDate +
+                    "\nCalenderID: " + CalenderID +
+                    "\nDuration = " + duration +
+                    "\nRRule = " + rRule +
+                    "\nRdate = " + rDate);
         }
     }
 

@@ -26,6 +26,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         this.mContext = mContext;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +44,9 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         holder.startTimeTextView.setText(eventsArrayList.get(position)[3]);
         holder.endTimeTextView.setText(eventsArrayList.get(position)[4]);
 
-        // TODO onCHeckListener
+
+
+
     }
 
     @Override
@@ -62,7 +65,6 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
 
         public ViewHolder(View itemView){
             super(itemView);
-            saveEventCheckBox = itemView.findViewById(R.id.saveEventCheckBox);
             eventTitleTextView = itemView.findViewById(R.id.eventTitleTextView);
             startDateTextView = itemView.findViewById(R.id.startDateTextView);
             endDateTextView = itemView.findViewById(R.id.endDateTextView);
