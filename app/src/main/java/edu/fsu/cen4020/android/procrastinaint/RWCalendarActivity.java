@@ -15,8 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +30,6 @@ public class RWCalendarActivity extends AppCompatActivity {
 
     private String TAG = RWCalendarActivity.class.getCanonicalName();
     private Button readCalander;
-    private TextView showText;
     private Spinner calanderSpinner;
     private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
@@ -43,7 +42,6 @@ public class RWCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rwcalendar);
 
         readCalander = (Button) findViewById(R.id.readCalendarButton);
-        showText = (TextView) findViewById(R.id.readTextView);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
         currentTime = System.currentTimeMillis();
         Log.i(TAG, "onCreate: time is " + currentTime.toString());
@@ -66,10 +64,17 @@ public class RWCalendarActivity extends AppCompatActivity {
         readCalander.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Clear the arraylist when a new calendar is read
+                eventArrayList.clear();
+
                 readEvent(view);
 
                 // Populate the eventRecyclerView after getting events
-                initRecyclerView();
+                if(eventArrayList.size() == 0){
+                    Toast.makeText(RWCalendarActivity.this, "No events found", Toast.LENGTH_SHORT ).show();
+                } else {
+                    initRecyclerView();
+                }
             }
         });
 
