@@ -30,7 +30,8 @@ public class timerActivity extends AppCompatActivity {
     public int counter = 25;
     Button pomodoroButton;
     Button breakButton;
-    TextView textView;
+    TextView minuteView;
+    TextView messageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,8 @@ public class timerActivity extends AppCompatActivity {
         pomodoroButton= (Button) findViewById(R.id.pomodoroButton);
         breakButton = (Button) findViewById(R.id.breakButton);
         breakButton.setVisibility(View.INVISIBLE);
-        textView= (TextView) findViewById(R.id.textView);
+        minuteView= (TextView) findViewById(R.id.minuteView);
+        messageView = (TextView) findViewById(R.id.messageView);
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
 
@@ -51,8 +53,7 @@ public class timerActivity extends AppCompatActivity {
 
 //        Log.i(TAG, "prevTime is in millisecs and minutes: " + prevTime + prevTime/60000);
 
-
-        textView.setVisibility(View.INVISIBLE);
+        minuteView.setVisibility(View.INVISIBLE);
         pomodoroButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -71,7 +72,8 @@ public class timerActivity extends AppCompatActivity {
     }
 
     private void startTimer(){
-        textView.setVisibility(View.VISIBLE);
+        messageView.setVisibility(View.INVISIBLE);
+        minuteView.setVisibility(View.VISIBLE);
         minutePicker.setVisibility(View.INVISIBLE);
         mCountDownTimer = new CountDownTimer(mTimeLeft, 1000) {
             @Override
@@ -82,12 +84,12 @@ public class timerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                textView.setText("You have stayed focused for 25 minutes!");
+                messageView.setVisibility(View.VISIBLE);
+                messageView.setText("You have stayed focused for " + prevTime/60000 + " minute(s)");
+//                textView.setText("You have stayed focused for 25 minutes!");
                 pomodoroButton.setVisibility(View.INVISIBLE);
                 breakButton.setVisibility(View.VISIBLE);
 
-//                mTimeLeft = START_MILLIS;
-//                startBreak();
             }
         }.start();
 
@@ -95,6 +97,7 @@ public class timerActivity extends AppCompatActivity {
     }
 
     private void startBreak(){
+        messageView.setVisibility(View.INVISIBLE);
         mCountDownTimer = new CountDownTimer(breakTimeLeft, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -104,20 +107,14 @@ public class timerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                textView.setText("5 minute break is done. Press button to start again.");
+                messageView.setText("5 minute break is done. Press button to start again.");
                 pomodoroButton.setVisibility(View.VISIBLE);
                 breakButton.setVisibility(View.INVISIBLE);
                 minutePicker.setVisibility(View.VISIBLE);
-
-
-//                minutePicker.setValue((int)prevTime);
-
                 mTimeLeft = prevTime;
-
                 minutePicker.setOnValueChangedListener(onValueChangeListener);
-
-
                 breakTimeLeft = breakTime;
+                minuteView.setVisibility(View.INVISIBLE);
 
             }
         }.start();
@@ -129,7 +126,7 @@ public class timerActivity extends AppCompatActivity {
         int seconds = (int) (time / 1000) % 60;
 
         String timeLeft = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        textView.setText(timeLeft);
+        minuteView.setText(timeLeft);
 
     }
 
