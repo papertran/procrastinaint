@@ -48,6 +48,15 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     private EditText TITLE;
     private EditText Description;
     private Boolean Reoccurr_or_not=false;
+    private Boolean Firebase = false;
+    private CheckBox sunday;
+    private CheckBox monday;
+    private CheckBox tuesday;
+    private CheckBox wednesday;
+    private CheckBox thursday;
+    private CheckBox friday;
+    private CheckBox saturday;
+
 
 
     @Override
@@ -113,17 +122,75 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         TITLE = (EditText) findViewById(R.id.EventTitle);
         Description = (EditText) findViewById(R.id.Description);
 
+        sunday = (CheckBox) findViewById(R.id.sundayCheckBox);
+        monday = (CheckBox) findViewById(R.id.mondayCheckBox);
+        tuesday = (CheckBox) findViewById(R.id.tuesdayCheckBox);
+        wednesday = (CheckBox) findViewById(R.id.wednesdayCheckBox);
+        thursday = (CheckBox) findViewById(R.id.thursdayCheckBox);
+        friday = (CheckBox) findViewById(R.id.fridayCheckBox);
+        saturday = (CheckBox) findViewById(R.id.saturdayCheckBox);
+
+
         addButton = (Button) findViewById(R.id.AddEvent);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
                 String title = TITLE.getText().toString();
                 String description = Description.getText().toString();
+                // Add Firebase thingy here
 
-                if (Reoccurr_or_not){
-                    
+                if (!Reoccurr_or_not){
+                    Log.i("LOL", "Made it here");
+                    Long startEpoch = CdateSolo + StartMilli;
+                    Long endEpoch = CdateSolo + EndMilli;
+
+                    // Add to ContentProvider
+
                 }
                 else{
+                    // If reoccuring it needs to not have the seconds added
+                    Long startEpoch = CdateRepeatStart + StartMilli;
+                    String repeatRule = "FREQ=WEEKLY;UNTIL="+CdateRepeatEnd+";WKST=SU;BYDAY=";
+                    Long endDate = CdateRepeatEnd;
+
+                    Long seconds = (EndMilli - StartMilli)/1000;
+
+                    String duration = "P"+seconds.toString()+"S";
+                    Log.i("LOL", duration);
+
+                    if (friday.isChecked()){
+                        repeatRule +="FR,";
+                    }
+
+                    if (monday.isChecked()) {
+                        repeatRule += "MO,";
+                    }
+
+                    if (saturday.isChecked()){
+                        repeatRule +="SA,";
+                    }
+
+                    if (sunday.isChecked()){
+                        repeatRule +="SU,";
+                    }
+
+                    if (thursday.isChecked()) {
+                        repeatRule += "TH,";
+                    }
+
+                    if (tuesday.isChecked()){
+                        repeatRule += "TU,";
+                    }
+
+                    if (wednesday.isChecked()){
+                        repeatRule += "WE,";
+                    }
+                    String temp = "";
+
+                    for (int x = 0; x<  repeatRule.length()-1; x++){
+                        temp += repeatRule.charAt(x);
+                    }
+                    repeatRule = temp;
 
                 }
 
@@ -263,9 +330,9 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             // This case is for the firebase upload
 
                 if (checked)
-                break;
+                Firebase = true;
             else
-                break;
+                Firebase = false;
         }
     }
 }
