@@ -1,6 +1,8 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +34,7 @@ public class RWCalendarActivity extends AppCompatActivity {
     private Spinner calanderSpinner;
     private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
+    private ArrayList<String[]> eventArrayList = new ArrayList<String[]>();
 
 
     @Override
@@ -63,6 +67,9 @@ public class RWCalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 readEvent(view);
+
+                // Populate the eventRecyclerView after getting events
+                initRecyclerView();
             }
         });
 
@@ -174,35 +181,194 @@ public class RWCalendarActivity extends AppCompatActivity {
             String rRule = cur.getString(cur.getColumnIndex(CalendarContract.Events.RRULE));
             String startDate = "";
             String endDate = "";
+            String startTime = "";
+            String endTime = "";
 
             // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
-            if(DTSTART != null ) {
-                startDate = epocToDateTime(DTSTART);
-            }
-            if (DTEND != null){
-                endDate = epocToDateTime(DTEND);
-            }
-            if (lasteDate != null){
-                lasteDate = epocToDateTime(lasteDate);
+
+            if (DTSTART != null){
+                startDate = epochToDate(Long.parseLong(DTSTART));
+                startTime = epochToTime(Long.parseLong(DTSTART));
             }
 
+            if (lasteDate != null){
+                endDate = epochToDate(Long.parseLong(lasteDate));
+            }
+
+            // Check DT for correct end time
+            if(DTEND != null){
+                endDate = epochToDate(Long.parseLong(DTEND));
+                endTime = epochToTime(Long.parseLong(lasteDate));
+            } else {
+                // DTEND is null if its a recurring event, then need to get time from duration
+                Long newDuration = RFC2445ToMilliseconds(duration);
+                endTime = epochToTime(Long.parseLong(DTSTART) + newDuration);
+            }
+
+
+            // Items to store into eventRecyclerView dataset
             Log.i(TAG, "readEvent: \n" +
                     "Title = " + title +
-                    "\nDTSTART: " + startDate +
-                    "\nDTEND: " + endDate +
-                    "\nlast date: " + lasteDate +
-                    "\nCalenderID: " + CalenderID +
-                    "\nDuration = " + duration +
-                    "\nRRule = " + rRule +
-                    "\nRdate = " + rDate);
+                    "\nStart Date = " + startDate +
+                    "\nEnd Date = " + endDate +
+                    "\nStart Time= " + startTime +
+                    "\nEnd Time = " + endTime);
+
+            // Add this to the dataset for the recyclerview
+            String[] recylerViewItems = new String[]{
+                    title,
+                    startDate,
+                    endDate,
+                    startTime,
+                    endTime,
+            };
+            eventArrayList.add(recylerViewItems);
+
+//            Log.i(TAG, "readEvent: \n" +
+//                    "Title = " + title +
+//                    "\nDTSTART: " + startDate +
+//                    "\nDTEND: " + endDate +
+//                    "\nlast date: " + lasteDate +
+//                    "\nCalenderID: " + CalenderID +
+//                    "\nDuration = " + duration +
+//                    "\nRRule = " + rRule +
+//                    "\nRdate = " + rDate);
         }
     }
 
-    public String epocToDateTime(String epocDate){
 
-        Date date = new Date(Long.parseLong(epocDate));
+    // https://stackoverflow.com/questions/20654967/convert-unix-epoch-time-to-formatted-date-unexpected-date
+    public static String epochToDate(Long epocSeconds){
+        Date updateDate = new Date(epocSeconds);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+        return format.format(updateDate);
+
+    }
+
+    //https://stackoverflow.com/questions/4142313/convert-timestamp-in-milliseconds-to-string-formatted-time-in-java
+    public static String epochToTime(Long epocSeconds){
+        Date date = new Date(epocSeconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm,a", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        return sdf.format(date);
+    }
+
+
+    // Duration is given in RFC2445 this was found on stackoverflow to convert
+    public static long RFC2445ToMilliseconds(String str)
+    {
+
+
+        if(str == null || str.isEmpty())
+            throw new IllegalArgumentException("Null or empty RFC string");
+
+        int sign = 1;
+        int weeks = 0;
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
+
+        int len = str.length();
+        int index = 0;
+        char c;
+
+        c = str.charAt(0);
+
+        if (c == '-')
+        {
+            sign = -1;
+            index++;
+        }
+
+        else if (c == '+')
+            index++;
+
+        if (len < index)
+            return 0;
+
+        c = str.charAt(index);
+
+        if (c != 'P')
+            throw new IllegalArgumentException("Duration.parse(str='" + str + "') expected 'P' at index="+ index);
+
+        index++;
+        c = str.charAt(index);
+        if (c == 'T')
+            index++;
+
+        int n = 0;
+        for (; index < len; index++)
+        {
+            c = str.charAt(index);
+
+            if (c >= '0' && c <= '9')
+            {
+                n *= 10;
+                n += ((int)(c-'0'));
+            }
+
+            else if (c == 'W')
+            {
+                weeks = n;
+                n = 0;
+            }
+
+            else if (c == 'H')
+            {
+                hours = n;
+                n = 0;
+            }
+
+            else if (c == 'M')
+            {
+                minutes = n;
+                n = 0;
+            }
+
+            else if (c == 'S')
+            {
+                seconds = n;
+                n = 0;
+            }
+
+            else if (c == 'D')
+            {
+                days = n;
+                n = 0;
+            }
+
+            else if (c == 'T')
+            {
+            }
+            else
+                throw new IllegalArgumentException ("Duration.parse(str='" + str + "') unexpected char '" + c + "' at index=" + index);
+        }
+
+        long factor = 1000 * sign;
+        long result = factor * ((7*24*60*60*weeks)
+                + (24*60*60*days)
+                + (60*60*hours)
+                + (60*minutes)
+                + seconds);
+
+        return result;
+    }
+
+    public String epochToDateTime(Long epocDate){
+
+        Date date = new Date(epocDate);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE,MMMM d,yyyy h:mm,a", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("EST"));
         return sdf.format(date);
+    }
+
+
+    private void initRecyclerView(){
+        Log.d(TAG, "initRecyclerView: init recyclerview");
+        RecyclerView eventRecyclerView = (RecyclerView) findViewById(R.id.readEventsRecyclerView);
+        EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, eventArrayList);
+        eventRecyclerView.setAdapter(adapter);
+        eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
