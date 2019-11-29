@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class RWCalendarActivity extends AppCompatActivity {
+public class ReadCalendarActivity extends AppCompatActivity {
 
 
-    private String TAG = RWCalendarActivity.class.getCanonicalName();
+    private String TAG = ReadCalendarActivity.class.getCanonicalName();
     private Button readCalander;
     private Spinner calanderSpinner;
     private Long currentTime;
@@ -40,7 +40,7 @@ public class RWCalendarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rwcalendar);
+        setContentView(R.layout.activity_read_calendar);
 
         readCalander = (Button) findViewById(R.id.readCalendarButton);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
@@ -73,7 +73,7 @@ public class RWCalendarActivity extends AppCompatActivity {
 
                 // Populate the eventRecyclerView after getting events
                 if(eventArrayList.size() == 0){
-                    Toast.makeText(RWCalendarActivity.this, "No events found", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(ReadCalendarActivity.this, "No events found", Toast.LENGTH_SHORT ).show();
                 } else {
                     initRecyclerView();
                 }
@@ -98,11 +98,27 @@ public class RWCalendarActivity extends AppCompatActivity {
                                 "\nRRule =" + item[11] +
                                 "\nDuration = " + item[9] +
                                 "\nEnd Date = " + item[7]);
+
+                        // Saves these values into content provider
+                        ContentValues values = new ContentValues();
+                        values.put(MainCP.TITLE, item[0]);
+                        values.put(MainCP.DTSTART, Long.parseLong(item[5]));
+                        values.put(MainCP.LAST_DATE, Long.parseLong(item[7]));
+                        values.put(MainCP.RRule, item[11]);
+                        values.put(MainCP.DURATION, item[9]);
+                        getContentResolver().insert(MainCP.CONTENT_URI, values);
                     }else{
                         Log.i(TAG, "saveButton singularEvent " +
                                 "\nTitle =" + item[0] +
                                 "\nDTStart ="  + item[5] +
                                 "\nDTEND = " + item[6]);
+
+                        ContentValues values = new ContentValues();
+                        values.put(MainCP.TITLE, item[0]);
+                        values.put(MainCP.DTSTART, Long.parseLong(item[5]));
+                        values.put(MainCP.DTEND, Long.parseLong(item[6]));
+                        values.put(MainCP.LAST_DATE, Long.parseLong(item[7]));
+                        getContentResolver().insert(MainCP.CONTENT_URI, values);
                     }
                 }
             }
