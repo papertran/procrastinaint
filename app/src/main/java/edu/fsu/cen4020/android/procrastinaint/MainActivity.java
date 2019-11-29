@@ -58,32 +58,42 @@ public class MainActivity extends AppCompatActivity {
 
         // Check Permissions
         // https://developer.android.com/training/permissions/requesting.html
+        // https://codinginflow.com/tutorials/android/run-time-permission-request
+        // THis was used for the request permission snippet
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.INTERNET},0);
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.READ_CALENDAR},1);
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.WRITE_CALENDAR},2);
 
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},3);
 
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE },4);
 
         }
 
@@ -187,53 +197,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // onStart and onStop methods to connect to the firebase
-
-
-    private void requestInternetPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.INTERNET)) {
-
-            new AlertDialog.Builder(this)
-                    .setTitle("Permission needed")
-                    .setMessage("Needed for internet thing")
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(MainActivity.this,
-                                    new String[] {Manifest.permission.INTERNET},0);
-                        }
-                    })
-                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .create().show();
-
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[] {Manifest.permission.INTERNET}, 0);
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     protected void onStart() {
