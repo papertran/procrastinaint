@@ -34,6 +34,11 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     private Long EndMilli;
     public int datepick = 0;   // This is used to determine which date picker was last clicked
     private int start_or_end = 0;
+    private boolean startTimeSelected = false;
+    private boolean endTimeSelected = false;
+    private boolean dateSoloSelected = false;
+    private boolean dateRepeatStartSelected = false;
+    private boolean dateRepeatEndSelected = false;
     private Button startButton;
     private Button endButton;
     private Button datePicker;
@@ -152,14 +157,21 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     Long startEpoch = Long.valueOf(0);
                     Long endEpoch = Long.valueOf(0);
 
-                    if (StartTimeHour == "" || EndTimeHour == "") {
+
+                    if (!startTimeSelected || !endTimeSelected || !dateSoloSelected) {
                         errorCheck = true;
                         Log.i("LOL", "Made it here");
+                        Toast.makeText(getApplicationContext(), "Error, The times and dates are not filled out.", Toast.LENGTH_LONG).show();
+
 
                     }
                     else {
                         startEpoch = CdateSolo + StartMilli;
                         endEpoch = CdateSolo + EndMilli;
+                        if (endEpoch < startEpoch){
+                            Toast.makeText(getApplicationContext(), "Error, The end time is before the start time.", Toast.LENGTH_LONG).show();
+
+                        }
                     }
 
                     // Add to ContentProvider
@@ -169,8 +181,11 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DESCRIPTION, description);
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
+                        mNewValues.put(MainCP.LAST_DATE, endEpoch);
 
                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+
+                       //TODO Go back to main activity?
 
                     }
 
@@ -178,45 +193,95 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 }
                 else{
                     // If reoccuring it needs to not have the seconds added
-                    Long startEpoch = CdateRepeatStart + StartMilli;
-                    String repeatRule = "FREQ=WEEKLY;UNTIL="+CdateRepeatEnd+";WKST=SU;BYDAY=";
-                    Long endDate = CdateRepeatEnd;
+                    String repeatRule = "";
+                    String duration = "";
+                    Long startEpoch = Long.valueOf(0);
+                    Long endDate = Long.valueOf(0);
+                    if (dateRepeatStartSelected && dateRepeatEndSelected && startTimeSelected && endTimeSelected) {
+                        startEpoch = CdateRepeatStart + StartMilli;
+                        repeatRule = "FREQ=WEEKLY;UNTIL=" + CdateRepeatEnd + ";WKST=SU;BYDAY=";
+                        endDate = CdateRepeatEnd;
 
-                    Long seconds = (EndMilli - StartMilli)/1000;
+                        if (endDate < startEpoch){
+                            errorCheck = true;
+                            Toast.makeText(getApplicationContext(), "Error, The end date is before the start date.", Toast.LENGTH_LONG).show();
+                        }
 
-                    String duration = "P"+seconds.toString()+"S";
-                    Log.i("LOL", duration);
+
+                        Long seconds = (EndMilli - StartMilli) / 1000;
+                        if (seconds < 0)
+                        {
+                            errorCheck = true;
+                            Toast.makeText(getApplicationContext(), "Error, The end time is before the start time.", Toast.LENGTH_LONG).show();
+                        }
+
+                        duration = "P" + seconds.toString() + "S";
+                        Log.i("LOL", duration);
+                    }
+                    else{
+                        errorCheck = true;
+                        Toast.makeText(getApplicationContext(), "Error, The times and dates are not filled out.", Toast.LENGTH_LONG).show();
+
+                    }
+                    boolean dateSelected = false;
 
                     if (friday.isChecked()){
                         repeatRule +="FR,";
+                        dateSelected = true;
                     }
 
                     if (monday.isChecked()) {
                         repeatRule += "MO,";
+                        dateSelected = true;
+
                     }
 
                     if (saturday.isChecked()){
                         repeatRule +="SA,";
+                        dateSelected = true;
+
                     }
 
                     if (sunday.isChecked()){
                         repeatRule +="SU,";
+                        dateSelected = true;
+
                     }
 
                     if (thursday.isChecked()) {
                         repeatRule += "TH,";
+                        dateSelected = true;
+
                     }
 
                     if (tuesday.isChecked()){
                         repeatRule += "TU,";
+                        dateSelected = true;
+
                     }
 
                     if (wednesday.isChecked()){
                         repeatRule += "WE,";
+                        dateSelected = true;
+
                     }
+
+                    if (!dateSelected)
+                    {
+                        errorCheck = true;
+                        Toast.makeText(getApplicationContext(), "Error, no days are selected.", Toast.LENGTH_LONG).show();
+                    }else{
+                        String temp = "";
+
+                        for (int x = 0; x <  repeatRule.length()-1; x++){
+                            temp += repeatRule.charAt(x);
+                        }
+                        repeatRule = temp;
+                    }
+
                     String temp = "";
 
-                    for (int x = 0; x<  repeatRule.length()-1; x++){
+                    for (int x = 0; x <  repeatRule.length()-1; x++){
                         temp += repeatRule.charAt(x);
                     }
                     repeatRule = temp;
@@ -269,6 +334,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             CdateSolo = time;
             datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
             datePicker.setText(tempStr);
+            dateSoloSelected = true;
             //Toast.makeText(getApplicationContext(), CdateSolo, Toast.LENGTH_LONG).show();
         }
 
@@ -276,6 +342,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             CdateRepeatStart = time;
             startDate = (Button) findViewById(R.id.Date_picker_reoccurring_start);
             startDate.setText(tempStr);
+            dateRepeatStartSelected = true;
             //Toast.makeText(getApplicationContext(), CdateRepeatStart, Toast.LENGTH_LONG).show();
 
         }
@@ -284,6 +351,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             CdateRepeatEnd = time;
             endDate = (Button) findViewById(R.id.Date_picker_reoccurring_end);
             endDate.setText(tempStr);
+            dateRepeatEndSelected = true;
             //Toast.makeText(getApplicationContext(), CdateRepeatEnd, Toast.LENGTH_LONG).show();
         }
 
@@ -301,6 +369,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             String tempStr = StartTimeHour + ":" + StartTimeMin;
             startButton.setText(tempStr);
             StartMilli = Long.valueOf(milli);
+            startTimeSelected = true;
 
         }
 
@@ -311,6 +380,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             String tempStr = EndTimeHour + ":" + EndTimeMin;
             endButton.setText(tempStr);
             EndMilli = Long.valueOf(milli);
+            endTimeSelected = true;
 
         }
 
