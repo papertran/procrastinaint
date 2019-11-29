@@ -23,7 +23,7 @@
             android:theme="@style/AppTheme"            />
 <!--android:theme="@style/AppTheme.NoActionBar"-->
 <!--Temporary to fix notes app -->
-        <activity android:name=".RWCalendarActivity" />
+        <activity android:name=".ReadCalendarActivity" />
         <activity android:name=".NotesActivity" />
         <activity android:name=".EventAdderActivity" />
         <activity android:name=".SignupActivity" />

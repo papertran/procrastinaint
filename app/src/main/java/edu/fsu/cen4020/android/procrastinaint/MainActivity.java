@@ -2,7 +2,6 @@ package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.CountDownTimer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -177,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRWCalendarButtonClicked(View view){
-        Intent intent = new Intent(this, RWCalendarActivity.class);
+        Intent intent = new Intent(this, ReadCalendarActivity.class);
         startActivity(intent);
     }
 
