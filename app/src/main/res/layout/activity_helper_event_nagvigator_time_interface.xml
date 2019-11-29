@@ -27,9 +27,6 @@
             </EditText>
 
 
-
-            <!-- THIS IS THE SECTION WHERE THE REPEATING EVENTS ARE ADDED -->
-
             <TableRow
                 android:id="@+id/reoccurringDatePickerText"
                 android:layout_width="match_parent"
@@ -45,6 +42,19 @@
 
                 </TextView>
 
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="20dp">
+                <TextView
+                    android:text="@string/range"
+                    android:textSize="16sp">
+
+                </TextView>
             </TableRow>
 
 
@@ -64,7 +74,7 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/Date_picker_reoccurring_start"
+                    android:id="@+id/start_date"
                     android:text="Pick Date"
                     android:textSize="16sp">
 
@@ -89,15 +99,13 @@
                 </TextView>
 
                 <Button
-                    android:id="@+id/Date_picker_reoccurring_end"
+                    android:id="@+id/end_date"
                     android:text="Pick Date"
                     android:textSize="16sp">
 
                 </Button>
 
             </TableRow>
-
-            <!-- THIS MARKS THE TIME PICKERS -->
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -116,6 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:inputType="number"
                     android:hint="@string/hours"
                     android:textSize="12sp">
 
@@ -127,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="20dp"
+                    android:inputType="number"
                     android:hint="@string/minutes"
                     android:textSize="12sp">
 
