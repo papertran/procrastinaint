@@ -1,9 +1,15 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.os.CountDownTimer;
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView emailTextView;
     private Button timerButton;
     private Button HEN;
-    
+    private Button viewContentProviderEvents;
+
     // Firebase stuff to make sure user is signed in
     // Guide from https://www.androidlearning.com/android-login-registration-firebase-authentication/
     private FirebaseAuth.AuthStateListener authListener;
@@ -49,7 +56,51 @@ public class MainActivity extends AppCompatActivity {
         signOutButton = (Button) findViewById(R.id.signOutButton);
         timerButton = (Button) findViewById(R.id.timerButton);
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
+        viewContentProviderEvents = (Button) findViewById(R.id.viewEventsButton);
+
         HEN = (Button) findViewById(R.id.hen);
+        // Check Permissions
+        // https://developer.android.com/training/permissions/requesting.html
+        // https://codinginflow.com/tutorials/android/run-time-permission-request
+        // THis was used for the request permission snippet
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.INTERNET},0);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.READ_CALENDAR},1);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.WRITE_CALENDAR},2);
+
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},3);
+
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE },4);
+
+        }
+
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +160,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onHENButtonClicked(view);
+            }
+        });
+
+        viewContentProviderEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onViewContentProviderEventsButtonClicked(view);
             }
         });
 
@@ -198,6 +256,13 @@ public class MainActivity extends AppCompatActivity {
     public void onHENButtonClicked(View view){
         Intent intent = new Intent(this, HelperEventNagvigatorTimeActivityInterface.class);
         startActivity(intent);
+
+    }
+
+    public void onViewContentProviderEventsButtonClicked(View view){
+        Intent intent = new Intent(this, viewEvents.class);
+        startActivity(intent);
+
     }
 
     public void signOut(){
