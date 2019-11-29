@@ -109,4 +109,12 @@
         app:layout_constraintStart_toStartOf="@+id/rwCalendarButton"
         app:layout_constraintTop_toBottomOf="@+id/rwCalendarButton"
         tools:text="Go to Calander" />
+
+    <Button
+        android:id="@+id/hen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEN"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="343dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
