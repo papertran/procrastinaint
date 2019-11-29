@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button temp_go_to_calendar_view;
     private TextView emailTextView;
     private Button timerButton;
+    private Button HEN;
     
     // Firebase stuff to make sure user is signed in
     // Guide from https://www.androidlearning.com/android-login-registration-firebase-authentication/
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         signOutButton = (Button) findViewById(R.id.signOutButton);
         timerButton = (Button) findViewById(R.id.timerButton);
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
+
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
