@@ -7,6 +7,15 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/viewEventsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:text="View ContentProvider Events"
+        app:layout_constraintStart_toEndOf="@+id/rwCalendarButton"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+
+    <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="340dp"
         android:layout_marginEnd="248dp"
-        android:text="RW Calander"
+        android:text="Read Calander"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,4 +109,12 @@
         app:layout_constraintStart_toStartOf="@+id/rwCalendarButton"
         app:layout_constraintTop_toBottomOf="@+id/rwCalendarButton"
         tools:text="Go to Calander" />
+
+    <Button
+        android:id="@+id/hen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEN"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="343dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         signOutButton = (Button) findViewById(R.id.signOutButton);
         timerButton = (Button) findViewById(R.id.timerButton);
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
-
-
+        HEN = (Button) findViewById(R.id.hen);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onTimerButtonClicked(view);
+            }
+        });
+
+        HEN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onHENButtonClicked(view);
             }
         });
 
@@ -179,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRWCalendarButtonClicked(View view){
-        Intent intent = new Intent(this, RWCalendarActivity.class);
+        Intent intent = new Intent(this, ReadCalendarActivity.class);
         startActivity(intent);
     }
 
@@ -187,6 +193,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, timerActivity.class);
         startActivity(intent);
 
+    }
+
+    public void onHENButtonClicked(View view){
+        Intent intent = new Intent(this, HelperEventNagvigatorTimeActivityInterface.class);
+        startActivity(intent);
     }
 
     public void signOut(){

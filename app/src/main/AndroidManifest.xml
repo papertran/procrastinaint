@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".HelperEventNagvigatorTimeActivityInterface"
-            android:label="@string/title_activity_helper_event_nagvigator_time_interface"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".viewEvents"></activity>
         <activity android:name=".timerActivity" />
         <activity android:name=".NoteEditorActivity" />
         <activity
@@ -26,7 +24,8 @@
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme" /> <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <!-- Temporary to fix notes app -->
-        <activity android:name=".RWCalendarActivity" />
+        <activity android:name=".ReadCalendarActivity" />
+        <activity android:name=".HelperEventNagvigatorTimeActivityInterface" />
         <activity android:name=".NotesActivity" />
         <activity android:name=".EventAdderActivity" />
         <activity android:name=".SignupActivity" />

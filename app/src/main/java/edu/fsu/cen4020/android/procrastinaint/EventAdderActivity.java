@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class EventAdderActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -329,8 +324,8 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.DAY_OF_MONTH, day);
         Long time = c.getTimeInMillis();
         Log.i(TAG, "onDateSet: calander = " + c.getTimeInMillis());
-        Log.i(TAG, "onDateSet: corrected time = " + RWCalendarActivity.epochToDate(time));
-        Log.i(TAG, "onDateSet: corrected time time = " + RWCalendarActivity.epochToTime(time));
+        Log.i(TAG, "onDateSet: corrected time = " + ReadCalendarActivity.epochToDate(time));
+        Log.i(TAG, "onDateSet: corrected time time = " + ReadCalendarActivity.epochToTime(time));
 
 
         String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
