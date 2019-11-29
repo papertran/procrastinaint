@@ -117,6 +117,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
                         values.put(MainCP.TITLE, item[0]);
                         values.put(MainCP.DTSTART, Long.parseLong(item[5]));
                         values.put(MainCP.DTEND, Long.parseLong(item[6]));
+                        values.put(MainCP.LAST_DATE, Long.parseLong(item[7]));
                         getContentResolver().insert(MainCP.CONTENT_URI, values);
                     }
                 }
