@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -135,16 +136,50 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
-                String title = TITLE.getText().toString();
-                String description = Description.getText().toString();
+
+                Boolean errorCheck = false;
+                String title = "";
+                String description = "";
+
+                if (TITLE.getText().toString() == "")
+                {
+                    errorCheck = true;
+                    TITLE.setError("Title is empty");
+                }
+                else {
+                    title = TITLE.getText().toString();
+                }
+                if (Description.getText().toString() != "") {
+                    description = Description.getText().toString();
+                }
                 // Add Firebase thingy here
 
                 if (!Reoccurr_or_not){
-                    Log.i("LOL", "Made it here");
-                    Long startEpoch = CdateSolo + StartMilli;
-                    Long endEpoch = CdateSolo + EndMilli;
+                    Long startEpoch = Long.valueOf(0);
+                    Long endEpoch = Long.valueOf(0);
+
+                    if (StartTimeHour == "" || EndTimeHour == "") {
+                        errorCheck = true;
+                        Log.i("LOL", "Made it here");
+
+                    }
+                    else {
+                        startEpoch = CdateSolo + StartMilli;
+                        endEpoch = CdateSolo + EndMilli;
+                    }
 
                     // Add to ContentProvider
+                    if (!errorCheck) {
+                        ContentValues mNewValues = new ContentValues();
+                        mNewValues.put(MainCP.TITLE, title);
+                        mNewValues.put(MainCP.DESCRIPTION, description);
+                        mNewValues.put(MainCP.DTSTART, startEpoch);
+                        mNewValues.put(MainCP.DTEND, endEpoch);
+
+                       getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+
+                    }
+
 
                 }
                 else{
@@ -191,6 +226,19 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         temp += repeatRule.charAt(x);
                     }
                     repeatRule = temp;
+
+
+                    if (!errorCheck) {
+                        ContentValues mNewValues = new ContentValues();
+                        mNewValues.put(MainCP.TITLE, title);
+                        mNewValues.put(MainCP.DESCRIPTION, description);
+                        mNewValues.put(MainCP.RRule, repeatRule);
+                        mNewValues.put(MainCP.DURATION, duration);
+                        mNewValues.put(MainCP.DTSTART, startEpoch);
+                        mNewValues.put(MainCP.DTEND, endDate);
+                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+
+                    }
 
                 }
 
