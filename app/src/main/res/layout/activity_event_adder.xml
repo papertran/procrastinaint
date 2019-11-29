@@ -394,7 +394,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginRight="20dp"
-                android:hint="@string/description">
+                android:hint="@string/description"
+                android:id="@+id/Description">
 
             </EditText>
 

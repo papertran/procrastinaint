@@ -22,15 +22,17 @@ public class MainCP extends ContentProvider {
     public final static String DTSTART = "DTSTART";
     public final static String DTEND = "DTEND";
     public final static String LAST_DATE = "LAST_DATE";
+    public final static String RRule = "RRule";
+    public final static String DURATION = "DURATION";
 
     private static final String SQL_CREATE_MAIN =
             "CREATE TABLE " + TABLE_NAMESTABLE+" ( "+
                     " CALENDAR_ID INTEGER PRIMARY KEY, " +
                     "ORGANIZER TEXT, " +
                     "TITLE TEXT, " +
-                    "EVENT_LOCATION TEXT," +
                     "DESCRIPTION TEXT," +
                     "DURATION TEXT," +
+                    "RRule TEXT," +
                     "DTSTART INTEGER," +
                     "DTEND INTEGER," +
                     "LAST_DATE INTEGER)";
