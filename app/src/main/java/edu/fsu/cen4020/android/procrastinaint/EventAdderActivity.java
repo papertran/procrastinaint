@@ -235,7 +235,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.RRule, repeatRule);
                         mNewValues.put(MainCP.DURATION, duration);
                         mNewValues.put(MainCP.DTSTART, startEpoch);
-                        mNewValues.put(MainCP.DTEND, endDate);
+                        mNewValues.put(MainCP.LAST_DATE, endDate);
                         getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
                     }
