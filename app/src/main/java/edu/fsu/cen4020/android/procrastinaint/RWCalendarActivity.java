@@ -83,7 +83,28 @@ public class RWCalendarActivity extends AppCompatActivity {
         saveEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                
+                for(String[] item : eventArrayList){
 
+                    // Track if event is reoccuring or singular
+                    boolean flag = false;
+                    if(item[6] == null){
+                        flag = true;
+                    }
+                    if(flag) {
+                        Log.i(TAG, "saveButton ReoccuringEvent " +
+                                "\nTitle =" + item[0] +
+                                "\nDTStart = " + item[5] +
+                                "\nRRule =" + item[11] +
+                                "\nDuration = " + item[9] +
+                                "\nEnd Date = " + item[7]);
+                    }else{
+                        Log.i(TAG, "saveButton singularEvent " +
+                                "\nTitle =" + item[0] +
+                                "\nDTStart ="  + item[5] +
+                                "\nDTEND = " + item[6]);
+                    }
+                }
             }
         });
 
