@@ -20,14 +20,14 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.183" />
 
     <Button
         android:id="@+id/breakButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="238dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="380dp"
         android:layout_marginEnd="238dp"
         android:text="Start break."
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,18 +35,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/minuteView"
+        android:layout_width="200dp"
+        android:layout_height="157dp"
         android:layout_marginStart="286dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="286dp"
         android:layout_marginBottom="414dp"
+        android:gravity="center"
         android:text="00:00"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
+    <TextView
+        android:id="@+id/messageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="500dp"
+        android:layout_marginTop="700dp"
+        android:layout_marginEnd="500dp"
+        android:layout_marginBottom="712dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <NumberPicker
         android:id="@+id/minutePicker"
