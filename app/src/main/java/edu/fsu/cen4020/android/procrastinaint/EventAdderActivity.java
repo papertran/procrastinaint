@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,7 +69,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
 
     FirebaseAuth auth;
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
 
         auth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         // This button is for the Solo date picker
         datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
@@ -197,7 +197,8 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endEpoch);
-                        // TODO INSERT mNewValues.put(MainCP.NEW, 1);
+                        // TODO INSERT
+                        mNewValues.put(MainCP.NEW, 1);
                        getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
                         uploadEventToFirebase(mNewValues);
                        //TODO Go back to main activity?
@@ -512,8 +513,19 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 event.setLAST_DATE(null);
             }
 
+            Log.i(TAG, "uploadEventToFirebase: " +
+                    "\nevent Title = " + event.Title +
+                    "\nevent Desc = " + event.Description +
+                    "\nevent RRule = " + event.RRULE +
+                    "\nevent DTSTART = " + event.DTSTART +
+                    "\nevent DTEND = " + event.DTEND +
+                    "\nevent LAST_DATE = " + event.LAST_DATE);
+
             //TODO upload to firebase
-            mDatabase.child("Events").child(event.getTitle()).setValue(event);
+            DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference("Events");
+            String key = mRef.push().getKey();
+            Log.i(TAG, "uploadEventToFirebase: key = " + key);
+            mRef.child(key).setValue(event);
 
         }
     }

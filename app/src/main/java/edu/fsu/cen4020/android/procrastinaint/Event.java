@@ -1,13 +1,13 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
 public class Event {
-    private String Title;
-    private String Description;
-    private String RRULE;
-    private String Duration;
-    private Long DTSTART;
-    private Long DTEND;
-    private Long LAST_DATE;
+    String Title;
+    String Description;
+    String RRULE;
+    String Duration;
+    Long DTSTART;
+    Long DTEND;
+    Long LAST_DATE;
 
     public Event(){
 
