@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -24,6 +25,8 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
     private Button addButton;
     private EditText name;
     private EditText description;
+    private EditText hours;
+    private EditText minutes;
     private Button startDate;
     private Button endDate;
     private int whichDateIsSelected=0;
@@ -40,10 +43,68 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
         setContentView(R.layout.activity_helper_event_nagvigator_time_interface);
 
         addButton = (Button) findViewById(R.id.AddEvent);
+        hours = (EditText) findViewById(R.id.hours);
+        minutes = (EditText) findViewById(R.id.mins);
+        name = (EditText) findViewById(R.id.Name);
+        description = (EditText) findViewById(R.id.Description);
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
+                Boolean errorCheck = false;
+                String nameStr = "";
+                String descriptionStr = "";
+                Long startDate = Long.valueOf(0);
+                Long endDate = Long.valueOf(0);
+                Long duration = Long.valueOf(0);
 
+                //TODO FINISH HERE
+
+                if (name.getText().toString().matches(""))
+                {
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the name is empty", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    nameStr = name.getText().toString();
+                }
+
+                if (!description.getText().toString().matches("")) {
+                    descriptionStr = description.getText().toString();
+                }
+
+                if (!startRangeSelected || !endRangeSelected){
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the dates are not filled out.", Toast.LENGTH_LONG).show();
+                }
+                else{
+
+                    startDate = startRange;
+                    endDate = endRange;
+                    if (endDate < startDate){
+                        errorCheck = true;
+                        Toast.makeText(getApplicationContext(), "Error, the end date is before the start time.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if (hours.getText().toString().matches("") || minutes.getText().toString().matches(""))
+                {
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the duration is empty.", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    if (!hours.getText().toString().matches("")){
+                        duration += Long.parseLong(hours.getText().toString())*3600000;
+                    }
+
+                    if (!minutes.getText().toString().matches("")){
+                        duration += Long.parseLong(hours.getText().toString())*60000;
+                    }
+                }
+
+                if (!errorCheck){
+
+                }
 
             }
         });

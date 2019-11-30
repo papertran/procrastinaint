@@ -105,25 +105,31 @@
                     android:id="@+id/hours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="32dp"
                     android:inputType="number"
                     android:hint="@string/hours"
-                    android:textSize="12sp">
+                    android:textSize="16sp">
 
                 </EditText>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:text=":"
+                    android:gravity="center">
+
+                </TextView>
 
                 <EditText
-                    android:id="@+id/minutes"
+                    android:id="@+id/mins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="20dp"
                     android:inputType="number"
                     android:hint="@string/minutes"
-                    android:textSize="12sp">
+                    android:textSize="16sp">
 
                 </EditText>
-
 
             </TableRow>
 
