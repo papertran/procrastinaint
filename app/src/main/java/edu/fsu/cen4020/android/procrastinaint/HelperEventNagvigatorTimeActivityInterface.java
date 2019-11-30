@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
     private Button addButton;
     private EditText name;
     private EditText description;
+    private EditText time;
     private Button startDate;
     private Button endDate;
     private int whichDateIsSelected=0;
@@ -40,14 +42,52 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
         setContentView(R.layout.activity_helper_event_nagvigator_time_interface);
 
         addButton = (Button) findViewById(R.id.AddEvent);
+        time = (EditText) findViewById(R.id.hours_mins);
+        name = (EditText) findViewById(R.id.Name);
+        description = (EditText) findViewById(R.id.Description);
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
-                String name = "";
-                String description = "";
+                Boolean errorCheck = false;
+                String nameStr = "";
+                String descriptionStr = "";
                 Long startDate = Long.valueOf(0);
                 Long endDate = Long.valueOf(0);
+                int hours = 0;
+                int minutes = 0;
                 //TODO FINISH HERE
+
+                if (name.getText().toString().matches(""))
+                {
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the name is empty", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    nameStr = name.getText().toString();
+                }
+
+                if (!description.getText().toString().matches("")) {
+                    descriptionStr = description.getText().toString();
+                }
+
+                if (!startRangeSelected || !endRangeSelected){
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the dates are not filled out.", Toast.LENGTH_LONG).show();
+                }
+                else{
+
+                    startDate = startRange;
+                    endDate = endRange;
+                    if (endDate < startDate){
+                        errorCheck = true;
+                        Toast.makeText(getApplicationContext(), "Error, the end date is before the start time.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+
+
 
 
 

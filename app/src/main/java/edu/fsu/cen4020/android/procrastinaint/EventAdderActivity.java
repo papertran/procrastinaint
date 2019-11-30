@@ -155,18 +155,17 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 String title = "";
                 String description = "";
 
-                if (TITLE.getText().toString() == "")
+                if (TITLE.getText().toString().matches(""))
                 {
                     errorCheck = true;
-                    TITLE.setError("Title is empty");
+                    Toast.makeText(getApplicationContext(), "Error, the title is empty.", Toast.LENGTH_LONG).show();
                 }
                 else {
                     title = TITLE.getText().toString();
                 }
-                if (Description.getText().toString() != "") {
+                if (!Description.getText().toString().matches("")) {
                     description = Description.getText().toString();
                 }
-                // Add Firebase thingy here
 
                 if (!Reoccurr_or_not){
                     Long startEpoch = Long.valueOf(0);
@@ -175,7 +174,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
                     if (!startTimeSelected || !endTimeSelected || !dateSoloSelected) {
                         errorCheck = true;
-                        Log.i("LOL", "Made it here");
                         Toast.makeText(getApplicationContext(), "Error, The times and dates are not filled out.", Toast.LENGTH_LONG).show();
 
 

@@ -102,24 +102,12 @@
                 </TextView>
 
                 <EditText
-                    android:id="@+id/hours"
+                    android:id="@+id/hours_mins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:inputType="number"
-                    android:hint="@string/hours"
-                    android:textSize="12sp">
-
-                </EditText>
-
-                <EditText
-                    android:id="@+id/minutes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="20dp"
-                    android:inputType="number"
-                    android:hint="@string/minutes"
+                    android:hint="@string/hours_mins"
                     android:textSize="12sp">
 
                 </EditText>
