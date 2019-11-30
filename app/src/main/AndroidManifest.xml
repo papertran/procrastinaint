@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddUploadedEventsActivity"></activity>
+        <activity android:name=".HENTimePicker"></activity>
+        <activity android:name=".AddUploadedEventsActivity" />
         <activity android:name=".viewEvents" />
         <activity android:name=".timerActivity" />
         <activity android:name=".NoteEditorActivity" />

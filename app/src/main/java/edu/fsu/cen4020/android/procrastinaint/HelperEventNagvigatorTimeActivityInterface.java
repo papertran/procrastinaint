@@ -93,7 +93,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                     }
                 }
 
-                if (hours.getText().toString().matches("") || minutes.getText().toString().matches(""))
+                if (hours.getText().toString().matches("") && minutes.getText().toString().matches(""))
                 {
                     errorCheck = true;
                     Toast.makeText(getApplicationContext(), "Error, the duration is empty.", Toast.LENGTH_LONG).show();
@@ -111,7 +111,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                 if (!errorCheck){
 
                     //TODO change the target of the Intent to the next activity not calendar
-                    Intent I = new Intent(getApplicationContext(), calendar.class );
+                    Intent I = new Intent(getApplicationContext(), HENTimePicker.class );
                     I.putExtra(NAME, nameStr);
                     I.putExtra(DESCRIPTION, descriptionStr);
                     I.putExtra(TIME, duration);
