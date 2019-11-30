@@ -24,9 +24,14 @@ import java.util.HashSet;
 public class NoteEditorActivity extends AppCompatActivity implements NoteSaveDialog.NoteSaveDialogListener {
 
     int noteId;
-    private String FILE_NAME = "example.txt";
-    public EditText mEditText;
+    public static String FILE_NAME = "defaultNote.txt";
+    public static EditText mEditText;
     private Button button;
+
+    @Override
+    public void applyText(String filename) {
+        FILE_NAME = filename + ".txt";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class NoteEditorActivity extends AppCompatActivity implements NoteSaveDia
             NotesActivity.arrayAdapter.notifyDataSetChanged();
         }
 
+        //Reference: https://www.youtube.com/watch?v=EcfUkjlL9RI
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -88,49 +94,5 @@ public class NoteEditorActivity extends AppCompatActivity implements NoteSaveDia
     public void openDialog(){
         NoteSaveDialog noteSaveDialog = new NoteSaveDialog();
         noteSaveDialog.show(getSupportFragmentManager(), "example dialog");
-    }
-
-    //Reference: https://www.youtube.com/watch?v=EcfUkjlL9RI
-    public void save(View v) {
-
-        //Converts mEditText it to a string saving it to "text"
-        String text = mEditText.getText().toString();
-        FileOutputStream fos = null;
-
-        try {
-
-
-            //This changes the default save location of the FileOutputStream
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-
-            dir.mkdirs();
-
-            //Creates a file output stream "dir" to write to the file "FILE_NAME"
-            fos = new FileOutputStream(new File(dir, FILE_NAME));
-
-            //Saves the content of "fos" to the internal storage
-            fos.write(text.getBytes());
-
-            //Prints a message to the user where the note was saved
-            Toast.makeText(this, "Saved to " + dir + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-    @Override
-    public void applyText(String filename) {
-        FILE_NAME = filename;
     }
 }
