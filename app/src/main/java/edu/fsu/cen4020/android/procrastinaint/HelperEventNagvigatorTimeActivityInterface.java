@@ -43,6 +43,12 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
+                String name = "";
+                String description = "";
+                Long startDate = Long.valueOf(0);
+                Long endDate = Long.valueOf(0);
+                //TODO FINISH HERE
+
 
 
             }
