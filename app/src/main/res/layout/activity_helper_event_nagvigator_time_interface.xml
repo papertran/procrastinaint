@@ -26,24 +26,6 @@
 
             </EditText>
 
-
-            <TableRow
-                android:id="@+id/reoccurringDatePickerText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginRight="20dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:text="@string/days"
-                    android:textSize="16sp">
-
-                </TextView>
-
-            </TableRow>
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

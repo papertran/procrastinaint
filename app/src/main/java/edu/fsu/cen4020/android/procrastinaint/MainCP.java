@@ -29,7 +29,6 @@ public class MainCP extends ContentProvider {
     private static final String SQL_CREATE_MAIN =
             "CREATE TABLE " + TABLE_NAMESTABLE+" ( "+
                     " CALENDAR_ID INTEGER PRIMARY KEY, " +
-                    "ORGANIZER TEXT, " +
                     "TITLE TEXT, " +
                     "DESCRIPTION TEXT," +
                     "DURATION TEXT," +

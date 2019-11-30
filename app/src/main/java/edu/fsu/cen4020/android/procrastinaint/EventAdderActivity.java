@@ -340,7 +340,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
             datePicker.setText(tempStr);
             dateSoloSelected = true;
-            //Toast.makeText(getApplicationContext(), CdateSolo, Toast.LENGTH_LONG).show();
         }
 
         else if (datepick == 1){
@@ -348,7 +347,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             startDate = (Button) findViewById(R.id.Date_picker_reoccurring_start);
             startDate.setText(tempStr);
             dateRepeatStartSelected = true;
-            //Toast.makeText(getApplicationContext(), CdateRepeatStart, Toast.LENGTH_LONG).show();
 
         }
 
@@ -357,7 +355,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             endDate = (Button) findViewById(R.id.Date_picker_reoccurring_end);
             endDate.setText(tempStr);
             dateRepeatEndSelected = true;
-            //Toast.makeText(getApplicationContext(), CdateRepeatEnd, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -369,7 +366,13 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
         if (start_or_end == 0) {
             StartTimeHour = Integer.toString(hour);
-            StartTimeMin = Integer.toString(minute);
+            if (minute < 10){
+                StartTimeMin = "0";
+                StartTimeMin += Integer.toString(minute);
+            }
+            else {
+                StartTimeMin = Integer.toString(minute);
+            }
             endButton = (Button) findViewById(R.id.end_time);
             String tempStr = StartTimeHour + ":" + StartTimeMin;
             startButton.setText(tempStr);
@@ -380,7 +383,14 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
         else{
             EndTimeHour= Integer.toString(hour);
-            EndTimeMin= Integer.toString(minute);
+            if ( minute < 10)
+            {
+                EndTimeMin = "0";
+                EndTimeMin +=Integer.toString(minute);
+            }
+            else {
+                EndTimeMin = Integer.toString(minute);
+            }
             endButton = (Button) findViewById(R.id.end_time);
             String tempStr = EndTimeHour + ":" + EndTimeMin;
             endButton.setText(tempStr);
