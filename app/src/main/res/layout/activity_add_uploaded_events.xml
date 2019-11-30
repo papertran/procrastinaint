@@ -6,30 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".AddUploadedEventsActivity">
 
-    <EditText
-        android:id="@+id/eventSearchEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="52dp"
-
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
         android:text="Long Press to Save Event"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventSearchEditText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/firebaseEventRecyclerView"

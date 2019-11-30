@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button timerButton;
     private Button HEN;
     private Button viewContentProviderEvents;
+    private Button viewFirebaseEventsButton;
 
     // Firebase stuff to make sure user is signed in
     // Guide from https://www.androidlearning.com/android-login-registration-firebase-authentication/
@@ -57,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         timerButton = (Button) findViewById(R.id.timerButton);
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
         viewContentProviderEvents = (Button) findViewById(R.id.viewEventsButton);
-
         HEN = (Button) findViewById(R.id.hen);
+        viewFirebaseEventsButton = (Button) findViewById(R.id.addUploadedEventsButton);
         // Check Permissions
         // https://developer.android.com/training/permissions/requesting.html
         // https://codinginflow.com/tutorials/android/run-time-permission-request
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[] {Manifest.permission.WRITE_CALENDAR},2);
+                    new String[] {Manifest.permission.WRITE_CALENDAR},1);
 
         }
 
@@ -89,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},3);
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},2);
 
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE },4);
+                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE },2);
 
         }
 
@@ -190,8 +191,15 @@ public class MainActivity extends AppCompatActivity {
             emailTextView.setText(user.getEmail());
         } else{
             emailTextView.setText("Not signed in");
-
         }
+
+
+        viewFirebaseEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFirebaseEvents(view);
+            }
+        });
 
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +271,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, viewEvents.class);
         startActivity(intent);
 
+    }
+
+    public void viewFirebaseEvents(View view){
+        Intent intent = new Intent(this, AddUploadedEventsActivity.class);
+        startActivity(intent);
     }
 
     public void signOut(){

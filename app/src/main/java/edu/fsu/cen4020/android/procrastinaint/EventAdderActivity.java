@@ -506,6 +506,11 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 event.setDTEND(null);
             }
 
+            try {
+                event.setDuration(value.getAsString(MainCP.DURATION));
+            } catch (Exception e){
+                event.setDuration(null);
+            }
 
             try {
                 event.setLAST_DATE(value.getAsLong(MainCP.LAST_DATE));
@@ -519,6 +524,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     "\nevent RRule = " + event.RRULE +
                     "\nevent DTSTART = " + event.DTSTART +
                     "\nevent DTEND = " + event.DTEND +
+                    "\nevent Duration = " + event.Duration +
                     "\nevent LAST_DATE = " + event.LAST_DATE);
 
             //TODO upload to firebase
