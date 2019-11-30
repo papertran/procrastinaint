@@ -197,9 +197,11 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endEpoch);
-                        // TODO INSERT mNewValues.put(MainCP.NEW, 1);
-                       getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
-                        uploadEventToFirebase(mNewValues);
+                        mNewValues.put(MainCP.NEW, 1);
+                        getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
+                        if (Firebase) {
+                            uploadEventToFirebase(mNewValues);
+                        }
                        //TODO Go back to main activity?
 
                     }
@@ -314,7 +316,9 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.NEW, 1);
                         getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
-                        uploadEventToFirebase(mNewValues);
+                        if (Firebase) {
+                            uploadEventToFirebase(mNewValues);
+                        }
 
                     }
 
