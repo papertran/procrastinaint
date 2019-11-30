@@ -198,6 +198,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.NEW, 1);
                         getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
                         if (Firebase) {
+                            Log.i("LOL", "strange");
                             uploadEventToFirebase(mNewValues);
                         }
                        //TODO Go back to main activity?
@@ -288,18 +289,11 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     }else{
                         String temp = "";
 
-                        for (int x = 0; x <  repeatRule.length()-1; x++){
+                        for (int x = 0; x <  repeatRule.length(); x++){
                             temp += repeatRule.charAt(x);
                         }
                         repeatRule = temp;
                     }
-
-                    String temp = "";
-
-                    for (int x = 0; x <  repeatRule.length()-1; x++){
-                        temp += repeatRule.charAt(x);
-                    }
-                    repeatRule = temp;
 
 
 
@@ -417,7 +411,6 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.reoccurringCheckBox:
@@ -465,16 +458,15 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     reEnd.setVisibility(View.GONE);
                     Reoccurr_or_not = false;
                 }
+                break;
             case R.id.firebase_upload:
-            // This case is for the firebase upload
-
-            if (checked){
+                if (checked){
                 Firebase = true;
-            } else{
+                }
+                else{
                 Firebase = false;
-            }
-
-
+                }
+                break;
         }
     }
 

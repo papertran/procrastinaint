@@ -25,7 +25,8 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
     private Button addButton;
     private EditText name;
     private EditText description;
-    private EditText time;
+    private EditText hours;
+    private EditText minutes;
     private Button startDate;
     private Button endDate;
     private int whichDateIsSelected=0;
@@ -42,7 +43,8 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
         setContentView(R.layout.activity_helper_event_nagvigator_time_interface);
 
         addButton = (Button) findViewById(R.id.AddEvent);
-        time = (EditText) findViewById(R.id.hours_mins);
+        hours = (EditText) findViewById(R.id.hours);
+        minutes = (EditText) findViewById(R.id.mins);
         name = (EditText) findViewById(R.id.Name);
         description = (EditText) findViewById(R.id.Description);
 
@@ -54,8 +56,8 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                 String descriptionStr = "";
                 Long startDate = Long.valueOf(0);
                 Long endDate = Long.valueOf(0);
-                int hours = 0;
-                int minutes = 0;
+                Long duration = Long.valueOf(0);
+
                 //TODO FINISH HERE
 
                 if (name.getText().toString().matches(""))
@@ -85,11 +87,24 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                     }
                 }
 
+                if (hours.getText().toString().matches("") || minutes.getText().toString().matches(""))
+                {
+                    errorCheck = true;
+                    Toast.makeText(getApplicationContext(), "Error, the duration is empty.", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    if (!hours.getText().toString().matches("")){
+                        duration += Long.parseLong(hours.getText().toString())*3600000;
+                    }
 
+                    if (!minutes.getText().toString().matches("")){
+                        duration += Long.parseLong(hours.getText().toString())*60000;
+                    }
+                }
 
+                if (!errorCheck){
 
-
-
+                }
 
             }
         });

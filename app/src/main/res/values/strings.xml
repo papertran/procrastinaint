@@ -59,7 +59,8 @@
     </string>
     <string name="name">Name</string>
     <string name="duration">Duration of Event</string>
-    <string name="hours_mins">Hrs:Mins</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
     <string name="range">Select Date Range</string>
 
 </resources>
