@@ -297,7 +297,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
                     String temp = "";
 
-                    for (int x = 0; x <  repeatRule.length()-1; x++){
+                    for (int x = 0; x <  repeatRule.length(); x++){
                         temp += repeatRule.charAt(x);
                     }
                     repeatRule = temp;
