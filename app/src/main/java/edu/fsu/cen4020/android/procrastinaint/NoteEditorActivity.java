@@ -106,4 +106,10 @@ public class NoteEditorActivity extends AppCompatActivity {
         }
 
     }
+
+    public static class Event {
+
+        public String Title;
+
+    }
 }

@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         EventAdderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)  {
-                Log.i(TAG, "onClick: Event Add Button Called");
+                Log.i(TAG, "onClick: edu.fsu.cen4020.android.procrastinaint.NoteEditorActivity.Event Add Button Called");
                 onEventAdderButtonClicked(view);
             }
         });
