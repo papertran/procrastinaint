@@ -1,6 +1,7 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,6 +36,11 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
     private boolean startRangeSelected = false;
     private boolean endRangeSelected = false;
 
+    public String NAME = "NAME";
+    public String DESCRIPTION = "DESCRIPTION";
+    public String TIME = "TIME";
+    public String STARTDATE = "STARTDATE";
+    public String ENDDATE = "ENDDATE";
 
 
     @Override
@@ -87,7 +93,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                     }
                 }
 
-                if (hours.getText().toString().matches("") || minutes.getText().toString().matches(""))
+                if (hours.getText().toString().matches("") && minutes.getText().toString().matches(""))
                 {
                     errorCheck = true;
                     Toast.makeText(getApplicationContext(), "Error, the duration is empty.", Toast.LENGTH_LONG).show();
@@ -104,6 +110,14 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
 
                 if (!errorCheck){
 
+                    //TODO change the target of the Intent to the next activity not calendar
+                    Intent I = new Intent(getApplicationContext(), HENTimePicker.class );
+                    I.putExtra(NAME, nameStr);
+                    I.putExtra(DESCRIPTION, descriptionStr);
+                    I.putExtra(TIME, duration);
+                    I.putExtra(STARTDATE, startDate);
+                    I.putExtra(ENDDATE, endDate);
+                    startActivity(I);
                 }
 
             }
