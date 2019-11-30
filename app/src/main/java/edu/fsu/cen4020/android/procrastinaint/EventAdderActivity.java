@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -76,6 +77,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
 
         auth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // This button is for the Solo date picker
         datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
@@ -195,8 +197,8 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endEpoch);
-                        mNewValues.put(MainCP.NEW, 1);
-                       getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+                        // TODO INSERT mNewValues.put(MainCP.NEW, 1);
+                       getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
                         uploadEventToFirebase(mNewValues);
                        //TODO Go back to main activity?
 
