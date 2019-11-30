@@ -54,5 +54,13 @@
     <string name="description">Description</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
+    <string name="title_activity_helper_event_nagvigator_time_interface">
+        HelperEventNagvigatorTimeActivityInterface
+    </string>
+    <string name="name">Name</string>
+    <string name="duration">Duration of Event</string>
+    <string name="hours">Hrs</string>
+    <string name="minutes">Mins</string>
+    <string name="range">Select Date Range</string>
 
 </resources>

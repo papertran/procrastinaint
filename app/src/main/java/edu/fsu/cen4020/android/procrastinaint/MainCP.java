@@ -24,6 +24,7 @@ public class MainCP extends ContentProvider {
     public final static String LAST_DATE = "LAST_DATE";
     public final static String RRule = "RRule";
     public final static String DURATION = "DURATION";
+    public final static String NEW = "NEW";
 
     private static final String SQL_CREATE_MAIN =
             "CREATE TABLE " + TABLE_NAMESTABLE+" ( "+
@@ -35,6 +36,7 @@ public class MainCP extends ContentProvider {
                     "RRule TEXT," +
                     "DTSTART INTEGER," +
                     "DTEND INTEGER," +
+                    "NEW INTEGER," +
                     "LAST_DATE INTEGER)";
 
     protected static final class MainDatabaseHelper extends SQLiteOpenHelper {

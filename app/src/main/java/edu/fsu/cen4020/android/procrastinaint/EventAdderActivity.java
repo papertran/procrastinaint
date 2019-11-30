@@ -186,7 +186,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endEpoch);
-
+                        mNewValues.put(MainCP.NEW, 1);
                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
                        //TODO Go back to main activity?
@@ -299,6 +299,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DURATION, duration);
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endDate);
+                        mNewValues.put(MainCP.NEW, 1);
                         getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
                     }

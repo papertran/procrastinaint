@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.os.CountDownTimer;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private Button temp_go_to_calendar_view;
     private TextView emailTextView;
     private Button timerButton;
+    private Button HEN;
     private Button viewContentProviderEvents;
-    
+
     // Firebase stuff to make sure user is signed in
     // Guide from https://www.androidlearning.com/android-login-registration-firebase-authentication/
     private FirebaseAuth.AuthStateListener authListener;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         temp_go_to_calendar_view = (Button) findViewById(R.id.temp_go_to_calendar_view);
         viewContentProviderEvents = (Button) findViewById(R.id.viewEventsButton);
 
+        HEN = (Button) findViewById(R.id.hen);
         // Check Permissions
         // https://developer.android.com/training/permissions/requesting.html
         // https://codinginflow.com/tutorials/android/run-time-permission-request
@@ -96,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
                     new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE },4);
 
         }
-
-
-
 
 
 
@@ -156,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        HEN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onHENButtonClicked(view);
+            }
+        });
 
         viewContentProviderEvents.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     // onStart and onStop methods to connect to the firebase
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -211,8 +218,6 @@ public class MainActivity extends AppCompatActivity {
 //            auth.removeAuthStateListener(authListener);
         }
     }
-
-
 
 
 
@@ -244,6 +249,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTimerButtonClicked(View view){
         Intent intent = new Intent(this, timerActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void onHENButtonClicked(View view){
+        Intent intent = new Intent(this, HelperEventNagvigatorTimeActivityInterface.class);
         startActivity(intent);
 
     }
