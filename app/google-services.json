@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "763552344377-4kg41v0selm4akvq8lrvkrrf1rcekqci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fsu.cen4020.android.procrastinaint",
+            "certificate_hash": "2f96f3b4ce337a8a9dbaf7624a3c9f38524a3686"
+          }
+        },
+        {
           "client_id": "763552344377-hcre61d619gqavd5qu3313hqdo78j8kg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

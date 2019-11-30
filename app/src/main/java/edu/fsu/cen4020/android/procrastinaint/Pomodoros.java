@@ -2,6 +2,7 @@ package edu.fsu.cen4020.android.procrastinaint;
 
 public class Pomodoros {
 
+    private String Username;
     private long OverallTime;
     private long OverallPomodoro;
     private long GoldenTomatoes;
@@ -11,10 +12,15 @@ public class Pomodoros {
 
     }
 
-    public Pomodoros(String username){
+    public Pomodoros(String username, long OverallTime, long OverallPomodoro, long GoldenTomatoes,
+                        long GlobalPomodoro){
         this.Username = username;
+        this.OverallTime = OverallTime;
+        this.OverallPomodoro = OverallPomodoro;
+        this.GoldenTomatoes = GoldenTomatoes;
+        this.GlobalPomodoro = GlobalPomodoro;
+
     }
-    private String Username;
 
     public String getUsername() {
         return Username;
