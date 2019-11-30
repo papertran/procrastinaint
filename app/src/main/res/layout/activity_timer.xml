@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="238dp"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="238dp"
         android:layout_marginBottom="74dp"
         android:text="Start pomodoro"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="238dp"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="238dp"
         android:text="Start break."
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="500dp"
-        android:layout_marginTop="700dp"
+        android:layout_marginTop="635dp"
         android:layout_marginEnd="500dp"
         android:layout_marginBottom="712dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +79,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/pomodoroMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="307dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="107dp"
+        android:text="Pomodoro's done so far: "
+        app:layout_constraintBottom_toTopOf="@+id/minuteView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/pomodoroCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="600dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="450dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,12 @@ import android.widget.NumberPicker;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Locale;
 
 public class timerActivity extends AppCompatActivity {
+
 
     private static final String TAG = timerActivity.class.getCanonicalName();
     private CountDownTimer mCountDownTimer;
@@ -25,13 +28,16 @@ public class timerActivity extends AppCompatActivity {
     private long breakTime = 5000;
     private long breakTime2 = 900000;
     private long breakTimeLeft = breakTime;
-    NumberPicker minutePicker;
+    public int pCounter = 0;
 
-    public int counter = 25;
+
+    NumberPicker minutePicker;
     Button pomodoroButton;
     Button breakButton;
     TextView minuteView;
     TextView messageView;
+    TextView pomodoroMessage;
+    TextView pomodoroCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class timerActivity extends AppCompatActivity {
         breakButton.setVisibility(View.INVISIBLE);
         minuteView= (TextView) findViewById(R.id.minuteView);
         messageView = (TextView) findViewById(R.id.messageView);
+        pomodoroMessage = (TextView) findViewById(R.id.pomodoroMessage);
+        pomodoroCounter = (TextView) findViewById(R.id.pomodoroCounter);
+        pomodoroCounter.setVisibility(View.VISIBLE);
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
 
@@ -86,10 +95,11 @@ public class timerActivity extends AppCompatActivity {
             public void onFinish() {
                 messageView.setVisibility(View.VISIBLE);
                 messageView.setText("You have stayed focused for " + prevTime/60000 + " minute(s)");
-//                textView.setText("You have stayed focused for 25 minutes!");
                 pomodoroButton.setVisibility(View.INVISIBLE);
                 breakButton.setVisibility(View.VISIBLE);
-
+                pCounter++;
+                Log.i(TAG, "pCounter: " + pCounter);
+                pomodoroCounter.setText(Integer.toString(pCounter));
             }
         }.start();
 
