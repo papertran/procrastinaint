@@ -1,6 +1,8 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,12 @@ import android.widget.NumberPicker;
 import android.os.Bundle;
 import android.widget.Toast;
 
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -32,7 +39,18 @@ public class timerActivity extends AppCompatActivity {
     private long breakTimeLeft = breakTime;
     public int pCounter = 0;
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth auth;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+    public static final String PCOUNT = "pCount";
+
+    private String text;
+    private long storeCounter;
+
+
+    private String userID;
     NumberPicker minutePicker;
     Button pomodoroButton;
     Button breakButton;
@@ -54,6 +72,14 @@ public class timerActivity extends AppCompatActivity {
         pomodoroCounter = (TextView) findViewById(R.id.pomodoroCounter);
         pomodoroCounter.setVisibility(View.VISIBLE);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
+
+        if(auth.getCurrentUser() != null){
+            userID = auth.getCurrentUser().getUid();
+        } else {
+            userID = null;
+        }
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
 
         minutePicker.setMinValue(0);
@@ -100,6 +126,13 @@ public class timerActivity extends AppCompatActivity {
                 pomodoroButton.setVisibility(View.INVISIBLE);
                 breakButton.setVisibility(View.VISIBLE);
                 pCounter++;
+
+                if(pCounter == 4)
+                {
+                    saveData();
+                    writeData(userID, 1, 2, 3, 4);
+                }
+
                 Log.i(TAG, "pCounter: " + pCounter);
                 pomodoroCounter.setText(Integer.toString(pCounter));
             }
@@ -156,4 +189,31 @@ public class timerActivity extends AppCompatActivity {
 
                 }
             };
+
+    private void writeData(String username, long OverallTime, long OverallPomodoro, long GoldenTomatoes,
+                           long GlobalPomodoro){
+        Pomodoros pomodoro = new Pomodoros(username, OverallTime, OverallPomodoro, GoldenTomatoes, GlobalPomodoro);
+
+        mDatabase.child("UserPomodoroInfo").child(username).setValue(pomodoro);
+    }
+
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(TEXT, userID);
+        editor.putLong(PCOUNT, pCounter);
+
+        editor.apply();
+
+        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        text = sharedPreferences.getString(TEXT, "");
+        storeCounter = sharedPreferences.getLong(PCOUNT, 0);
+    }
+
+
 }
