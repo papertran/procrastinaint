@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,10 @@ import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -62,11 +67,17 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     private CheckBox saturday;
 
 
+    FirebaseAuth auth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_adder);
+
+
+        auth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // This button is for the Solo date picker
         datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
@@ -186,9 +197,9 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.DTEND, endEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endEpoch);
-                        mNewValues.put(MainCP.NEW, 1);
-                       getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
-
+                        // TODO INSERT mNewValues.put(MainCP.NEW, 1);
+                       getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
+                        uploadEventToFirebase(mNewValues);
                        //TODO Go back to main activity?
 
                     }
@@ -291,6 +302,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     repeatRule = temp;
 
 
+
                     if (!errorCheck) {
                         ContentValues mNewValues = new ContentValues();
                         mNewValues.put(MainCP.TITLE, title);
@@ -302,17 +314,15 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.NEW, 1);
                         getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
+                        uploadEventToFirebase(mNewValues);
+
                     }
 
                 }
 
 
-
-
             }
         });
-
-
 
 
 
@@ -456,10 +466,55 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             case R.id.firebase_upload:
             // This case is for the firebase upload
 
-                if (checked)
+            if (checked){
                 Firebase = true;
-            else
+            } else{
                 Firebase = false;
+            }
+
+
+        }
+    }
+
+    private void uploadEventToFirebase(ContentValues value){
+        if (auth.getCurrentUser() == null){
+            Toast.makeText(this, "Must be signed in to upload to events to firebase", Toast.LENGTH_SHORT).show();
+        } else{
+
+
+            Event event = new Event();
+
+            event.setTitle(value.getAsString(MainCP.TITLE));
+            event.setDescription(value.getAsString(MainCP.DESCRIPTION));
+
+            try {
+                event.setRRULE(value.getAsString(MainCP.RRule));
+            } catch (Exception e){
+                event.setRRULE(null);
+            }
+
+            try {
+                event.setDTSTART(value.getAsLong(MainCP.DTSTART));
+            } catch (Exception e){
+                event.setDTSTART(null);
+            }
+
+            try {
+                event.setDTEND(value.getAsLong(MainCP.DTEND));
+            } catch (Exception e){
+                event.setDTEND(null);
+            }
+
+
+            try {
+                event.setLAST_DATE(value.getAsLong(MainCP.LAST_DATE));
+            } catch (Exception e){
+                event.setLAST_DATE(null);
+            }
+
+            //TODO upload to firebase
+            mDatabase.child("Events").child(event.getTitle()).setValue(event);
+
         }
     }
 }
