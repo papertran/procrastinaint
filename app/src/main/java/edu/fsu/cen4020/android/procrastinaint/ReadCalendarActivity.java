@@ -85,7 +85,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
     }
 
 
-    private void saveEvent(Event item){
+    public void saveEvent(Event item){
         // Track if event is reoccuring or singular
         boolean flag = false;
         if(item.getRRULE() == null){

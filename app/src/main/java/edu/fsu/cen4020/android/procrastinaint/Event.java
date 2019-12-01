@@ -39,7 +39,7 @@ public class Event {
 
 
     public String getEventStartDate(){
-        if (this.getDTSTART() != 0){
+        if (this.getDTSTART() != 0 && this.getDTSTART() != null){
             return epochToDate(this.getDTSTART());
 
         }
@@ -47,19 +47,19 @@ public class Event {
     }
 
     public String getEventStartTime(){
-        if (this.getDTSTART() != 0){
+        if (this.getDTSTART() != 0 && this.getDTSTART() != null){
             return epochToTime(this.getDTSTART());
         }
         return null;
     }
 
     public String getEventEndDate(){
-        if (this.getLAST_DATE() != 0){
+        if (this.getLAST_DATE() != 0 && this.getLAST_DATE() != null){
             return epochToDate(this.getLAST_DATE());
         }
         else{
             // Check DT for correct end time
-            if(this.getDTEND() != 0) {
+            if(this.getDTEND() != 0 && this.getDTEND() == null)  {
                 return epochToDate(this.getDTEND());
             }
             return null;
@@ -67,9 +67,13 @@ public class Event {
     }
 
     public String getEventEndTime(){
-        if (this.getDTEND() != 0){
+        if (this.getDTEND() == null){
+            Long newDuration = RFC2445ToMilliseconds(this.getDuration());
+            return epochToTime(this.getDTSTART() + newDuration);
+        } else if( this.getDTEND() != 0){
             return epochToTime(this.getDTEND());
-        } else{
+        }
+        else{
             try {
                 Long newDuration = RFC2445ToMilliseconds(this.getDuration());
                 return epochToTime(this.getDTSTART() + newDuration);
