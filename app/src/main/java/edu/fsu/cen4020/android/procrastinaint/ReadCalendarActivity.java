@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +34,8 @@ public class ReadCalendarActivity extends AppCompatActivity {
     private Spinner calanderSpinner;
     private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
-    private ArrayList<String[]> eventArrayList = new ArrayList<String[]>();
+
+    private ArrayList<Event> eventArrayList = new ArrayList<Event>();
     private Button saveEventsButton;
 
 
@@ -84,40 +86,42 @@ public class ReadCalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 
-                for(String[] item : eventArrayList){
+                for(Event item : eventArrayList){
 
                     // Track if event is reoccuring or singular
                     boolean flag = false;
-                    if(item[6] == null){
+                    if(item.getRRULE() == null){
                         flag = true;
                     }
                     if(flag) {
                         Log.i(TAG, "saveButton ReoccuringEvent " +
-                                "\nTitle =" + item[0] +
-                                "\nDTStart = " + item[5] +
-                                "\nRRule =" + item[11] +
-                                "\nDuration = " + item[9] +
-                                "\nEnd Date = " + item[7]);
+                                "\nTitle =" + item.getTitle() +
+                                "\nDTStart = " + item.getDTSTART() +
+                                "\nRRule =" + item.getRRULE() +
+                                "\nDuration = " + item.getDuration() +
+                                "\nEnd Date = " + item.getEventEndDate());
 
                         // Saves these values into content provider
                         ContentValues values = new ContentValues();
-                        values.put(MainCP.TITLE, item[0]);
-                        values.put(MainCP.DTSTART, Long.parseLong(item[5]));
-                        values.put(MainCP.LAST_DATE, Long.parseLong(item[7]));
-                        values.put(MainCP.RRule, item[11]);
-                        values.put(MainCP.DURATION, item[9]);
+                        values.put(MainCP.TITLE, item.getTitle());
+                        values.put(MainCP.DTSTART, item.getDTSTART());
+                        values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+                        values.put(MainCP.RRule, item.getRRULE());
+                        values.put(MainCP.DURATION, item.getDuration());
+                        values.put(MainCP.NEW, 0);
                         getContentResolver().insert(MainCP.CONTENT_URI, values);
                     }else{
                         Log.i(TAG, "saveButton singularEvent " +
-                                "\nTitle =" + item[0] +
-                                "\nDTStart ="  + item[5] +
-                                "\nDTEND = " + item[6]);
+                                "\nTitle =" + item.getTitle() +
+                                "\nDTStart ="  + item.getDTSTART() +
+                                "\nDTEND = " + item.getDTEND());
 
                         ContentValues values = new ContentValues();
-                        values.put(MainCP.TITLE, item[0]);
-                        values.put(MainCP.DTSTART, Long.parseLong(item[5]));
-                        values.put(MainCP.DTEND, Long.parseLong(item[6]));
-                        values.put(MainCP.LAST_DATE, Long.parseLong(item[7]));
+                        values.put(MainCP.TITLE, item.getTitle());
+                        values.put(MainCP.DTSTART, item.getDTSTART());
+                        values.put(MainCP.DTEND, item.getDTEND());
+                        values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+                        values.put(MainCP.NEW, 0);
                         getContentResolver().insert(MainCP.CONTENT_URI, values);
                     }
                 }
@@ -223,75 +227,31 @@ public class ReadCalendarActivity extends AppCompatActivity {
         while (cur.moveToNext()) {
             Log.i(TAG, "readEvent: Starting calander");
             String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-            String DTSTART = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
-            String DTEND = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
-            String lasteDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.LAST_DATE));
-            String CalenderID = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
+            Long DTSTART = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTSTART));
+            Long DTEND = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTEND));
+            Long LAST_DATE = cur.getLong(cur.getColumnIndex(CalendarContract.Events.LAST_DATE));
+            Integer CalenderID = cur.getInt(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
             String duration = cur.getString(cur.getColumnIndex(CalendarContract.Events.DURATION));
             String rDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.RDATE));
             String rRule = cur.getString(cur.getColumnIndex(CalendarContract.Events.RRULE));
-            String startDate = "";
-            String endDate = "";
-            String startTime = "";
-            String endTime = "";
 
             // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
-
-            if (DTSTART != null){
-                startDate = epochToDate(Long.parseLong(DTSTART));
-                startTime = epochToTime(Long.parseLong(DTSTART));
-            }
-
-            if (lasteDate != null){
-                endDate = epochToDate(Long.parseLong(lasteDate));
-            }
-
-            // Check DT for correct end time
-            if(DTEND != null){
-                endDate = epochToDate(Long.parseLong(DTEND));
-                endTime = epochToTime(Long.parseLong(lasteDate));
-            } else {
-                // DTEND is null if its a recurring event, then need to get time from duration
-                Long newDuration = RFC2445ToMilliseconds(duration);
-                endTime = epochToTime(Long.parseLong(DTSTART) + newDuration);
-            }
+            // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
+            Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
 
 
             // Items to store into eventRecyclerView dataset
-//            Log.i(TAG, "readEvent: \n" +
-//                    "Title = " + title +
-//                    "\nStart Date = " + startDate +
-//                    "\nEnd Date = " + endDate +
-//                    "\nStart Time= " + startTime +
-//                    "\nEnd Time = " + endTime);
-
-            // Add this to the dataset for the recyclerview
-            String[] recylerViewItems = new String[]{
-                    title,
-                    startDate,
-                    endDate,
-                    startTime,
-                    endTime,
-                    DTSTART,
-                    DTEND,
-                    lasteDate,
-                    CalenderID,
-                    duration,
-                    rDate,
-                    rRule
-            };
-            eventArrayList.add(recylerViewItems);
-
             Log.i(TAG, "readEvent: \n" +
-                    "Title = " + title +
-                    "\nDTSTART: " + startDate +
-                    "\nDTEND: " + endDate +
-                    "\nlast date: " + lasteDate +
-                    "\nCalenderID: " + CalenderID +
-                    "\nDuration = " + duration +
-                    "\nRRule = " + rRule +
-                    "\nRdate = " + rDate);
+                    "Title = " + event.getTitle() +
+                    "\nStart Date = " + event.getEventStartDate() +
+                    "\nEnd Date = " + event.getEventEndDate() +
+                    "\nStart Time= " + event.getEventStartTime() +
+                    "\nEnd Time = " + event.getEventEndTime());
+
+
+            eventArrayList.add(event);
         }
+
     }
 
 

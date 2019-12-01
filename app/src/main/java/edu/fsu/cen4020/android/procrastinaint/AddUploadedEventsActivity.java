@@ -25,7 +25,7 @@ import static edu.fsu.cen4020.android.procrastinaint.ReadCalendarActivity.epochT
 public class AddUploadedEventsActivity extends AppCompatActivity {
 
     private static final String TAG = AddUploadedEventsActivity.class.getCanonicalName();
-    private ArrayList<String[]> eventArrayList = new ArrayList<String[]>();
+    private ArrayList<Event> eventArrayList = new ArrayList<Event>();
     private EditText searchEventEditText;
     DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference("Events");
     RecyclerView firebaseEventsRecyclerView;
@@ -50,57 +50,8 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                 eventArrayList.clear();
                 for(DataSnapshot eventSnapShot : dataSnapshot.getChildren()){
                     Event event = eventSnapShot.getValue(Event.class);
-                    String title = event.getTitle();
-                    Long DTSTART = event.getDTSTART();
-                    Long DTEND = event.getDTEND();
-                    Long LAST_DATE = event.getLAST_DATE();
-                    String duration = event.getDuration();
 
-
-                    String startDate = "";
-                    String endDate = "";
-                    String startTime = "";
-                    String endTime = "";
-
-                    // Reuse code from viewEvents
-                    if (DTSTART != null) {
-                        startDate = epochToDate(DTSTART);
-                        startTime = epochToTime(DTSTART);
-                    }
-
-                    if (LAST_DATE != null) {
-                        endDate = epochToDate(LAST_DATE);
-                    }
-
-                    // Check DT for correct end time
-                    if (DTEND != null ) {
-                        endDate = epochToDate(DTEND);
-                        endTime = epochToTime(LAST_DATE);
-                    } else {
-                        // DTEND is null if its a recurring event, then need to get time from duration
-                        Long newDuration = ReadCalendarActivity.RFC2445ToMilliseconds(duration);
-                        endTime = epochToTime(DTSTART + newDuration);
-                    }
-
-
-
-                    Log.i(TAG, "viewFirebaseEventOnStart: " +
-                            "\nevent Title = " + event.Title +
-                            "\nevent Desc = " + event.Description +
-                            "\nevent RRule = " + event.RRULE +
-                            "\nevent DTSTART = " + event.DTSTART +
-                            "\nevent DTEND = " + event.DTEND +
-                            "\nevent LAST_DATE = " + event.LAST_DATE);
-
-
-
-                    String[] recylerViewItems = new String[]{
-                            title,
-                            startDate,
-                            endDate,
-                            startTime,
-                            endTime,};
-                    eventArrayList.add(recylerViewItems);
+                    eventArrayList.add(event);
 
                 }
 

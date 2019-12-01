@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import static edu.fsu.cen4020.android.procrastinaint.ReadCalendarActivity.epochT
 public class viewEvents extends AppCompatActivity {
 
     private static final String TAG = viewEvents.class.getCanonicalName();
-    private ArrayList<String[]> eventArrayList = new ArrayList<String[]>();
+    private ArrayList<Event> eventArrayList = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,58 +25,39 @@ public class viewEvents extends AppCompatActivity {
         setContentView(R.layout.activity_view_events);
 
 
-        final Cursor mCursor = getContentResolver().query(MainCP.CONTENT_URI, null, null,
+        final Cursor cur = getContentResolver().query(MainCP.CONTENT_URI, null, null,
                 null, null);
 
 
-        while (mCursor.getCount() > 0 && !mCursor.isLast()) {
-            mCursor.moveToNext();
+        while (cur.getCount() > 0 && !cur.isLast()) {
+            cur.moveToNext();
 
-            String startDate = "";
-            String endDate = "";
-            String startTime = "";
-            String endTime = "";
+            Log.i(TAG, "readEvent: Starting calander");
+            String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+            Long DTSTART = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTSTART));
+            Long DTEND = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTEND));
+            Long LAST_DATE = cur.getLong(cur.getColumnIndex(CalendarContract.Events.LAST_DATE));
+            Integer CalenderID = cur.getInt(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
+            String duration = cur.getString(cur.getColumnIndex(CalendarContract.Events.DURATION));
+            String rDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.RDATE));
+            String rRule = cur.getString(cur.getColumnIndex(CalendarContract.Events.RRULE));
 
-            String title = mCursor.getString(mCursor.getColumnIndex(MainCP.TITLE));
-            String DTSTART = mCursor.getString(mCursor.getColumnIndex(MainCP.DTSTART));
-            String DTEND = mCursor.getString(mCursor.getColumnIndex(MainCP.DTEND));
-            String LAST_DATE = mCursor.getString(mCursor.getColumnIndex(MainCP.LAST_DATE));
-            String DURATION = mCursor.getString(mCursor.getColumnIndex(MainCP.DURATION));
-            Log.i(TAG, "onCreate: viewEvents" +
-                    "\nTitle = " + title +
-                    "\nDTSTART = " + DTSTART +
-                    "\nDTEND = " + DTEND +
-                    "\nLAST_DATE = " + LAST_DATE +
-                    "\nDURATION = " + DURATION);
-
-                        // Reuse code from ReadCalendarActivity
-            if (DTSTART != null) {
-                startDate = epochToDate(Long.parseLong(DTSTART));
-                startTime = epochToTime(Long.parseLong(DTSTART));
-            }
-
-            if (LAST_DATE != null) {
-                endDate = epochToDate(Long.parseLong(LAST_DATE));
-            }
-
-            // Check DT for correct end time
-            if (DTEND != null ) {
-                endDate = epochToDate(Long.parseLong(DTEND));
-                endTime = epochToTime(Long.parseLong(LAST_DATE));
-            } else {
-                // DTEND is null if its a recurring event, then need to get time from duration
-                Long newDuration = ReadCalendarActivity.RFC2445ToMilliseconds(DURATION);
-                endTime = epochToTime(Long.parseLong(DTSTART) + newDuration);
-            }
+            // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
+            // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
+            Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
 
 
-            String[] recylerViewItems = new String[]{
-                    title,
-                    startDate,
-                    endDate,
-                    startTime,
-                    endTime,};
-            eventArrayList.add(recylerViewItems);
+            // Items to store into eventRecyclerView dataset
+            Log.i(TAG, "readEvent: \n" +
+                    "Title = " + event.getTitle() +
+                    "\nStart Date = " + event.getEventStartDate() +
+                    "\nEnd Date = " + event.getEventEndDate() +
+                    "\nStart Time= " + event.getEventStartTime() +
+                    "\nEnd Time = " + event.getEventEndTime());
+
+
+            eventArrayList.add(event);
+
         }
 
         initRecyclerView();

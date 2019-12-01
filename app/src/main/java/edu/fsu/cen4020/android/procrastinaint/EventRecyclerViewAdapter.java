@@ -18,10 +18,10 @@ import java.util.ArrayList;
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = EventRecyclerViewAdapter.class.getCanonicalName();
-    private ArrayList<String[]> eventsArrayList = new ArrayList<String[]>();
+    private ArrayList<Event> eventsArrayList = new ArrayList<Event>();
     private Context mContext;
 
-    public EventRecyclerViewAdapter(Context mContext, ArrayList<String[]> eventsArrayList ) {
+    public EventRecyclerViewAdapter(Context mContext, ArrayList<Event> eventsArrayList ) {
         this.eventsArrayList = eventsArrayList;
         this.mContext = mContext;
     }
@@ -38,11 +38,11 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
-        holder.eventTitleTextView.setText(eventsArrayList.get(position)[0]);
-        holder.startDateTextView.setText(eventsArrayList.get(position)[1]);
-        holder.endDateTextView.setText(eventsArrayList.get(position)[2]);
-        holder.startTimeTextView.setText(eventsArrayList.get(position)[3]);
-        holder.endTimeTextView.setText(eventsArrayList.get(position)[4]);
+        holder.eventTitleTextView.setText(eventsArrayList.get(position).getTitle());
+        holder.startDateTextView.setText(eventsArrayList.get(position).getEventStartDate());
+        holder.endDateTextView.setText(eventsArrayList.get(position).getEventEndDate());
+        holder.startTimeTextView.setText(eventsArrayList.get(position).getEventStartTime());
+        holder.endTimeTextView.setText(eventsArrayList.get(position).getEventEndTime());
 
 
 
