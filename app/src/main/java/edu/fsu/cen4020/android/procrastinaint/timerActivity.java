@@ -144,15 +144,22 @@ public class timerActivity extends AppCompatActivity {
                 pCounter++;
                 fullCounter++;
                 AllTimeP++;
+                AllTimeTime += prevTime/60000;
+
+                if(pCounter == 4)
+                {
+                    AllTimeGP++;
+                }
 
                 Log.i(TAG, "All time pp is: " + AllTimeP);
 
 
 
                 saveData();
+
                 floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
                         "\nAll time golden tomatoes is: " + AllTimeGP +
-                        "\nTotal time spent focused: " + AllTimeTime);
+                        "\nTotal minute(s) spent focused: " + AllTimeTime);
 //                loadData();
 //                updateViews();
 
@@ -190,6 +197,7 @@ public class timerActivity extends AppCompatActivity {
                 pomodoroButton.setVisibility(View.VISIBLE);
                 breakButton.setVisibility(View.INVISIBLE);
                 minutePicker.setVisibility(View.VISIBLE);
+
                 mTimeLeft = prevTime;
                 minutePicker.setOnValueChangedListener(onValueChangeListener);
                 breakTimeLeft = breakTime;
@@ -236,6 +244,8 @@ public class timerActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putLong("AllTimeP",AllTimeP);
+        editor.putLong("AllTimeGP", AllTimeGP);
+        editor.putLong("AllTimeTime", AllTimeTime);
 
         editor.apply();
 
@@ -244,16 +254,30 @@ public class timerActivity extends AppCompatActivity {
     public void loadData(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         long what = preferences.getLong("AllTimeP", 0);
+        long what2 = preferences.getLong("AllTimeGP", 0);
+        long what3 = preferences.getLong("AllTimeTime", 0);
+
         if(what != 0)
         {
             AllTimeP = what;
         }
+
+        if(what2 != 0)
+        {
+            AllTimeGP = what2;
+        }
+
+        if(what3 != 0)
+        {
+            AllTimeTime = what3;
+        }
+
     }
 
     public void updateViews(){
         floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
                             "\nAll time golden tomatoes is: " + AllTimeGP +
-                            "\nTotal time spent focused: " + AllTimeTime);
+                            "\nTotal minute(s) spent focused: " + AllTimeTime);
     }
 
     ValueEventListener eventListener = new ValueEventListener() {
