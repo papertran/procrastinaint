@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">procrastinaint</string>
-
+    <string name="welcome">Enter your eamil and password below to sign in.</string>
+    <string name="sign_in">Sign In</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="sign_out">Sign Out</string>
@@ -14,6 +15,7 @@
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="fire_base_upload">Upload this event to the Firebase?</string>
+    <string name="new_user">------------------------------------ New User? ------------------------------------</string>
 
     <!--Calendar View Strings-->
     <string name="AddBreak">Add Break</string>
