@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static edu.fsu.cen4020.android.procrastinaint.ReadCalendarActivity.epochToDate;
 import static edu.fsu.cen4020.android.procrastinaint.ReadCalendarActivity.epochToTime;
@@ -27,11 +29,13 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
 
     private static final String TAG = AddUploadedEventsActivity.class.getCanonicalName();
     private ArrayList<Event> eventArrayList = new ArrayList<Event>();
+    private HashMap<Event, Long> localEventHM= new HashMap<Event, Long>();
+    private Long currentTime;
 
     private EditText searchEventEditText;
     DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference("Events");
     RecyclerView firebaseEventsRecyclerView;
-     EventRecyclerViewAdapter adapter;
+    EventRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +93,10 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        currentTime = System.currentTimeMillis();
+        getContentProviderEvents();
+
+
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -96,7 +104,12 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                 for(DataSnapshot eventSnapShot : dataSnapshot.getChildren()){
                     Event event = eventSnapShot.getValue(Event.class);
 
-                    eventArrayList.add(event);
+                    if (localEventHM.containsKey(event)) {
+                        continue;
+                    }
+                    else{
+                        eventArrayList.add(event);
+                    }
 
                 }
                 adapter.notifyDataSetChanged();
@@ -110,6 +123,57 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+    private void getContentProviderEvents(){
+        String[] projection = {
+                MainCP.TITLE,
+                MainCP.RRule,
+                MainCP.DURATION,
+                MainCP.DTSTART,
+                MainCP.DTEND,
+                MainCP.LAST_DATE};
+
+        String selection =
+                MainCP.DTSTART + " >= ? OR " +
+                        MainCP.LAST_DATE +
+                        " >= ?";
+        String[] selectionArgs = new String[]{
+                currentTime.toString(),
+                currentTime.toString()
+        };
+
+        Cursor cursor = getContentResolver().query(
+                MainCP.CONTENT_URI,
+                projection,
+                null,
+                null,
+                MainCP.DTSTART
+
+        );
+
+        if (cursor.getCount()!= 0){
+            if(cursor.moveToFirst()){
+                do{
+                    String title = cursor.getString(cursor.getColumnIndex(MainCP.TITLE));
+                    String rRule = cursor.getString(cursor.getColumnIndex(MainCP.RRule));
+                    String duration = cursor.getString(cursor.getColumnIndex(MainCP.DURATION));
+                    Long DTSTART = cursor.getLong(cursor.getColumnIndex(MainCP.DTSTART));
+                    Long DTEND = cursor.getLong(cursor.getColumnIndex(MainCP.DTEND));
+                    Long LAST_DATE = cursor.getLong(cursor.getColumnIndex(MainCP.LAST_DATE));
+                    Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+                    localEventHM.put(event, DTSTART);
+                }while(cursor.moveToNext());
+            }
+        }
+
+    }
+
+
+
+
 
 
 

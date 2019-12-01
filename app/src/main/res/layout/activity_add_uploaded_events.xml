@@ -14,7 +14,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
-        android:text="Long Press to Save Event"
+        android:text="Swipe right to Save Event"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

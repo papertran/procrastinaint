@@ -37,6 +37,27 @@ public class Event {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Event)) {
+            return false;
+        }
+        Event p = (Event)o;
+
+        return (this.getTitle().equals(p.getTitle()) && this.getDTSTART().equals(p.getDTSTART()));
+    }
+
+
+    @Override
+    public int hashCode() {
+
+        return this.getTitle().hashCode();
+    }
+
 
     public String getEventStartDate(){
         if (this.getDTSTART() != 0 && this.getDTSTART() != null){
