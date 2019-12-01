@@ -38,6 +38,8 @@ public class timerActivity extends AppCompatActivity {
     private long breakTime2 = 900000;
     private long breakTimeLeft = breakTime;
     public int pCounter = 0;
+    public int fullCounter;
+
 
     private DatabaseReference mDatabase;
     private FirebaseAuth auth;
@@ -126,6 +128,7 @@ public class timerActivity extends AppCompatActivity {
                 pomodoroButton.setVisibility(View.INVISIBLE);
                 breakButton.setVisibility(View.VISIBLE);
                 pCounter++;
+                fullCounter++;
 
                 if(pCounter == 4)
                 {
@@ -134,7 +137,7 @@ public class timerActivity extends AppCompatActivity {
                 }
 
                 Log.i(TAG, "pCounter: " + pCounter);
-                pomodoroCounter.setText(Integer.toString(pCounter));
+                pomodoroCounter.setText(Integer.toString(fullCounter));
             }
         }.start();
 
@@ -143,6 +146,11 @@ public class timerActivity extends AppCompatActivity {
 
     private void startBreak(){
         messageView.setVisibility(View.INVISIBLE);
+        if(pCounter == 4)
+        {
+            breakTimeLeft = 10000;
+            pCounter = 0;
+        }
         mCountDownTimer = new CountDownTimer(breakTimeLeft, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
