@@ -133,6 +133,45 @@ public class ReadCalendarActivity extends AppCompatActivity {
     }
 
 
+    private void saveEvent(Event item){
+        // Track if event is reoccuring or singular
+        boolean flag = false;
+        if(item.getRRULE() == null){
+            flag = true;
+        }
+        if(flag) {
+            Log.i(TAG, "saveButton ReoccuringEvent " +
+                    "\nTitle =" + item.getTitle() +
+                    "\nDTStart = " + item.getDTSTART() +
+                    "\nRRule =" + item.getRRULE() +
+                    "\nDuration = " + item.getDuration() +
+                    "\nEnd Date = " + item.getEventEndDate());
+
+            // Saves these values into content provider
+            ContentValues values = new ContentValues();
+            values.put(MainCP.TITLE, item.getTitle());
+            values.put(MainCP.DTSTART, item.getDTSTART());
+            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+            values.put(MainCP.RRule, item.getRRULE());
+            values.put(MainCP.DURATION, item.getDuration());
+            values.put(MainCP.NEW, 0);
+            getContentResolver().insert(MainCP.CONTENT_URI, values);
+        }else{
+            Log.i(TAG, "saveButton singularEvent " +
+                    "\nTitle =" + item.getTitle() +
+                    "\nDTStart ="  + item.getDTSTART() +
+                    "\nDTEND = " + item.getDTEND());
+
+            ContentValues values = new ContentValues();
+            values.put(MainCP.TITLE, item.getTitle());
+            values.put(MainCP.DTSTART, item.getDTSTART());
+            values.put(MainCP.DTEND, item.getDTEND());
+            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+            values.put(MainCP.NEW, 0);
+            getContentResolver().insert(MainCP.CONTENT_URI, values);
+        }
+
+    }
     // This was taken from Google documentation on the calander contentprovider
     // https://developer.android.com/guide/topics/providers/calendar-provider#query
     private HashMap<String, Long> getCalanders(){
@@ -384,9 +423,44 @@ public class ReadCalendarActivity extends AppCompatActivity {
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
-        RecyclerView eventRecyclerView = (RecyclerView) findViewById(R.id.readEventsRecyclerView);
-        EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, eventArrayList);
+        final RecyclerView eventRecyclerView = (RecyclerView) findViewById(R.id.readEventsRecyclerView);
+        final EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, eventArrayList);
         eventRecyclerView.setAdapter(adapter);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+        // https://stackoverflow.com/questions/26422948/how-to-do-swipe-to-delete-cardview-in-android-using-support-library
+        // This is used for the swipe functionailty
+
+        SwipeableRecyclerViewTouchListener swipeTouchListener = new SwipeableRecyclerViewTouchListener(eventRecyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener() {
+            @Override
+            public boolean canSwipeLeft(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean canSwipeRight(int position) {
+                return true;
+            }
+
+            @Override
+            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+
+            }
+
+            @Override
+            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                for(int position : reverseSortedPositions){
+                    Event event = eventArrayList.get(position);
+                    saveEvent(event);
+                    Log.i(TAG, "onDismissedBySwipeRight: SavedEvent");
+                    eventArrayList.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        eventRecyclerView.addOnItemTouchListener(swipeTouchListener);
     }
 }

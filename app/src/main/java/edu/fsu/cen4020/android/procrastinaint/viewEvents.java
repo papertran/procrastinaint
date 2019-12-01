@@ -24,40 +24,35 @@ public class viewEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_events);
 
+        String[] projection = {
+                MainCP.TITLE,
+                MainCP.RRule,
+                MainCP.DURATION,
+                MainCP.DTSTART,
+                MainCP.DTEND,
+                MainCP.LAST_DATE};
+        Cursor cursor = getContentResolver().query(
+                MainCP.CONTENT_URI,
+                projection,
+                null,
+                null,
+                MainCP.DTSTART
 
-        final Cursor cur = getContentResolver().query(MainCP.CONTENT_URI, null, null,
-                null, null);
+        );
 
-
-        while (cur.getCount() > 0 && !cur.isLast()) {
-            cur.moveToNext();
-
-            Log.i(TAG, "readEvent: Starting calander");
-            String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-            Long DTSTART = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTSTART));
-            Long DTEND = cur.getLong(cur.getColumnIndex(CalendarContract.Events.DTEND));
-            Long LAST_DATE = cur.getLong(cur.getColumnIndex(CalendarContract.Events.LAST_DATE));
-            Integer CalenderID = cur.getInt(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
-            String duration = cur.getString(cur.getColumnIndex(CalendarContract.Events.DURATION));
-            String rDate = cur.getString(cur.getColumnIndex(CalendarContract.Events.RDATE));
-            String rRule = cur.getString(cur.getColumnIndex(CalendarContract.Events.RRULE));
-
-            // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
-            // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
-            Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
-
-
-            // Items to store into eventRecyclerView dataset
-            Log.i(TAG, "readEvent: \n" +
-                    "Title = " + event.getTitle() +
-                    "\nStart Date = " + event.getEventStartDate() +
-                    "\nEnd Date = " + event.getEventEndDate() +
-                    "\nStart Time= " + event.getEventStartTime() +
-                    "\nEnd Time = " + event.getEventEndTime());
-
-
-            eventArrayList.add(event);
-
+        if (cursor.getCount()!= 0){
+            if(cursor.moveToFirst()){
+                do{
+                    String title = cursor.getString(cursor.getColumnIndex(MainCP.TITLE));
+                    String rRule = cursor.getString(cursor.getColumnIndex(MainCP.RRule));
+                    String duration = cursor.getString(cursor.getColumnIndex(MainCP.DURATION));
+                    Long DTSTART = cursor.getLong(cursor.getColumnIndex(MainCP.DTSTART));
+                    Long DTEND = cursor.getLong(cursor.getColumnIndex(MainCP.DTEND));
+                    Long LAST_DATE = cursor.getLong(cursor.getColumnIndex(MainCP.LAST_DATE));
+                    Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+                    eventArrayList.add(event);
+                }while(cursor.moveToNext());
+            }
         }
 
         initRecyclerView();

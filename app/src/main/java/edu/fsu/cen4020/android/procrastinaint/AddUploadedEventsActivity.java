@@ -75,5 +75,7 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
         EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, eventArrayList);
         firebaseEventsRecyclerView.setAdapter(adapter);
         firebaseEventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
 }
