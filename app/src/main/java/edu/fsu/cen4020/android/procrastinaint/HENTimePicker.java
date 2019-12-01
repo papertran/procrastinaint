@@ -61,16 +61,17 @@ public class HENTimePicker extends AppCompatActivity {
                 if (tempval > startDate){
                     pairDtEnd = mCursor.getLong(5); // This gets the start of the next event
                     Pair<Long,Long> temp = new Pair<>(pairDtStart,pairDtEnd); // The start and end times of possible time slots
+
                     if (pairDtEnd-pairDtStart >= duration) {
                         list.add(temp);
                     }
                     pairDtStart = mCursor.getLong(6);
                     counter++;
-
                 }
                 if (tempval > endDate){
                     pairDtEnd = endDate;
                     if (pairDtEnd-pairDtStart >= duration) {
+                        counter++;
                         Pair<Long,Long> temp = new Pair<>(pairDtStart,pairDtEnd);
                         list.add(temp);
                         worksFine = true;
@@ -84,6 +85,7 @@ public class HENTimePicker extends AppCompatActivity {
         {
             pairDtEnd = endDate;
             if (pairDtEnd-pairDtStart >= duration) {
+                counter++;
                 Pair<Long, Long> temp = new Pair<>(pairDtStart, pairDtEnd);
                 list.add(temp);
             }
@@ -93,6 +95,7 @@ public class HENTimePicker extends AppCompatActivity {
         for ( int x =0; x < list.size(); x++){
             Log.i("LOL", "Start time = " + list.get(x).first + " End time = " + list.get(x).second);
         }
+        Log.i("LOL", "" +counter);
 
     }
 }
