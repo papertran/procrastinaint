@@ -62,19 +62,21 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             return false;
         }
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            startActivity(new Intent(getApplicationContext(), CameraActivity.class));
-        } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(getApplicationContext(), GalleryActivity.class));
-        } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(getApplicationContext(), SlideshowActivity.class));
-        } else if (id == R.id.nav_manage) {
-            startActivity(new Intent(getApplicationContext(), ManageActivity.class));
-        } else if (id == R.id.nav_share) {
-            startActivity(new Intent(getApplicationContext(), ShareActivity.class));
-        } else if (id == R.id.nav_send) {
-            startActivity(new Intent(getApplicationContext(), SendActivity.class));
+        if (id == R.id.nav_home) {
+            // Handle home
+            startActivity(new Intent(getApplicationContext(), calendar.class));
+        } else if (id == R.id.nav_login) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else if (id == R.id.nav_newevent) {
+            startActivity(new Intent(getApplicationContext(), Event.class));
+        } else if (id == R.id.nav_read_cal) {
+            startActivity(new Intent(getApplicationContext(), ReadCalendarActivity.class));
+        } else if (id == R.id.nav_export) {
+            startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
+        } else if (id == R.id.nav_timer) {
+            startActivity(new Intent(getApplicationContext(), Pomodoros.class));
+        } else if (id == R.id.nav_notes) {
+            startActivity(new Intent(getApplicationContext (), NotesActivity.class));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

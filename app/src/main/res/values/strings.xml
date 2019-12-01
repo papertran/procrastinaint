@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">procrastinaint</string>
+    <string name="rwcalendar">Calendar Options</string>
+    <string name="notes">Notes</string>
     <string name="welcome">Enter your email and password below to sign in.</string>
     <string name="welcome_signup">To create a new account enter you email and password below.</string>
     <string name="sign_in">Sign In</string>
@@ -19,7 +21,7 @@
     <string name="new_user">--------------------------------- Need an account? ---------------------------------</string>
     <string name="old_user">--------------------------- Already have an Account? ---------------------------</string>
 
-    <!--Calendar View Strings-->
+    <string name="read_cal">Read From Local Calendar</string>
     <string name="AddBreak">Add Break</string>
     <string name="AddAssignment">Add Assignment</string>
     <string name="AddClass">Add New Class</string>

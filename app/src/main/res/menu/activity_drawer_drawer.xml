@@ -9,41 +9,37 @@
             android:icon="@drawable/ic_calendar"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_pomodoro_timer"
-            android:icon="@drawable/ic_timer"
-            android:title="@string/menu_timer" />
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_account"
+            android:title="@string/login" />
         <item
-            android:id="@+id/nav_backupToCloud"
-            android:icon="@drawable/ic_back_up"
-            android:title="@string/menu_cloud" />
-        <item
-            android:id="@+id/nav_extras"
-            android:icon="@drawable/ic_extras"
-            android:title="@string/menu_extras" />
+            android:id="@+id/nav_newevent"
+            android:icon="@drawable/ic_add_black"
+            android:title="@string/add_event" />
 
-        <item android:title="@string/menu_communication">
+        <item android:title="@string/rwcalendar">
             <menu>
                 <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_share" />
+                    android:id="@+id/nav_read_cal"
+                    android:icon="@drawable/ic_export"
+                    android:title="@string/read_cal" />
                 <item
                     android:id="@+id/nav_export"
-                    android:icon="@drawable/ic_export"
-                    android:title="@string/menu_export" />
+                    android:icon="@drawable/ic_back_up"
+                    android:title="@string/menu_cloud" />
             </menu>
         </item>
 
-        <item android:title="@string/menu_settings">
+        <item android:title="@string/menu_extras">
             <menu>
                 <item
-                    android:id="@+id/nav_schedule_settings"
-                    android:icon="@drawable/ic_schedule_settings"
-                    android:title="@string/menu_schedule_settings" />
+                    android:id="@+id/nav_timer"
+                    android:icon="@drawable/ic_timer"
+                    android:title="@string/menu_timer" />
                 <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings"
-                    android:title="@string/menu_settings" />
+                    android:id="@+id/nav_notes"
+                    android:icon="@drawable/ic_note"
+                    android:title="@string/notes" />
             </menu>
         </item>
     </group>
