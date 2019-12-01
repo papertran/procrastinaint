@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -55,7 +57,7 @@ public class HENTimePicker extends AppCompatActivity {
 
 
         int myInt = 1;
-        List<Pair<Long,Long>> list = new ArrayList<Pair<Long,Long>>();
+        final List<Pair<Long,Long>> list = new ArrayList<Pair<Long,Long>>();
 
         Long pairDtStart = startDate;
         Long pairDtEnd = Long.valueOf(0);
@@ -95,7 +97,7 @@ public class HENTimePicker extends AppCompatActivity {
 
         }
 
-        ArrayList<String> start_to_end = new ArrayList<String>();
+        final ArrayList<String> start_to_end = new ArrayList<String>();
 
         for ( int x =0; x < list.size(); x++){
             String temp = "";
@@ -119,6 +121,18 @@ public class HENTimePicker extends AppCompatActivity {
                 start_to_end );
 
         lv.setAdapter(arrayAdapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            // argument position gives the index of item which is clicked
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3)
+            {
+                Long startTime = list.get(position).first;
+                Long endTime = list.get(position).second;
+                Toast.makeText(getApplicationContext(), "Start time : "+ startTime,   Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
