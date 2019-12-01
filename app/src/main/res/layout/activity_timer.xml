@@ -113,18 +113,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="145dp"
         android:layout_marginEnd="136dp"
         android:layout_marginBottom="657dp"
+        android:tooltipText="PLEASE"
         android:clickable="true"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pomodoroMessage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="50dp"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
 
 
