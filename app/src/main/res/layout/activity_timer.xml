@@ -34,6 +34,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <TextView
         android:id="@+id/minuteView"
         android:layout_width="200dp"
@@ -57,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="500dp"
-        android:layout_marginTop="635dp"
+        android:layout_marginTop="645dp"
         android:layout_marginEnd="500dp"
         android:layout_marginBottom="712dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -109,6 +111,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginBottom="657dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pomodoroMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
