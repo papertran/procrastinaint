@@ -35,6 +35,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
     HashMap<String, Long> calanderValues = new HashMap<>();
 
     private ArrayList<Event> eventArrayList = new ArrayList<Event>();
+    private HashMap<Event, Long> localEventHM= new HashMap<Event, Long>();
     private Button saveEventsButton;
 
 
@@ -49,6 +50,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: time is " + currentTime.toString());
         // Query though the content provider and get the names of the calanders
         calanderValues = getCalanders();
+        getContentProviderEvents();
 
         List<String> calandersNames = new ArrayList<String>();
 
@@ -176,7 +178,49 @@ public class ReadCalendarActivity extends AppCompatActivity {
         return calanderValues;
     }
 
-    
+    private void getContentProviderEvents(){
+        String[] projection = {
+                MainCP.TITLE,
+                MainCP.RRule,
+                MainCP.DURATION,
+                MainCP.DTSTART,
+                MainCP.DTEND,
+                MainCP.LAST_DATE};
+
+        String selection =
+                MainCP.DTSTART + " >= ? OR " +
+                MainCP.LAST_DATE +
+                " >= ?";
+        String[] selectionArgs = new String[]{
+                currentTime.toString(),
+                currentTime.toString()
+        };
+
+        Cursor cursor = getContentResolver().query(
+                MainCP.CONTENT_URI,
+                projection,
+                null,
+                null,
+                MainCP.DTSTART
+
+        );
+
+        if (cursor.getCount()!= 0){
+            if(cursor.moveToFirst()){
+                do{
+                    String title = cursor.getString(cursor.getColumnIndex(MainCP.TITLE));
+                    String rRule = cursor.getString(cursor.getColumnIndex(MainCP.RRule));
+                    String duration = cursor.getString(cursor.getColumnIndex(MainCP.DURATION));
+                    Long DTSTART = cursor.getLong(cursor.getColumnIndex(MainCP.DTSTART));
+                    Long DTEND = cursor.getLong(cursor.getColumnIndex(MainCP.DTEND));
+                    Long LAST_DATE = cursor.getLong(cursor.getColumnIndex(MainCP.LAST_DATE));
+                    Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+                    localEventHM.put(event, DTSTART);
+                }while(cursor.moveToNext());
+            }
+        }
+
+    }
     private void readEvent(View view){
         Log.i(TAG, "readEvent: Started");
         String calanderName = calanderSpinner.getSelectedItem().toString();
@@ -230,17 +274,23 @@ public class ReadCalendarActivity extends AppCompatActivity {
             // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
             Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
 
+            if(localEventHM.containsKey(event)){
+                Log.i(TAG, "readEvent: Event already exists in calendar");
+                continue;
+            }
+            else {
+                // Items to store into eventRecyclerView dataset
+                Log.i(TAG, "readEvent: \n" +
+                        "Title = " + event.getTitle() +
+                        "\nStart Date = " + event.getEventStartDate() +
+                        "\nEnd Date = " + event.getEventEndDate() +
+                        "\nStart Time= " + event.getEventStartTime() +
+                        "\nEnd Time = " + event.getEventEndTime());
 
-            // Items to store into eventRecyclerView dataset
-            Log.i(TAG, "readEvent: \n" +
-                    "Title = " + event.getTitle() +
-                    "\nStart Date = " + event.getEventStartDate() +
-                    "\nEnd Date = " + event.getEventEndDate() +
-                    "\nStart Time= " + event.getEventStartTime() +
-                    "\nEnd Time = " + event.getEventEndTime());
 
+                eventArrayList.add(event);
+            }
 
-            eventArrayList.add(event);
         }
 
     }
