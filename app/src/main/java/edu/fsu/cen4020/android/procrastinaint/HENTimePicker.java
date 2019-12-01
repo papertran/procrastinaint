@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -94,14 +95,31 @@ public class HENTimePicker extends AppCompatActivity {
 
         }
 
-        List<String> start_to_end = new ArrayList<String>();
+        ArrayList<String> start_to_end = new ArrayList<String>();
 
         for ( int x =0; x < list.size(); x++){
-            String temp = "Between " + ReadCalendarActivity.epochToDate(list.get(x).first) + " " +
-                    ReadCalendarActivity.epochToTime(list.get(x).first)  + " and " +
-                    ReadCalendarActivity.epochToDate(list.get(x).second) + " " +
-                    ReadCalendarActivity.epochToTime(list.get(x).second);
-            Log.i("LOL", temp);
+            String temp = "";
+            if (!ReadCalendarActivity.epochToDate(list.get(x).first).equals(ReadCalendarActivity.epochToDate(list.get(x).second)) ) {
+                temp = ReadCalendarActivity.epochToTime(list.get(x).first) + " " +
+                        ReadCalendarActivity.epochToDate(list.get(x).first) + " - " +
+                        ReadCalendarActivity.epochToTime(list.get(x).second) + " " +
+                        ReadCalendarActivity.epochToDate(list.get(x).second);
+            }
+            else{
+                temp = ReadCalendarActivity.epochToTime(list.get(x).first) + " - " +
+                        ReadCalendarActivity.epochToTime(list.get(x).second) + " on " +
+                        ReadCalendarActivity.epochToDate(list.get(x).first);
+            }
+            start_to_end.add(temp);
         }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                start_to_end );
+
+        lv.setAdapter(arrayAdapter);
     }
+
+
 }

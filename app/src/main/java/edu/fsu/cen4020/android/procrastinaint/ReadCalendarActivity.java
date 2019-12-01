@@ -249,7 +249,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
     // https://stackoverflow.com/questions/20654967/convert-unix-epoch-time-to-formatted-date-unexpected-date
     public static String epochToDate(Long epocSeconds){
         Date updateDate = new Date(epocSeconds);
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         return format.format(updateDate);
 
     }
