@@ -67,5 +67,7 @@
     <string name="minutes">Minutes</string>
     <string name="range">Select Date Range</string>
     <string name="pick_time">Select a time for the activity</string>
+    <string name="select_start_time">Select a starting time</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

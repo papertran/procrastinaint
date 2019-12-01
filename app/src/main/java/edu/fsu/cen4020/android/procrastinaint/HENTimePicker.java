@@ -130,9 +130,23 @@ public class HENTimePicker extends AppCompatActivity {
                 Long startTime = list.get(position).first;
                 Long endTime = list.get(position).second;
                 Toast.makeText(getApplicationContext(), "Start time : "+ startTime,   Toast.LENGTH_LONG).show();
+                openDialog(startTime, endTime, name, description, duration);
             }
         });
 
+    }
+
+    public void openDialog(Long start, Long end , String name, String description, Long duration){
+        HENDialog dialog = new HENDialog();
+
+        Bundle args = new Bundle();
+        args.putLong("START", start);
+        args.putLong("END", end);
+        args.putString("NAME", name);
+        args.putString("DESCRIPTION", description);
+        args.putLong("DURATION", duration);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "HEN dialog");
     }
 
 
