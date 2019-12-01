@@ -257,7 +257,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
     //https://stackoverflow.com/questions/4142313/convert-timestamp-in-milliseconds-to-string-formatted-time-in-java
     public static String epochToTime(Long epocSeconds){
         Date date = new Date(epocSeconds);
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm,a", Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
         return sdf.format(date);
     }
