@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,7 +45,6 @@ public class ReadCalendarActivity extends AppCompatActivity {
 
         readCalander = (Button) findViewById(R.id.readCalendarButton);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
-        saveEventsButton = (Button) findViewById(R.id.saveEventsButton);
         currentTime = System.currentTimeMillis();
         Log.i(TAG, "onCreate: time is " + currentTime.toString());
         // Query though the content provider and get the names of the calanders
@@ -78,52 +76,6 @@ public class ReadCalendarActivity extends AppCompatActivity {
                     Toast.makeText(ReadCalendarActivity.this, "No events found", Toast.LENGTH_SHORT ).show();
                 } else {
                     initRecyclerView();
-                }
-            }
-        });
-
-        saveEventsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
-                for(Event item : eventArrayList){
-
-                    // Track if event is reoccuring or singular
-                    boolean flag = false;
-                    if(item.getRRULE() == null){
-                        flag = true;
-                    }
-                    if(flag) {
-                        Log.i(TAG, "saveButton ReoccuringEvent " +
-                                "\nTitle =" + item.getTitle() +
-                                "\nDTStart = " + item.getDTSTART() +
-                                "\nRRule =" + item.getRRULE() +
-                                "\nDuration = " + item.getDuration() +
-                                "\nEnd Date = " + item.getEventEndDate());
-
-                        // Saves these values into content provider
-                        ContentValues values = new ContentValues();
-                        values.put(MainCP.TITLE, item.getTitle());
-                        values.put(MainCP.DTSTART, item.getDTSTART());
-                        values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-                        values.put(MainCP.RRule, item.getRRULE());
-                        values.put(MainCP.DURATION, item.getDuration());
-                        values.put(MainCP.NEW, 0);
-                        getContentResolver().insert(MainCP.CONTENT_URI, values);
-                    }else{
-                        Log.i(TAG, "saveButton singularEvent " +
-                                "\nTitle =" + item.getTitle() +
-                                "\nDTStart ="  + item.getDTSTART() +
-                                "\nDTEND = " + item.getDTEND());
-
-                        ContentValues values = new ContentValues();
-                        values.put(MainCP.TITLE, item.getTitle());
-                        values.put(MainCP.DTSTART, item.getDTSTART());
-                        values.put(MainCP.DTEND, item.getDTEND());
-                        values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-                        values.put(MainCP.NEW, 0);
-                        getContentResolver().insert(MainCP.CONTENT_URI, values);
-                    }
                 }
             }
         });
