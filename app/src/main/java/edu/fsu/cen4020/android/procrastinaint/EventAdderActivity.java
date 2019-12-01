@@ -110,6 +110,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        // The starting time button
         startButton = (Button) findViewById(R.id.start_time);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +122,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        // the ending time button
         endButton = (Button) findViewById(R.id.end_time);
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +157,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 String title = "";
                 String description = "";
 
+                //This section is for error checking
                 if (TITLE.getText().toString().matches(""))
                 {
                     errorCheck = true;
@@ -167,6 +170,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                     description = Description.getText().toString();
                 }
 
+                // The next part is split up between reoccurring events and nonreoccurring events
                 if (!Reoccurr_or_not){
                     Long startEpoch = Long.valueOf(0);
                     Long endEpoch = Long.valueOf(0);
@@ -198,6 +202,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.NEW, 1);
                         getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
                         if (Firebase) {
+                            // if logged in and the button is check it will upload to the firebase
                             uploadEventToFirebase(mNewValues);
                         }
 
@@ -339,6 +344,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
         String tempStr = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         if (datepick == 0) {
+            // if the date for nonreoccurring events is clicked
             CdateSolo = time;
             datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
             datePicker.setText(tempStr);
@@ -346,6 +352,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         }
 
         else if (datepick == 1){
+            // if the date for start on reoccurring event is clicked
             CdateRepeatStart = time;
             startDate = (Button) findViewById(R.id.Date_picker_reoccurring_start);
             startDate.setText(tempStr);
@@ -354,6 +361,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         }
 
         else if (datepick == 2){
+            // if the date for the end on reoccurring event is clicked
             CdateRepeatEnd = time;
             endDate = (Button) findViewById(R.id.Date_picker_reoccurring_end);
             endDate.setText(tempStr);
@@ -368,6 +376,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         int milli = hour*3600000+ minute *60000;
 
         if (start_or_end == 0) {
+            // if start time is clicked
             StartTimeHour = Integer.toString(hour);
             if (minute < 10){
                 StartTimeMin = "0";
@@ -385,6 +394,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
         }
 
         else{
+            // if end time is clicked
             EndTimeHour= Integer.toString(hour);
             if ( minute < 10)
             {
@@ -457,6 +467,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                 }
                 break;
             case R.id.firebase_upload:
+                // if the upload to firebase button is clicked
                 if (checked){
                 Firebase = true;
                 }

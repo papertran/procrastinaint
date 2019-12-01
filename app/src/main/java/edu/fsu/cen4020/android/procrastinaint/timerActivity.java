@@ -50,11 +50,10 @@ public class timerActivity extends AppCompatActivity {
     private DatabaseReference usernameRef;
     private FirebaseAuth auth;
 
-
+    //FOR SHARED PREFERENCES
     private long AllTimeP;
     private long AllTimeGP;
     private long AllTimeTime;
-    private long storeCounter;
 
 
     private String userID;
@@ -91,9 +90,9 @@ public class timerActivity extends AppCompatActivity {
             userID = null;
         }
 
-        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID);
+        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
 
-        usernameRef.addListenerForSingleValueEvent(eventListener);
+        usernameRef.addListenerForSingleValueEvent(eventListener); //create database entry if there isnt one for user
 
         Log.i(TAG, "THIS BIDDIE" + usernameRef);
 
@@ -153,22 +152,17 @@ public class timerActivity extends AppCompatActivity {
 
                 Log.i(TAG, "All time pp is: " + AllTimeP);
 
+                //STORE DATA TO THE FIREBASE
+                mDatabase.child("UserPomodoroInfo").child(userID).child("overallPomodoro").setValue(AllTimeP);
+                mDatabase.child("UserPomodoroInfo").child(userID).child("goldenTomatoes").setValue(AllTimeGP);
+                mDatabase.child("UserPomodoroInfo").child(userID).child("overallTime").setValue(AllTimeTime);
 
-
-                saveData();
+                saveData(); //store alltimetime, alltimeP and alltimegp in sharedpreferences
 
                 floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
                         "\nAll time golden tomatoes is: " + AllTimeGP +
                         "\nTotal minute(s) spent focused: " + AllTimeTime);
-//                loadData();
-//                updateViews();
 
-//                floatingActionButton.setTooltipText("You've done " + fullCounter + " pomodoros!");
-
-//                if(pCounter == 4)
-//                {
-//                    saveData();
-//                }
 
                 pomodoroCounter.setText(Integer.toString(fullCounter));
             }
