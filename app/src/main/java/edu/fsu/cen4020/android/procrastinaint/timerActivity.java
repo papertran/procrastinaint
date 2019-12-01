@@ -1,5 +1,6 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.EventListener;
 import java.util.Locale;
 
 public class timerActivity extends AppCompatActivity {
@@ -42,6 +44,7 @@ public class timerActivity extends AppCompatActivity {
 
 
     private DatabaseReference mDatabase;
+    private DatabaseReference usernameRef;
     private FirebaseAuth auth;
 
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -75,6 +78,7 @@ public class timerActivity extends AppCompatActivity {
         pomodoroCounter.setVisibility(View.VISIBLE);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
         auth = FirebaseAuth.getInstance();
 
         if(auth.getCurrentUser() != null){
@@ -82,15 +86,20 @@ public class timerActivity extends AppCompatActivity {
         } else {
             userID = null;
         }
-        minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
 
+        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID);
+
+        usernameRef.addListenerForSingleValueEvent(eventListener);
+
+        Log.i(TAG, "THIS BIDDIE" + usernameRef);
+
+        minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
         minutePicker.setMinValue(0);
         minutePicker.setMaxValue(60);
         minutePicker.setValue(25);
 
         minutePicker.setOnValueChangedListener(onValueChangeListener);
 
-//        Log.i(TAG, "prevTime is in millisecs and minutes: " + prevTime + prevTime/60000);
 
         minuteView.setVisibility(View.INVISIBLE);
         pomodoroButton.setOnClickListener(new View.OnClickListener()
@@ -133,10 +142,8 @@ public class timerActivity extends AppCompatActivity {
                 if(pCounter == 4)
                 {
                     saveData();
-                    writeData(userID, 1, 2, 3, 4);
                 }
 
-                Log.i(TAG, "pCounter: " + pCounter);
                 pomodoroCounter.setText(Integer.toString(fullCounter));
             }
         }.start();
@@ -198,12 +205,7 @@ public class timerActivity extends AppCompatActivity {
                 }
             };
 
-    private void writeData(String username, long OverallTime, long OverallPomodoro, long GoldenTomatoes,
-                           long GlobalPomodoro){
-        Pomodoros pomodoro = new Pomodoros(username, OverallTime, OverallPomodoro, GoldenTomatoes, GlobalPomodoro);
 
-        mDatabase.child("UserPomodoroInfo").child(username).setValue(pomodoro);
-    }
 
     public void saveData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -217,11 +219,38 @@ public class timerActivity extends AppCompatActivity {
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
+    private void writeData(String username, long OverallTime, long OverallPomodoro, long GoldenTomatoes,
+                           long GlobalPomodoro){
+        Pomodoros pomodoro = new Pomodoros(username, OverallTime, OverallPomodoro, GoldenTomatoes, GlobalPomodoro);
+
+        mDatabase.child("UserPomodoroInfo").child(username).setValue(pomodoro);
+    }
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         text = sharedPreferences.getString(TEXT, "");
         storeCounter = sharedPreferences.getLong(PCOUNT, 0);
     }
+
+    ValueEventListener eventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if(!dataSnapshot.exists())
+            {
+                Log.i(TAG, "no user for this guy yet" + dataSnapshot);
+                writeData(userID, 0, 0, 0, 0);
+            }
+            else
+            {
+                Log.i(TAG, "already has user" + dataSnapshot);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.i(TAG, databaseError.getMessage());
+        }
+    };
+
 
 
 }
