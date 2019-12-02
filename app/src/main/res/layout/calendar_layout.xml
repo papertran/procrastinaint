@@ -17,27 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addassigmentbutton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="0dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingEnd="0dp"
-        android:paddingRight="0dp"
-        app:fabCustomSize="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/addclassbutton"
-        app:layout_constraintEnd_toEndOf="@+id/addclassbutton"
-        app:layout_constraintStart_toStartOf="@+id/addclassbutton"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_add_white" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addclassbutton"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -55,54 +34,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_white" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addbreakbutton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:fabCustomSize="40dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="0dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingEnd="0dp"
-        android:paddingRight="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addassigmentbutton"
-        app:layout_constraintEnd_toEndOf="@+id/addassigmentbutton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/addassigmentbutton"
-        app:srcCompat="@drawable/ic_add_white" />
-
-    <TextView
-        android:id="@+id/break_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:text="@string/AddBreak"
-        app:layout_constraintBottom_toBottomOf="@+id/addbreakbutton"
-        app:layout_constraintEnd_toStartOf="@+id/addbreakbutton"
-        app:layout_constraintTop_toTopOf="@+id/addbreakbutton" />
-
-    <TextView
-        android:id="@+id/assignment_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/AddAssignment"
-        app:layout_constraintBottom_toBottomOf="@+id/addassigmentbutton"
-        app:layout_constraintEnd_toStartOf="@+id/addassigmentbutton"
-        app:layout_constraintTop_toTopOf="@+id/addassigmentbutton"
-        app:layout_constraintVertical_bias="1.0" />
-
     <TextView
         android:id="@+id/class_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:text="@string/AddClass"
+        android:text="@string/add_event"
         app:layout_constraintBottom_toBottomOf="@+id/addclassbutton"
         app:layout_constraintEnd_toStartOf="@+id/addclassbutton"
         app:layout_constraintTop_toTopOf="@+id/addclassbutton"

@@ -128,13 +128,4 @@
         app:layout_constraintStart_toEndOf="@+id/AddEventButton"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
-    <Button
-        android:id="@+id/to_draw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:onClick="onTo_drawerButtonClicked"
-        android:text="to drawer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewEventsButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
