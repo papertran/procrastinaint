@@ -8,20 +8,22 @@
 
     <Button
         android:id="@+id/adNote"
-        android:layout_width="41dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="350dp"
+        android:layout_width="36dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="325dp"
+        android:layout_marginTop="625dp"
+        android:layout_marginBottom="25dp"
         android:background="@null"
         android:drawableEnd="@drawable/ic_add_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="411dp"
-        android:layout_height="621dp"
+        android:layout_height="603dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
