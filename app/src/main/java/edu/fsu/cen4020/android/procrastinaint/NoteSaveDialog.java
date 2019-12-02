@@ -80,7 +80,7 @@ public class NoteSaveDialog extends AppCompatDialogFragment {
 
 
             //This changes the default save location of the FileOutputStream
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
             dir.mkdirs();
 
