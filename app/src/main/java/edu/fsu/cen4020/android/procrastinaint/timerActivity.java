@@ -2,6 +2,8 @@ package edu.fsu.cen4020.android.procrastinaint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -180,21 +182,25 @@ public class timerActivity extends AppCompatActivity {
                 MainCP.DTEND,
                 MainCP.LAST_DATE};
 
-        String selection =
+        String selection = MainCP.DTSTART + " >= ? AND " +
                 MainCP.LAST_DATE + " <= ? ";
+
+        Long secondTime = currentTime + 43200000;
         String[] selectionArgs = new String[]{
-                currentTime.toString()};
+                currentTime.toString(),
+                secondTime.toString()
+        };
 
         Cursor cursor = getContentResolver().query(
                 MainCP.CONTENT_URI,
                 null,
                 null,
                 null,
-                null
+                MainCP.DTSTART
 
         );
-        Log.i(TAG, "onCreate: cursor count = " + cursor.getCount());
 
+        // Get all events from cursor
         if (cursor.getCount()!= 0){
             if(cursor.moveToFirst()){
                 do{
@@ -211,15 +217,60 @@ public class timerActivity extends AppCompatActivity {
             }
         }
 
-        for(Event event : eventArrayList) {
-            Log.i(TAG, "timerActivity: \n" +
-                    "Title = " + event.getTitle() +
-                    "\nStart Date = " + event.getEventStartDate() +
-                    "\nEnd Date = " + event.getEventEndDate() +
-                    "\nStart Time= " + event.getEventStartTime() +
-                    "\nEnd Time = " + event.getEventEndTime());
-        }
+        initRecyclerView();
 
+
+//        for(Event event : eventArrayList) {
+//            Log.i(TAG, "timerActivity: \n" +
+//                    "Title = " + event.getTitle() +
+//                    "\nStart Date = " + event.getEventStartDate() +
+//                    "\nEnd Date = " + event.getEventEndDate() +
+//                    "\nStart Time= " + event.getEventStartTime() +
+//                    "\nEnd Time = " + event.getEventEndTime());
+//        }
+
+
+
+    }
+
+    private void initRecyclerView(){
+        Log.d(TAG, "initRecyclerView: init recyclerview");
+        RecyclerView eventRecyclerView = (RecyclerView) findViewById(R.id.readEventsRecyclerView);
+        final EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, eventArrayList);
+        eventRecyclerView.setAdapter(adapter);
+        eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+        SwipeableRecyclerViewTouchListener swipeTouchListener = new SwipeableRecyclerViewTouchListener(eventRecyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener() {
+            @Override
+            public boolean canSwipeLeft(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean canSwipeRight(int position) {
+                return true;
+            }
+
+            @Override
+            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+
+            }
+
+            @Override
+            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                for(int position : reverseSortedPositions){
+                    Event event = eventArrayList.get(position);
+                    Event secondEvent = new Event(event.getTitle(), event.getDescription(), event.getRRULE(), event.getDuration(), event.getDTSTART() + 3600000, event.getDTEND(), event.getLAST_DATE());
+                    Log.i(TAG, "onDismissedBySwipeRight: SavedEvent");
+                    eventArrayList.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+        eventRecyclerView.addOnItemTouchListener(swipeTouchListener);
     }
 
     private void startTimer(){
@@ -259,8 +310,6 @@ public class timerActivity extends AppCompatActivity {
                     mDatabase.child("UserPomodoroInfo").child(userID).child("overallTime").setValue(AllTimeTime);
                 }
 
-
-                //saveData(); //store alltimetime, alltimeP and alltimegp in sharedpreferences
 
                 floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
                         "\nAll time golden tomatoes is: " + AllTimeGP +
