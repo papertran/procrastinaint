@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class Event {
 
@@ -155,33 +153,30 @@ public class Event {
             }
         }
 
-        HashMap<String, Long> apartHashmap = new HashMap<String, Long>();
-
-        for(int i = 0; i < recurringDays.size(); i++){
-            apartHashmap.put(recurringDays.get(i), distanceApart.get(i));
-        }
-
-
-//        Log.i(TAG, "recurringToSingular: recuring day = " + recurringDays.toString());
-//        for(Long time : distanceApart){
-//            Log.i(TAG, "recurringToSingular: distance apart = " + msToDays(time));
-//        }
-
 
 
 
         // newStartDate calulate from time difference betewen two date, then adding to DTStart
         Long newStartDate;
-        int i = 1;
+
+        int i = 0;
 
         if(currentTime > this.getDTSTART()){
             newStartDate =  this.getDTSTART() + ( ((currentTime - this.getDTSTART()) / 604800000)  * 604800000 );
+            String weekDay = epochToWeekDay(newStartDate);
 
+            i = recurringDays.indexOf(weekDay);
             while(newStartDate < currentTime){
                 Log.i(TAG, "recurringToSingular: This is the Currently " + "\nTitle = " + this.getTitle() +
                         "\nCurrent date = " + epochToDate(newStartDate) + "\nday = " + epochToWeekDay(newStartDate));
 
-                newStartDate += apartHashmap.get(epochToWeekDay(newStartDate));
+                if(i == distanceApart.size()-1) {
+                    newStartDate += distanceApart.get(i);
+                    i = 0;
+                } else{
+                    newStartDate += distanceApart.get(i);
+                    i++;
+                }
 
             }
 
@@ -197,11 +192,16 @@ public class Event {
             Event event = new Event(this.getTitle(), null, null, null, currentTime, currentTime+ RFC2445ToMilliseconds(this.getDuration()), currentTime+ RFC2445ToMilliseconds(this.getDuration()));
             newEvents.add(event);
 
-//            newStartDate += apartHashmap.get(epochToWeekDay(newStartDate));
-
+            if(i == distanceApart.size()-1) {
+                currentTime += distanceApart.get(i);
+                i = 0;
+            } else{
+                currentTime += distanceApart.get(i);
+                i++;
+            }
         }
 
-
+//
 //        for(Event item : newEvents){
 //            Log.i(TAG, " recurringToSingle NEW REPEATING EVENT" +
 //                    "\nTitle =" + item.getTitle() +
