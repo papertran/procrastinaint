@@ -46,7 +46,7 @@ public class timerActivity extends AppCompatActivity {
     private static final String TAG = timerActivity.class.getCanonicalName();
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
-    private long mTimeLeft = 1500000;
+    private long mTimeLeft = 1500000; //25 minutes in milliSecs
     private long prevTime;
 //    private long breakTime = 300000;
     private long breakTime = 5000;
@@ -62,7 +62,7 @@ public class timerActivity extends AppCompatActivity {
     private DatabaseReference usernameRef;
     private FirebaseAuth auth;
 
-    //FOR SHARED PREFERENCES
+    //TO RETRIEVE DATA FROM DATABASE
     private long AllTimeP;
     private long AllTimeGP;
     private long AllTimeTime;
@@ -117,6 +117,8 @@ public class timerActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +140,7 @@ public class timerActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        //ACCESS DATABASE INFORMATION FOR INFO ICON
         if(auth.getCurrentUser() != null){
             userID = auth.getCurrentUser().getUid();
             usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
@@ -150,6 +153,7 @@ public class timerActivity extends AppCompatActivity {
 
         Log.i(TAG, "cmon man" + AllTimeP);
 
+        //SET DEFAULT VALUES FOR MY BUTTON/TEXTVIEW
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
         minutePicker.setMinValue(0);
         minutePicker.setMaxValue(60);
@@ -273,6 +277,7 @@ public class timerActivity extends AppCompatActivity {
         eventRecyclerView.addOnItemTouchListener(swipeTouchListener);
     }
 
+
     private void startTimer(){
         messageView.setVisibility(View.INVISIBLE);
         minuteView.setVisibility(View.VISIBLE);
@@ -329,6 +334,8 @@ public class timerActivity extends AppCompatActivity {
         {
             breakTimeLeft = 10000;
             pCounter = 0;
+            messageView.setText("You earned a golden tomato!!!");
+            messageView.setVisibility(View.VISIBLE);
         }
         mCountDownTimer = new CountDownTimer(breakTimeLeft, 1000) {
             @Override
@@ -341,9 +348,10 @@ public class timerActivity extends AppCompatActivity {
             public void onFinish() {
                 if(pCounter == 4) {
                     messageView.setText("You earned a golden tomato!!!");
+                    messageView.setVisibility(View.VISIBLE);
                 }
                 else{
-                    messageView.setText("5 minute break is done. Press button to start again.");
+                    messageView.setText("Break is done. Press button to start again.");
                 }
                 pomodoroButton.setVisibility(View.VISIBLE);
                 breakButton.setVisibility(View.INVISIBLE);
