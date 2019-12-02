@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -22,7 +24,7 @@ public class calendar extends AppCompatActivity {
     //calendar activity referenced from youtube video
     private static final String TAG = "CalendarActivity";
     private CalendarView my_calendarView;
-
+    private FirebaseAuth auth;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate and add items to actionbar
@@ -38,6 +40,11 @@ public class calendar extends AppCompatActivity {
                 return true;
             case R.id.nav_login:
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return true;
+            case R.id.nav_logout:
+                if(auth.getCurrentUser() != null){
+                    auth.signOut();
+                }
                 return true;
             case R.id.nav_newevent:
                 startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
@@ -64,6 +71,8 @@ public class calendar extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
         setTitle("Home");
