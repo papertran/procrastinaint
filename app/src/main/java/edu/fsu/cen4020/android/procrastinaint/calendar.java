@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
@@ -101,7 +102,6 @@ public class calendar extends AppCompatActivity {
 //            }
 //        });
 
-
     }
     public void openDialog(Long time){
         Calendar_Dialog dialog = new Calendar_Dialog();
@@ -109,5 +109,10 @@ public class calendar extends AppCompatActivity {
         args.putLong("TIME", time);
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "Calendar Dialog");
+    }
+
+    public void onEventAdderButtonClicked(View view){
+        Intent intent = new Intent(this, EventAdderActivity.class);
+        startActivity(intent);
     }
 }

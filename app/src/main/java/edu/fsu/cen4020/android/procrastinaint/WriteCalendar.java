@@ -78,6 +78,7 @@ public class WriteCalendar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Write Calendar");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_calendar);
         currentTime = System.currentTimeMillis();

@@ -16,36 +16,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addclassbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="0dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingEnd="0dp"
-        android:paddingRight="0dp"
-        app:fabCustomSize="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_white" />
-
-    <TextView
-        android:id="@+id/class_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+    <Button
+        android:id="@+id/addevent"
+        android:layout_width="133dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:drawableEnd="@drawable/ic_add_circle_"
+        android:onClick="onEventAdderButtonClicked"
         android:text="@string/add_event"
-        app:layout_constraintBottom_toBottomOf="@+id/addclassbutton"
-        app:layout_constraintEnd_toStartOf="@+id/addclassbutton"
-        app:layout_constraintTop_toTopOf="@+id/addclassbutton"
-        app:layout_constraintVertical_bias="0.54" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-<!--    <ImageButton-->
+    <!--    <ImageButton-->
 <!--        android:id="@+id/menuButton"-->
 <!--        android:layout_width="42dp"-->
 <!--        android:layout_height="42dp"-->
