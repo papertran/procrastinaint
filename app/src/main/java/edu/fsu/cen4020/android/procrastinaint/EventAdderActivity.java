@@ -211,6 +211,9 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                             uploadEventToFirebase(mNewValues);
                         }
 
+                        Intent I = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(I);
+
                     }
 
 
@@ -322,19 +325,23 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
                         }
 
-                        ContentValues mNewValues = new ContentValues();
-                        mNewValues.put(MainCP.TITLE, title);
-                        mNewValues.put(MainCP.DESCRIPTION, description);
-                        mNewValues.put(MainCP.RRule, repeatRule);
-                        mNewValues.put(MainCP.DURATION, duration);
-                        mNewValues.put(MainCP.DTSTART, startEpoch);
-                        mNewValues.put(MainCP.LAST_DATE, endDate);
-                        mNewValues.put(MainCP.NEW, 1);
-//                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+
 
                         if (Firebase) {
+                            ContentValues mNewValues = new ContentValues();
+                            mNewValues.put(MainCP.TITLE, title);
+                            mNewValues.put(MainCP.DESCRIPTION, description);
+                            mNewValues.put(MainCP.RRule, repeatRule);
+                            mNewValues.put(MainCP.DURATION, duration);
+                            mNewValues.put(MainCP.DTSTART, startEpoch);
+                            mNewValues.put(MainCP.LAST_DATE, endDate);
+                            mNewValues.put(MainCP.NEW, 1);
+//                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
                             uploadEventToFirebase(mNewValues);
                         }
+
+                        Intent I = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(I);
 
                     }
 

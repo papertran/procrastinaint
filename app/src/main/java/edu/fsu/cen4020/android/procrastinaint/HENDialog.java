@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,10 +42,8 @@ public class HENDialog extends AppCompatDialogFragment {
         final String name = bundle.getString("NAME");
         final String description = bundle.getString("DESCRIPTION");
 
-        Log.i("LOL", "Duration is " + ReadCalendarActivity.epochToTime(duration));
 
-
-        Long end_minus_duration = end - duration;
+        final Long end_minus_duration = end - duration;
 
         String start_time = ReadCalendarActivity.epochToTime(start);
         String end_time = ReadCalendarActivity.epochToTime(end_minus_duration);
@@ -123,8 +122,10 @@ public class HENDialog extends AppCompatDialogFragment {
 
                                 startOfDayTimes = startOfDayTimes + hours_given * 3600000 + minutes_given * 60000;
 
-                                Log.i("LOL", "" + ReadCalendarActivity.epochToDate(startOfDayTimes) + " " + ReadCalendarActivity.epochToTime(startOfDayTimes));
-
+                                if (startOfDayTimes < start || startOfDayTimes > end_minus_duration){
+                                    errorCheck = true;
+                                    Toast.makeText(view.getContext(), "Please enter a valid time.", Toast.LENGTH_LONG).show();
+                                }
 
 
                                 if (!errorCheck){
@@ -136,6 +137,10 @@ public class HENDialog extends AppCompatDialogFragment {
                                     mNewValues.put(MainCP.LAST_DATE, startOfDayTimes + duration);
                                     mNewValues.put(MainCP.NEW, 1);
                                     getContext().getContentResolver().insert(MainCP.CONTENT_URI, mNewValues);
+
+                                    Intent I = new Intent(getActivity(), MainActivity.class);
+                                    startActivity(I);
+
                                 }
                             }
                         }
