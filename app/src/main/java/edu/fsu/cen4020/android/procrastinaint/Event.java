@@ -3,13 +3,16 @@ package edu.fsu.cen4020.android.procrastinaint;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class Event {
+
+    private static final String TAG = Event.class.getCanonicalName();
     String Title;
     String Description;
     String RRULE;
@@ -17,9 +20,14 @@ public class Event {
     Long DTSTART;
     Long DTEND;
     Long LAST_DATE;
+    boolean recurring;
 
     public Event(){
 
+    }
+
+    public boolean isRecurring() {
+        return recurring;
     }
 
     public Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
@@ -30,6 +38,11 @@ public class Event {
         this.DTSTART = DTSTART;
         this.DTEND = DTEND;
         this.LAST_DATE = LAST_DATE;
+        if(this.RRULE == null){
+            this.recurring = false;
+        } else{
+            this.recurring = true;
+        }
     }
 
     public Boolean isEqual(Event event){
@@ -105,13 +118,116 @@ public class Event {
         }
     }
 
+    public ArrayList<Event> recurringToSingular(){
+        ArrayList<Event> newEvents = new ArrayList<Event>();
+        Long currentTime = 1572209600000L;
+        if(!isRecurring()){
+            return null;
+        }
+
+        // Get list of days from that reoccur
+        ArrayList<String> recurringDays = RRuleToDays(this.getRRULE());
+
+//        Log.i(TAG, "recurringToSingular: rruel = " + this.getRRULE());
+//        for(String item : recurringDays)
+//        {
+//            Log.i(TAG, "recurringToSingular: New Rule is = " + item);
+//        }
+
+
+        // Check if the event has passed already
+
+
+
+        ArrayList<Long> distanceApart = new ArrayList<Long>();
+        for(int i = 0; i < recurringDays.size(); i++){
+            if(recurringDays.size() == 1){
+                distanceApart.add(daysApart(recurringDays.get(i)));
+            }
+            else if( i == recurringDays.size() -1){
+                distanceApart.add(daysApart(recurringDays.get(i),
+                        recurringDays.get(0)));
+            } else{
+                distanceApart.add(daysApart(recurringDays.get(i),
+                        recurringDays.get(i+1)));
+            }
+        }
+
+
+
+
+        // newStartDate calulate from time difference betewen two date, then adding to DTStart
+        Long newStartDate;
+
+        int i = 0;
+
+        if(currentTime > this.getDTSTART()){
+            newStartDate =  this.getDTSTART() + ( ((currentTime - this.getDTSTART()) / 604800000)  * 604800000 );
+            String weekDay = epochToWeekDay(newStartDate);
+
+            i = recurringDays.indexOf(weekDay);
+            while(newStartDate < currentTime){
+                Log.i(TAG, "recurringToSingular: This is the Currently " + "\nTitle = " + this.getTitle() +
+                        "\nCurrent date = " + epochToDate(newStartDate) + "\nday = " + epochToWeekDay(newStartDate));
+
+                if(i == distanceApart.size()-1) {
+                    newStartDate += distanceApart.get(i);
+                    i = 0;
+                } else{
+                    newStartDate += distanceApart.get(i);
+                    i++;
+                }
+
+            }
+
+        } else {
+            newStartDate = DTSTART;
+        }
+
+        currentTime = newStartDate;
+
+//        Log.i(TAG, "recurringToSingular: GG \n Ttile =" + this.getTitle() + "\nCurrent Time = " + epochToDate(currentTime) + "\nDay = " + epochToWeekDay(currentTime));
+
+        while(currentTime < this.getLAST_DATE()){
+            Event event = new Event(this.getTitle(), null, null, null, currentTime, currentTime+ RFC2445ToMilliseconds(this.getDuration()), currentTime+ RFC2445ToMilliseconds(this.getDuration()));
+            newEvents.add(event);
+
+            if(i == distanceApart.size()-1) {
+                currentTime += distanceApart.get(i);
+                i = 0;
+            } else{
+                currentTime += distanceApart.get(i);
+                i++;
+            }
+        }
+
+//
+//        for(Event item : newEvents){
+//            Log.i(TAG, " recurringToSingle NEW REPEATING EVENT" +
+//                    "\nTitle =" + item.getTitle() +
+//                    "\nDTStart = " + item.getEventStartDate() + " On " + item.epochToWeekDay(item.getDTSTART())+
+//                    "\nEnd Date = " + item.getEventEndTime() + " On " + item.epochToWeekDay(item.getDTEND())+
+//                    "\nDTStart = " + item.getEventStartTime() +
+//                    "\nEnd Date = " + item.getEventEndTime());
+//        }
+
+        return newEvents;
+    }
+
+
+
     // Helper Functions
+    // https://stackoverflow.com/questions/43676183/convert-unix-time-to-week-day
+    private String epochToWeekDay(Long epochSeconds){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.US);
+        Date dateFormat = new java.util.Date(epochSeconds);
+        return sdf.format(dateFormat );
+    }
     private  String epochToDate(Long epocSeconds){
         Date updateDate = new Date(epocSeconds);
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         return format.format(updateDate);
     }
-
 
     //https://stackoverflow.com/questions/4142313/convert-timestamp-in-milliseconds-to-string-formatted-time-in-java
     private  String epochToTime(Long epocSeconds){
@@ -119,6 +235,80 @@ public class Event {
         SimpleDateFormat sdf = new SimpleDateFormat("h:mm,a", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
         return sdf.format(date);
+    }
+
+    private Long msToDays(Long seconds){
+        return seconds / 86400000;
+    }
+
+    // Turns RRule to list of days
+    private ArrayList<String> RRuleToDays(String rRule){
+
+        int indexPoint = rRule.indexOf("BYDAY=");
+        rRule = rRule.substring(indexPoint);
+        if(rRule == null){
+            rRule = "";
+        }
+        ArrayList<String> Days = new ArrayList<String>();
+        if(rRule.contains("SU")){
+            Days.add("Sunday");
+        }
+        if(rRule.contains("MO")){
+            Days.add("Monday");
+        }
+        if(rRule.contains("TU")){
+            Days.add("Tuesday");
+        }
+        if(rRule.contains("WE")){
+            Days.add("Wednesday");
+        }
+        if(rRule.contains("TH")){
+            Days.add("Thursday");
+        }
+        if(rRule.contains("FR")){
+            Days.add("Friday");
+        }
+        if(rRule.contains("SA")){
+            Days.add("Saturday");
+        }
+        return Days;
+    }
+
+
+    private Long daysApart(String day1){
+         return 604800000L;
+    }
+    private Long daysApart(String day1, String day2){
+        HashMap<String, Integer> dayToInt =new  HashMap<String, Integer>(){{
+            put("Monday", 1);
+            put("Tuesday", 2);
+            put("Wednesday", 3);
+            put("Thursday", 4);
+            put("Friday", 5);
+            put("Saturday", 6);
+            put("Sunday", 7);
+        }};
+
+        if(dayToInt.containsKey(day1) && dayToInt.containsKey(day2)){
+            Integer int1 = dayToInt.get(day2);
+            Integer int2 = dayToInt.get(day1);
+            Integer timeApart;
+            // Subtract cause have to get to sunday first
+            if(int1 < int2){
+                timeApart = 7 - int2 + int1;
+            } else{
+                timeApart = int2 - int1;
+            }
+
+            if(timeApart < 0)
+                timeApart *= -1;
+
+            return 86400000L * timeApart;
+
+        } else{
+            Log.i(TAG, "daysApart: day1 = " + day1 +"\nday2 = " + day2);
+            return null;
+        }
     }
 
     private  long RFC2445ToMilliseconds(String str)

@@ -273,19 +273,31 @@ public class ReadCalendarActivity extends AppCompatActivity {
             // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
             // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
             Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+            Log.i(TAG, "readEvent: \n" +
+                    "Title = " + event.getTitle() +
+                    "\nStart Date = " + event.getEventStartDate() +
+                    "\nEnd Date = " + event.getEventEndDate() +
+                    "\nStart Time= " + event.getEventStartTime() +
+                    "\nEnd Time = " + event.getEventEndTime() +
+                    "\nRrule = " + event.getRRULE() +
+                    "\nCurrentTime = " + currentTime);
 
+            if(event.isRecurring()){
+                event.recurringToSingular();
+            }
             if(localEventHM.containsKey(event)){
                 Log.i(TAG, "readEvent: Event already exists in calendar");
                 continue;
             }
             else {
                 // Items to store into eventRecyclerView dataset
-                Log.i(TAG, "readEvent: \n" +
-                        "Title = " + event.getTitle() +
-                        "\nStart Date = " + event.getEventStartDate() +
-                        "\nEnd Date = " + event.getEventEndDate() +
-                        "\nStart Time= " + event.getEventStartTime() +
-                        "\nEnd Time = " + event.getEventEndTime());
+//                Log.i(TAG, "readEvent: \n" +
+//                        "Title = " + event.getTitle() +
+//                        "\nStart Date = " + event.getEventStartDate() +
+//                        "\nEnd Date = " + event.getEventEndDate() +
+//                        "\nStart Time= " + event.getEventStartTime() +
+//                        "\nEnd Time = " + event.getEventEndTime() +
+//                        "\nRrule = " + event.getRRULE());
 
 
                 eventArrayList.add(event);
