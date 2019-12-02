@@ -46,7 +46,7 @@ public class timerActivity extends AppCompatActivity {
     private static final String TAG = timerActivity.class.getCanonicalName();
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
-    private long mTimeLeft;
+    private long mTimeLeft = 1500000;
     private long prevTime;
 //    private long breakTime = 300000;
     private long breakTime = 5000;
@@ -147,7 +147,6 @@ public class timerActivity extends AppCompatActivity {
         } else {
             userID = null;
         }
-
 
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
@@ -339,7 +338,12 @@ public class timerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                messageView.setText("5 minute break is done. Press button to start again.");
+                if(pCounter == 4) {
+                    messageView.setText("You earned a golden tomato!!!");
+                }
+                else{
+                    messageView.setText("5 minute break is done. Press button to start again.");
+                }
                 pomodoroButton.setVisibility(View.VISIBLE);
                 breakButton.setVisibility(View.INVISIBLE);
                 minutePicker.setVisibility(View.VISIBLE);
@@ -397,10 +401,20 @@ public class timerActivity extends AppCompatActivity {
             else
             {
                 Object temp = dataSnapshot.child("overallPomodoro").getValue();
+                Object temp2 = dataSnapshot.child("goldenTomatoes").getValue();
+                Object temp3 = dataSnapshot.child("overallTime").getValue();
 //                AllTimeP = Long.parseLong(temp);
                 if(temp != null) {
                     String porque = temp.toString();
+                    String porque2 = temp2.toString();
+                    String porque3 = temp3.toString();
                     AllTimeP = Long.parseLong(porque);
+                    AllTimeGP = Long.parseLong(porque2);
+                    AllTimeTime = Long.parseLong(porque3);
+
+                    floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
+                            "\nAll time golden tomatoes is: " + AllTimeGP +
+                            "\nTotal minute(s) spent focused: " + AllTimeTime);
                     Log.i(TAG, "FUCK " + AllTimeP);
                 }
 //                Log.i(TAG, "already has user" + dataSnapshot + "plus this shit" + dataSnapshot.child("overallPomodoro").getValue());
