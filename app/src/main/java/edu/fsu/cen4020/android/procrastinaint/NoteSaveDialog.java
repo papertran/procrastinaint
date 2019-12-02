@@ -71,6 +71,16 @@ public class NoteSaveDialog extends AppCompatDialogFragment {
         void applyText(String filename);
     }
 
+
+    
+    /*
+    ******************************************************************
+    *
+    * Saving notes to the download folder works on Android 9.0 but not Android 10.0
+    * Please test using Android 9.0
+    *
+    * ****************************************************************
+    */
     public void dialogSave(EditText mEditText, String FILE_NAME){
         //Converts mEditText it to a string saving it to "text"
         String text = mEditText.getText().toString();
@@ -78,8 +88,8 @@ public class NoteSaveDialog extends AppCompatDialogFragment {
 
         try {
 
-
             //This changes the default save location of the FileOutputStream
+
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
             dir.mkdirs();
