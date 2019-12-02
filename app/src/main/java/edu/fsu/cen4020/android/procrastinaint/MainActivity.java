@@ -283,9 +283,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    public void onTo_drawerButtonClicked(View view) {
-        Intent intent = new Intent (this, BaseDrawerActivity.class);
-        startActivity(intent);
-    }
 
 }
