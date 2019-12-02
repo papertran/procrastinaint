@@ -1,13 +1,10 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.os.CountDownTimer;
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -48,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Parts assignment
-        loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton = (Button) findViewById(R.id.signUpButton);
         registerButton = (Button) findViewById(R.id.registerButton);
         EventAdderButton = (Button) findViewById(R.id.AddEventButton);
         notesButton = (Button) findViewById(R.id.notesButton);
