@@ -213,7 +213,7 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                     values.put(MainCP.DTSTART, item2.getDTSTART());
                     values.put(MainCP.DTEND, item2.getDTEND());
                     values.put(MainCP.LAST_DATE, item2.getLAST_DATE());
-                    values.put(MainCP.NEW, 0);
+                    values.put(MainCP.NEW, 1);
                     getContentResolver().insert(MainCP.CONTENT_URI, values);
                 }
             }

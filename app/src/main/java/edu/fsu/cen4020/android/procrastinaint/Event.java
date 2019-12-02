@@ -36,6 +36,10 @@ public class Event {
         this.write = write;
     }
 
+    public int getWrite() {
+        return write;
+    }
+
     public Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
         Title = title;
         Description = description;

@@ -36,7 +36,6 @@ public class ReadCalendarActivity extends AppCompatActivity {
 
     private ArrayList<Event> eventArrayList = new ArrayList<Event>();
     private HashMap<Event, Long> localEventHM= new HashMap<Event, Long>();
-    private Button saveEventsButton;
 
 
     @Override
@@ -226,6 +225,8 @@ public class ReadCalendarActivity extends AppCompatActivity {
         }
 
     }
+
+
     private void readEvent(View view){
         Log.i(TAG, "readEvent: Started");
         String calanderName = calanderSpinner.getSelectedItem().toString();
