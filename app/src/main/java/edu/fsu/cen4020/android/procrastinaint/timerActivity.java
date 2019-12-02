@@ -89,21 +89,18 @@ public class timerActivity extends AppCompatActivity {
         pomodoroCounter.setVisibility(View.VISIBLE);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
-//        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-//        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-//        if(auth.getCurrentUser() != null){
-//            userID = auth.getCurrentUser().getUid();
-//        } else {
-//            userID = null;
-//        }
-//
-//        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
-//
-//        usernameRef.addListenerForSingleValueEvent(eventListener); //create database entry if there isnt one for user
+        if(auth.getCurrentUser() != null){
+            userID = auth.getCurrentUser().getUid();
+            usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
+            usernameRef.addListenerForSingleValueEvent(eventListener); //create database entry if there isn't one for user
+        } else {
+            userID = null;
+        }
 
-        Log.i(TAG, "THIS BIDDIE" + userID);
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
         minutePicker.setMinValue(0);
@@ -209,9 +206,13 @@ public class timerActivity extends AppCompatActivity {
                 Log.i(TAG, "All time pp is: " + AllTimeP);
 
                 //STORE DATA TO THE FIREBASE
-//                mDatabase.child("UserPomodoroInfo").child(userID).child("overallPomodoro").setValue(AllTimeP);
-//                mDatabase.child("UserPomodoroInfo").child(userID).child("goldenTomatoes").setValue(AllTimeGP);
-//                mDatabase.child("UserPomodoroInfo").child(userID).child("overallTime").setValue(AllTimeTime);
+                if(auth.getCurrentUser() != null)
+                {
+                    mDatabase.child("UserPomodoroInfo").child(userID).child("overallPomodoro").setValue(AllTimeP);
+                    mDatabase.child("UserPomodoroInfo").child(userID).child("goldenTomatoes").setValue(AllTimeGP);
+                    mDatabase.child("UserPomodoroInfo").child(userID).child("overallTime").setValue(AllTimeTime);
+                }
+
 
                 //saveData(); //store alltimetime, alltimeP and alltimegp in sharedpreferences
 
