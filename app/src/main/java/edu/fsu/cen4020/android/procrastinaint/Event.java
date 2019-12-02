@@ -20,6 +20,7 @@ public class Event {
     Long DTSTART;
     Long DTEND;
     Long LAST_DATE;
+    int write;
     boolean recurring;
 
     public Event(){
@@ -28,6 +29,10 @@ public class Event {
 
     public boolean isRecurring() {
         return recurring;
+    }
+
+    public void setWrite(int write) {
+        this.write = write;
     }
 
     public Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
@@ -61,7 +66,7 @@ public class Event {
         }
         Event p = (Event)o;
 
-        return (this.getTitle().equals(p.getTitle()) && this.getDTSTART().equals(p.getDTSTART()));
+        return (this.getTitle().equals(p.getTitle()) );
     }
 
 
@@ -118,9 +123,9 @@ public class Event {
         }
     }
 
-    public ArrayList<Event> recurringToSingular(){
+    public ArrayList<Event> recurringToSingular(Long currentTime){
         ArrayList<Event> newEvents = new ArrayList<Event>();
-        Long currentTime = 1572209600000L;
+
         if(!isRecurring()){
             return null;
         }
@@ -189,7 +194,8 @@ public class Event {
 //        Log.i(TAG, "recurringToSingular: GG \n Ttile =" + this.getTitle() + "\nCurrent Time = " + epochToDate(currentTime) + "\nDay = " + epochToWeekDay(currentTime));
 
         while(currentTime < this.getLAST_DATE()){
-            Event event = new Event(this.getTitle(), null, null, null, currentTime, currentTime+ RFC2445ToMilliseconds(this.getDuration()), currentTime+ RFC2445ToMilliseconds(this.getDuration()));
+            Event event = new Event(this.getTitle(), this.getDescription(), null, null, currentTime, currentTime+ RFC2445ToMilliseconds(this.getDuration()), currentTime+ RFC2445ToMilliseconds(this.getDuration()));
+            event.setWrite(1);
             newEvents.add(event);
 
             if(i == distanceApart.size()-1) {

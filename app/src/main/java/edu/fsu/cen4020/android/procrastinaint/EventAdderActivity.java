@@ -67,7 +67,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
     private CheckBox friday;
     private CheckBox saturday;
 
-
+    private Long currentTime;
     FirebaseAuth auth;
 
     @Override
@@ -78,6 +78,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
         auth = FirebaseAuth.getInstance();
 
+        currentTime = System.currentTimeMillis();
 
         // This button is for the Solo date picker
         datePicker = (Button) findViewById(R.id.Date_picker_nonreoccurring);
@@ -300,6 +301,23 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
 
                     if (!errorCheck) {
+                        //Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
+
+
+                        Event event = new Event(title, description, repeatRule, duration, startEpoch, null, endDate);
+                        event.setWrite(1);
+
+                        for(Event item : event.recurringToSingular(currentTime)){
+                            ContentValues mNewValues = new ContentValues();
+                            mNewValues.put(MainCP.TITLE, item.getTitle());
+                            mNewValues.put(MainCP.DESCRIPTION, item.getDescription());
+                            mNewValues.put(MainCP.DTSTART, item.getDTSTART());
+                            mNewValues.put(MainCP.DTEND, item.getDTEND());
+                            mNewValues.put(MainCP.NEW, 1);
+                            getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+
+                        }
+
                         ContentValues mNewValues = new ContentValues();
                         mNewValues.put(MainCP.TITLE, title);
                         mNewValues.put(MainCP.DESCRIPTION, description);
@@ -308,7 +326,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
                         mNewValues.put(MainCP.DTSTART, startEpoch);
                         mNewValues.put(MainCP.LAST_DATE, endDate);
                         mNewValues.put(MainCP.NEW, 1);
-                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
+//                        getContentResolver().insert(MainCP.CONTENT_URI,mNewValues);
 
                         if (Firebase) {
                             uploadEventToFirebase(mNewValues);
