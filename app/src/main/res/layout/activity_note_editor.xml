@@ -9,9 +9,8 @@
 
     <Button
         android:id="@+id/dialog_button"
-        android:layout_width="77dp"
-        android:layout_height="46dp"
-        android:background="@null"
+        android:layout_width="90dp"
+        android:layout_height="60dp"
         android:drawableEnd="@drawable/ic_save_black"
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,20 +20,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.989" />
 
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/dialog_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.954"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.976"-->
+<!--        app:srcCompat="@drawable/ic_save_black" />-->
+
     <EditText
         android:id="@+id/editText"
-        android:layout_width="413dp"
-        android:layout_height="546dp"
+        android:layout_width="389dp"
+        android:layout_height="526dp"
         android:background="@null"
         android:ems="10"
         android:gravity="start|top|left"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/dialog_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.115" />
     //android:lableFor="editLable";
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
