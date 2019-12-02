@@ -16,7 +16,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="47dp"
@@ -33,7 +33,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/add_event"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
 
     <Button
         android:id="@+id/notesButton"
@@ -128,13 +128,4 @@
         app:layout_constraintStart_toEndOf="@+id/AddEventButton"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
-    <Button
-        android:id="@+id/to_draw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:onClick="onTo_drawerButtonClicked"
-        android:text="to drawer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewEventsButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

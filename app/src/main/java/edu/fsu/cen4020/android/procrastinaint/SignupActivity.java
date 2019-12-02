@@ -25,13 +25,13 @@ public class SignupActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button signUpButton;
     private Button redirectLoginButton;
-    private ProgressBar progressBar;
     private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setTitle("");
+        setContentView(R.layout.activity_signup_1);
 
 
         // Get Firebase Auth instance
@@ -42,7 +42,6 @@ public class SignupActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         signUpButton = (Button) findViewById(R.id.signUpButton);
         redirectLoginButton = (Button) findViewById(R.id.redirectLoginButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +79,6 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
 
         // Create the user
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
@@ -89,7 +87,6 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:"
                         + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
 
                         // If it fails then tell user it failed, else sign in user
 
@@ -109,7 +106,6 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.GONE);
     }
 
 }
