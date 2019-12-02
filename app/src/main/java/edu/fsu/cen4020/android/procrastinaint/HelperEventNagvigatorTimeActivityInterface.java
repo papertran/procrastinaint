@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -51,7 +52,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
 
         addButton = (Button) findViewById(R.id.AddEvent);
         hours = (EditText) findViewById(R.id.hours);
-        minutes = (EditText) findViewById(R.id.mins);
+        minutes = (EditText) findViewById(R.id.mins_wack);
         name = (EditText) findViewById(R.id.Name);
         description = (EditText) findViewById(R.id.Description);
 
@@ -93,21 +94,20 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                     }
                 }
 
-                if (hours.getText().toString().matches("") && minutes.getText().toString().matches(""))
+                if (hours.getText().toString().matches("") || minutes.getText().toString().matches(""))
                 {
+
                     errorCheck = true;
                     Toast.makeText(getApplicationContext(), "Error, the duration is empty.", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    if (!hours.getText().toString().matches("")){
-                        //turns hours into milliseconds
-                        duration += Long.parseLong(hours.getText().toString())*3600000;
-                    }
 
-                    if (!minutes.getText().toString().matches("")){
-                        //turns minutes into milli seconds
-                        duration += Long.parseLong(hours.getText().toString())*60000;
-                    }
+                        //turns hours and minutes into milliseconds
+                        duration += Long.parseLong(hours.getText().toString())*3600000;
+
+
+                        duration += Long.parseLong(minutes.getText().toString())*60000;
+
                 }
 
                 if (!errorCheck){
