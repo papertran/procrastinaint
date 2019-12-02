@@ -12,31 +12,36 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_pomodoro_timer"
+        android:id="@+id/nav_login"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.gallery.GalleryFragment"
         android:label="@string/menu_timer"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_backupToCloud"
+        android:id="@+id/nav_newevent"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_cloud"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_extras"
+        android:id="@+id/nav_read_cal"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.tools.ToolsFragment"
         android:label="@string/menu_extras"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_export"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.share.ShareFragment"
         android:label="@string/menu_share"
         tools:layout="@layout/fragment_share" />
 
     <fragment
-        android:id="@+id/nav_export"
+        android:id="@+id/nav_timer"
+        android:name="edu.fsu.cen4020.android.procrastinaint.ui.send.SendFragment"
+        android:label="@string/menu_export"
+        tools:layout="@layout/fragment_send" />
+    <fragment
+        android:id="@+id/nav_notes"
         android:name="edu.fsu.cen4020.android.procrastinaint.ui.send.SendFragment"
         android:label="@string/menu_export"
         tools:layout="@layout/fragment_send" />

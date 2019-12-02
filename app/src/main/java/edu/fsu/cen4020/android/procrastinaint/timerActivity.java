@@ -3,8 +3,10 @@ package edu.fsu.cen4020.android.procrastinaint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import android.widget.NumberPicker;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,12 +50,10 @@ public class timerActivity extends AppCompatActivity {
     private DatabaseReference usernameRef;
     private FirebaseAuth auth;
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
-    public static final String PCOUNT = "pCount";
-
-    private String text;
-    private long storeCounter;
+    //FOR SHARED PREFERENCES
+    private long AllTimeP;
+    private long AllTimeGP;
+    private long AllTimeTime;
 
 
     private String userID;
@@ -63,6 +64,7 @@ public class timerActivity extends AppCompatActivity {
     TextView messageView;
     TextView pomodoroMessage;
     TextView pomodoroCounter;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class timerActivity extends AppCompatActivity {
         pomodoroMessage = (TextView) findViewById(R.id.pomodoroMessage);
         pomodoroCounter = (TextView) findViewById(R.id.pomodoroCounter);
         pomodoroCounter.setVisibility(View.VISIBLE);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -87,9 +90,9 @@ public class timerActivity extends AppCompatActivity {
             userID = null;
         }
 
-        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID);
+        usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
 
-        usernameRef.addListenerForSingleValueEvent(eventListener);
+        usernameRef.addListenerForSingleValueEvent(eventListener); //create database entry if there isnt one for user
 
         Log.i(TAG, "THIS BIDDIE" + usernameRef);
 
@@ -116,7 +119,8 @@ public class timerActivity extends AppCompatActivity {
             }
         });
 
-
+        loadData();
+        updateViews();
     }
 
     private void startTimer(){
@@ -138,11 +142,27 @@ public class timerActivity extends AppCompatActivity {
                 breakButton.setVisibility(View.VISIBLE);
                 pCounter++;
                 fullCounter++;
+                AllTimeP++;
+                AllTimeTime += prevTime/60000;
 
                 if(pCounter == 4)
                 {
-                    saveData();
+                    AllTimeGP++;
                 }
+
+                Log.i(TAG, "All time pp is: " + AllTimeP);
+
+                //STORE DATA TO THE FIREBASE
+                mDatabase.child("UserPomodoroInfo").child(userID).child("overallPomodoro").setValue(AllTimeP);
+                mDatabase.child("UserPomodoroInfo").child(userID).child("goldenTomatoes").setValue(AllTimeGP);
+                mDatabase.child("UserPomodoroInfo").child(userID).child("overallTime").setValue(AllTimeTime);
+
+                saveData(); //store alltimetime, alltimeP and alltimegp in sharedpreferences
+
+                floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
+                        "\nAll time golden tomatoes is: " + AllTimeGP +
+                        "\nTotal minute(s) spent focused: " + AllTimeTime);
+
 
                 pomodoroCounter.setText(Integer.toString(fullCounter));
             }
@@ -171,6 +191,7 @@ public class timerActivity extends AppCompatActivity {
                 pomodoroButton.setVisibility(View.VISIBLE);
                 breakButton.setVisibility(View.INVISIBLE);
                 minutePicker.setVisibility(View.VISIBLE);
+
                 mTimeLeft = prevTime;
                 minutePicker.setOnValueChangedListener(onValueChangeListener);
                 breakTimeLeft = breakTime;
@@ -205,30 +226,52 @@ public class timerActivity extends AppCompatActivity {
                 }
             };
 
-
-
-    public void saveData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(TEXT, userID);
-        editor.putLong(PCOUNT, pCounter);
-
-        editor.apply();
-
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
-    }
-
     private void writeData(String username, long OverallTime, long OverallPomodoro, long GoldenTomatoes,
                            long GlobalPomodoro){
         Pomodoros pomodoro = new Pomodoros(username, OverallTime, OverallPomodoro, GoldenTomatoes, GlobalPomodoro);
 
         mDatabase.child("UserPomodoroInfo").child(username).setValue(pomodoro);
     }
+
+    public void saveData(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putLong("AllTimeP",AllTimeP);
+        editor.putLong("AllTimeGP", AllTimeGP);
+        editor.putLong("AllTimeTime", AllTimeTime);
+
+        editor.apply();
+
+        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+    }
     public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        text = sharedPreferences.getString(TEXT, "");
-        storeCounter = sharedPreferences.getLong(PCOUNT, 0);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        long what = preferences.getLong("AllTimeP", 0);
+        long what2 = preferences.getLong("AllTimeGP", 0);
+        long what3 = preferences.getLong("AllTimeTime", 0);
+
+        if(what != 0)
+        {
+            AllTimeP = what;
+        }
+
+        if(what2 != 0)
+        {
+            AllTimeGP = what2;
+        }
+
+        if(what3 != 0)
+        {
+            AllTimeTime = what3;
+        }
+
+    }
+
+    public void updateViews(){
+        floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
+                            "\nAll time golden tomatoes is: " + AllTimeGP +
+                            "\nTotal minute(s) spent focused: " + AllTimeTime);
     }
 
     ValueEventListener eventListener = new ValueEventListener() {

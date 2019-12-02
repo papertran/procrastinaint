@@ -36,6 +36,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
     private boolean startRangeSelected = false;
     private boolean endRangeSelected = false;
 
+    // these strings are used for the intent
     public String NAME = "NAME";
     public String DESCRIPTION = "DESCRIPTION";
     public String TIME = "TIME";
@@ -64,8 +65,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                 Long endDate = Long.valueOf(0);
                 Long duration = Long.valueOf(0);
 
-                //TODO FINISH HERE
-
+                //error checking section
                 if (name.getText().toString().matches(""))
                 {
                     errorCheck = true;
@@ -100,17 +100,19 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
                 }
                 else{
                     if (!hours.getText().toString().matches("")){
+                        //turns hours into milliseconds
                         duration += Long.parseLong(hours.getText().toString())*3600000;
                     }
 
                     if (!minutes.getText().toString().matches("")){
+                        //turns minutes into milli seconds
                         duration += Long.parseLong(hours.getText().toString())*60000;
                     }
                 }
 
                 if (!errorCheck){
+                    //If all goes well send the info to the next page
 
-                    //TODO change the target of the Intent to the next activity not calendar
                     Intent I = new Intent(getApplicationContext(), HENTimePicker.class );
                     I.putExtra(NAME, nameStr);
                     I.putExtra(DESCRIPTION, descriptionStr);
@@ -123,6 +125,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
             }
         });
 
+        // These are for the date pickers
         startDate = (Button) findViewById(R.id.start_date);
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +162,7 @@ public class HelperEventNagvigatorTimeActivityInterface extends AppCompatActivit
         Long time = c.getTimeInMillis();
         String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
 
-
+        // 0 for start 1 for end
         if (whichDateIsSelected == 0){
             startDate = (Button) findViewById(R.id.start_date);
             startDate.setText(currentDateString);
