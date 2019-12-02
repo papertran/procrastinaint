@@ -151,12 +151,12 @@ public class ReadCalendarActivity extends AppCompatActivity {
                         "\nDTEND ="  + item.getEventEndDate() +
                         "\nDTStartTime ="  + item.getEventStartTime() +
                         "\nDTENDTime = " + item.getEventEndTime());
-//                values.put(MainCP.TITLE, item.getTitle());
-//                values.put(MainCP.DTSTART, item.getDTSTART());
-//                values.put(MainCP.DTEND, item.getDTEND());
-//                values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-//                values.put(MainCP.NEW, 0);
-//                getContentResolver().insert(MainCP.CONTENT_URI, values);
+                values.put(MainCP.TITLE, item.getTitle());
+                values.put(MainCP.DTSTART, item.getDTSTART());
+                values.put(MainCP.DTEND, item.getDTEND());
+                values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+                values.put(MainCP.NEW, 0);
+                getContentResolver().insert(MainCP.CONTENT_URI, values);
             }
 
         }else{
