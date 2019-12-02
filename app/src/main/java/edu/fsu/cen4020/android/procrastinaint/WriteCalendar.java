@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ public class WriteCalendar extends AppCompatActivity {
     private static final String TAG = WriteCalendar.class.getCanonicalName();
 
     private Button writeButton;
+    private Button clearButton;
     private ArrayList<Event> eventArrayList = new ArrayList<Event>();
     private Long currentTime;
     HashMap<String, Long> calanderValues = new HashMap<>();
@@ -88,6 +90,7 @@ public class WriteCalendar extends AppCompatActivity {
 
         readCalander = (Button) findViewById(R.id.readCalendarButton);
         calanderSpinner = (Spinner) findViewById(R.id.calendarSpinner);
+        clearButton = (Button) findViewById(R.id.clearContentProivderButton);
         calanderValues = getCalanders();
         final List<String> calandersNames = new ArrayList<String>();
         for(String Key : calanderValues.keySet()){
@@ -105,6 +108,14 @@ public class WriteCalendar extends AppCompatActivity {
             public void onClick(View view) {
                 getEvents();
                 writeCalendar();
+            }
+        });
+
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearContentProvider();
             }
         });
     }
@@ -170,7 +181,7 @@ public class WriteCalendar extends AppCompatActivity {
                 MainCP.LAST_DATE};
 
         String selection =
-                MainCP.DTSTART + " == 1 AND " +
+                MainCP.DTSTART + " == ? AND " +
                         MainCP.DTSTART + " >= ?";
         String[] selectionArgs = new String[]{
                 "1",
@@ -236,8 +247,24 @@ public class WriteCalendar extends AppCompatActivity {
             values.put(MainCP.DTSTART, event.getDTSTART());
             values.put(MainCP.NEW, event.getWrite());
             resolver.update(MainCP.CONTENT_URI, values, "TITLE = ? AND DTSTART = ?", new String[]{event.getTitle(), event.getDTSTART().toString()});
-        }
 
+        }
+        Toast.makeText(this, "Wrote to calendar", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    private void clearContentProvider(){
+        for( Event event: eventArrayList) {
+            String selection =
+                    MainCP.TITLE + " == ? ";
+            String[] selectionArgs = new String[]{
+                event.getTitle()
+            };
+
+            getContentResolver().delete(MainCP.CONTENT_URI, selection, selectionArgs);
+        }
+        Toast.makeText(this, "Database cleared", Toast.LENGTH_SHORT).show();
         eventArrayList.clear();
     }
 }
