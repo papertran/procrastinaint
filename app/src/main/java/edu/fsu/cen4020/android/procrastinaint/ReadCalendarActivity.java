@@ -87,40 +87,40 @@ public class ReadCalendarActivity extends AppCompatActivity {
     }
 
 
-    public void saveEvent(Event item){
+    public void saveEvent(Event event){
         // Track if event is reoccuring or singular
-        boolean flag = false;
-        if(item.getRRULE() == null){
-            flag = true;
-        }
-        if(flag) {
-            Log.i(TAG, "saveButton ReoccuringEvent " +
-                    "\nTitle =" + item.getTitle() +
-                    "\nDTStart = " + item.getDTSTART() +
-                    "\nRRule =" + item.getRRULE() +
-                    "\nDuration = " + item.getDuration() +
-                    "\nEnd Date = " + item.getEventEndDate());
 
-            // Saves these values into content provider
-            ContentValues values = new ContentValues();
-            values.put(MainCP.TITLE, item.getTitle());
-            values.put(MainCP.DTSTART, item.getDTSTART());
-            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-            values.put(MainCP.RRule, item.getRRULE());
-            values.put(MainCP.DURATION, item.getDuration());
-            values.put(MainCP.NEW, 0);
-            getContentResolver().insert(MainCP.CONTENT_URI, values);
+        if(event.isRecurring()){
+            ArrayList<Event> newEvents = event.recurringToSingular(currentTime);
+
+            for(Event item : newEvents) {
+
+                ContentValues values = new ContentValues();
+                Log.i(TAG, "saveButton singularEvent " +
+                        "\nTitle =" + item.getTitle() +
+                        "\nDTStart ="  + item.getEventStartDate() +
+                        "\nDTEND ="  + item.getEventEndDate() +
+                        "\nDTStartTime ="  + item.getEventStartTime() +
+                        "\nDTENDTime = " + item.getEventEndTime());
+//                values.put(MainCP.TITLE, item.getTitle());
+//                values.put(MainCP.DTSTART, item.getDTSTART());
+//                values.put(MainCP.DTEND, item.getDTEND());
+//                values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+//                values.put(MainCP.NEW, 0);
+//                getContentResolver().insert(MainCP.CONTENT_URI, values);
+            }
+
         }else{
             Log.i(TAG, "saveButton singularEvent " +
-                    "\nTitle =" + item.getTitle() +
-                    "\nDTStart ="  + item.getDTSTART() +
-                    "\nDTEND = " + item.getDTEND());
+                    "\nTitle =" + event.getTitle() +
+                    "\nDTStart ="  + event.getDTSTART() +
+                    "\nDTEND = " + event.getDTEND());
 
             ContentValues values = new ContentValues();
-            values.put(MainCP.TITLE, item.getTitle());
-            values.put(MainCP.DTSTART, item.getDTSTART());
-            values.put(MainCP.DTEND, item.getDTEND());
-            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+            values.put(MainCP.TITLE, event.getTitle());
+            values.put(MainCP.DTSTART, event.getDTSTART());
+            values.put(MainCP.DTEND, event.getDTEND());
+            values.put(MainCP.LAST_DATE, event.getLAST_DATE());
             values.put(MainCP.NEW, 0);
             getContentResolver().insert(MainCP.CONTENT_URI, values);
         }
@@ -273,20 +273,20 @@ public class ReadCalendarActivity extends AppCompatActivity {
             // https://stackoverflow.com/questions/9754600/converting-epoch-time-to-date-string/9754625
             // Event(String title, String description, String RRULE, String duration, Long DTSTART, Long DTEND, Long LAST_DATE) {
             Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+            Log.i(TAG, "readEvent: \n" +
+                    "Title = " + event.getTitle() +
+                    "\nStart Date = " + event.getEventStartDate() +
+                    "\nEnd Date = " + event.getEventEndDate() +
+                    "\nStart Time= " + event.getEventStartTime() +
+                    "\nEnd Time = " + event.getEventEndTime() +
+                    "\nRrule = " + event.getRRULE() +
+                    "\nCurrentTime = " + currentTime);
+
 
             if(localEventHM.containsKey(event)){
-                Log.i(TAG, "readEvent: Event already exists in calendar");
                 continue;
             }
             else {
-                // Items to store into eventRecyclerView dataset
-                Log.i(TAG, "readEvent: \n" +
-                        "Title = " + event.getTitle() +
-                        "\nStart Date = " + event.getEventStartDate() +
-                        "\nEnd Date = " + event.getEventEndDate() +
-                        "\nStart Time= " + event.getEventStartTime() +
-                        "\nEnd Time = " + event.getEventEndTime());
-
 
                 eventArrayList.add(event);
             }
@@ -455,7 +455,8 @@ public class ReadCalendarActivity extends AppCompatActivity {
             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                 for(int position : reverseSortedPositions){
                     Event event = eventArrayList.get(position);
-                    saveEvent(event);
+                    Event secondEvent = new Event(event.getTitle(), event.getDescription(), event.getRRULE(), event.getDuration(), event.getDTSTART() + 3600000, event.getDTEND(), event.getLAST_DATE());
+                    saveEvent(secondEvent);
                     Log.i(TAG, "onDismissedBySwipeRight: SavedEvent");
                     eventArrayList.remove(position);
                     adapter.notifyItemRemoved(position);

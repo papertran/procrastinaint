@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_account"
+            android:title="@string/login" />
+        <item
+            android:id="@+id/nav_newevent"
+            android:icon="@drawable/ic_add_black"
+            android:title="@string/add_event" />
+
+        <item android:title="@string/rwcalendar">
+            <menu>
+                <item
+                    android:id="@+id/nav_read_cal"
+                    android:icon="@drawable/ic_export"
+                    android:title="@string/read_cal" />
+                <item
+                    android:id="@+id/nav_write_cal"
+                    android:icon="@drawable/ic_import"
+                    android:title="@string/write_cal" />
+                <item
+                    android:id="@+id/nav_hentimer"
+                    android:icon="@drawable/ic_calendar"
+                    android:title="@string/hent" />
+            </menu>
+        </item>
+
+        <item android:title="@string/menu_extras">
+            <menu>
+                <item
+                    android:id="@+id/nav_timer"
+                    android:icon="@drawable/ic_timer"
+                    android:title="@string/menu_timer" />
+                <item
+                    android:id="@+id/nav_notes"
+                    android:icon="@drawable/ic_note"
+                    android:title="@string/notes" />
+            </menu>
+        </item>
 </menu>

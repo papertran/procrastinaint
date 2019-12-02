@@ -10,7 +10,7 @@
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,16 +108,16 @@
         app:layout_constraintTop_toTopOf="@+id/addclassbutton"
         app:layout_constraintVertical_bias="0.54" />
 
-    <ImageButton
-        android:id="@+id/menuButton"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:contentDescription="@string/menu_descriptor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/menuButton"-->
+<!--        android:layout_width="42dp"-->
+<!--        android:layout_height="42dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@null"-->
+<!--        android:contentDescription="@string/menu_descriptor"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_menu" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

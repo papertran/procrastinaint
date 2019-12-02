@@ -30,30 +30,47 @@ public class NotesActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_note_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
+        // Inflate and add items to actionbar
+        getMenuInflater().inflate(R.menu.drawer, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        if(item.getItemId() == R.id.add_note){
-            Intent intent = new Intent(getApplicationContext(), NoteEditorActivity.class);
-
-            startActivity(intent);
-
-            return true;
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                startActivity(new Intent(getApplicationContext(), calendar.class));
+                return true;
+            case R.id.nav_login:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return true;
+            case R.id.nav_newevent:
+                startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
+                return true;
+            case R.id.nav_read_cal:
+                startActivity(new Intent(getApplicationContext(), ReadCalendarActivity.class));
+                return true;
+            case R.id.nav_hentimer:
+                startActivity(new Intent(getApplicationContext(), HelperEventNagvigatorTimeActivityInterface.class));
+                return true;
+            case R.id.nav_timer:
+                startActivity(new Intent(getApplicationContext(), timerActivity.class));
+                return true;
+            case R.id.nav_notes:
+                startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+                return true;
+            case R.id.nav_write_cal:
+                startActivity(new Intent(getApplicationContext(), WriteCalendar.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Notes");
         setContentView(R.layout.activity_notes);
 
         adNote = (Button) findViewById(R.id.adNote);
