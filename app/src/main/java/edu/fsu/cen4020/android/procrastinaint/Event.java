@@ -177,7 +177,7 @@ public class Event {
             String weekDay = epochToWeekDay(newStartDate);
 
             i = recurringDays.indexOf(weekDay);
-            while(newStartDate < currentTime){
+            while(newStartDate <= currentTime){
                 Log.i(TAG, "recurringToSingular: This is the Currently " + "\nTitle = " + this.getTitle() +
                         "\nCurrent date = " + epochToDate(newStartDate) + "\nday = " + epochToWeekDay(newStartDate));
 
@@ -199,7 +199,7 @@ public class Event {
 
 //        Log.i(TAG, "recurringToSingular: GG \n Ttile =" + this.getTitle() + "\nCurrent Time = " + epochToDate(currentTime) + "\nDay = " + epochToWeekDay(currentTime));
 
-        while(currentTime < this.getLAST_DATE()){
+        while(currentTime <= this.getLAST_DATE()){
             Event event = new Event(this.getTitle(), this.getDescription(), null, null, currentTime, currentTime+ RFC2445ToMilliseconds(this.getDuration()), currentTime+ RFC2445ToMilliseconds(this.getDuration()));
             event.setWrite(1);
             newEvents.add(event);
