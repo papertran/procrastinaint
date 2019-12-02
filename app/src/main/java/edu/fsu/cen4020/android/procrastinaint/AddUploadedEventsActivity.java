@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +39,52 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
     DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference("Events");
     RecyclerView firebaseEventsRecyclerView;
     EventRecyclerViewAdapter adapter;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate and add items to actionbar
+        getMenuInflater().inflate(R.menu.drawer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                startActivity(new Intent(getApplicationContext(), calendar.class));
+                return true;
+            case R.id.nav_login:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return true;
+            case R.id.nav_newevent:
+                startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
+                return true;
+            case R.id.nav_read_cal:
+                startActivity(new Intent(getApplicationContext(), ReadCalendarActivity.class));
+                return true;
+            case R.id.nav_hentimer:
+                startActivity(new Intent(getApplicationContext(), HelperEventNagvigatorTimeActivityInterface.class));
+                return true;
+            case R.id.nav_timer:
+                startActivity(new Intent(getApplicationContext(), timerActivity.class));
+                return true;
+            case R.id.nav_notes:
+                startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+                return true;
+            case R.id.nav_write_cal:
+                startActivity(new Intent(getApplicationContext(), WriteCalendar.class));
+                return true;
+            case R.id.nav_write_to_firebase:
+                startActivity(new Intent(getApplicationContext(), AddUploadedEventsActivity.class));
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Back Up From Cloud");
         setContentView(R.layout.activity_add_uploaded_events);
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView eventRecyclerView = (RecyclerView) findViewById(R.id.firebaseEventRecyclerView);
