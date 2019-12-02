@@ -63,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
             case R.id.nav_write_cal:
                 startActivity(new Intent(getApplicationContext(), WriteCalendar.class));
                 return true;
+            case R.id.nav_write_to_firebase:
+                startActivity(new Intent(getApplicationContext(), AddUploadedEventsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

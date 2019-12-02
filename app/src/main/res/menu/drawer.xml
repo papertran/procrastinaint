@@ -16,6 +16,10 @@
             android:id="@+id/nav_newevent"
             android:icon="@drawable/ic_add_black"
             android:title="@string/add_event" />
+        <item
+            android:id="@+id/nav_write_to_firebase"
+            android:title="@string/menu_cloud" />
+
 
         <item android:title="@string/rwcalendar">
             <menu>

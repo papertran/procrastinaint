@@ -59,6 +59,8 @@ public class WriteCalendar extends AppCompatActivity {
                 return true;
             case R.id.nav_write_cal:
                 startActivity(new Intent(getApplicationContext(), WriteCalendar.class));
+            case R.id.nav_write_to_firebase:
+                startActivity(new Intent(getApplicationContext(), AddUploadedEventsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -33,7 +33,7 @@
     <string name="menu_communication">Communication</string>
     <string name="menu_home">Home</string>
     <string name="menu_timer">Pomodoro Timer</string>
-    <string name="menu_cloud">Back Up To Cloud</string>
+    <string name="menu_cloud">Back Up From Cloud</string>
     <string name="menu_extras">Extras</string>
     <string name="menu_share">Share</string>
     <string name="menu_export">Export To Calendar</string>
