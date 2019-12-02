@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.internal.ObjectConstructor;
 
 import org.w3c.dom.Text;
 
@@ -97,9 +98,12 @@ public class timerActivity extends AppCompatActivity {
             userID = auth.getCurrentUser().getUid();
             usernameRef = mDatabase.child("UserPomodoroInfo").child(userID); //id for database user.
             usernameRef.addListenerForSingleValueEvent(eventListener); //create database entry if there isn't one for user
+            mDatabase.addValueEventListener(eventListener);
+
         } else {
             userID = null;
         }
+
 
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
@@ -295,12 +299,20 @@ public class timerActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if(!dataSnapshot.exists())
             {
+
                 Log.i(TAG, "no user for this guy yet" + dataSnapshot);
                 writeData(userID, 0, 0, 0, 0);
             }
             else
             {
-                Log.i(TAG, "already has user" + dataSnapshot);
+                Object temp = dataSnapshot.child("overallPomodoro").getValue();
+//                AllTimeP = Long.parseLong(temp);
+                if(temp != null) {
+                    String porque = temp.toString();
+                    AllTimeP = Long.parseLong(porque);
+                    Log.i(TAG, "FUCK " + AllTimeP);
+                }
+//                Log.i(TAG, "already has user" + dataSnapshot + "plus this shit" + dataSnapshot.child("overallPomodoro").getValue());
             }
         }
 
