@@ -148,6 +148,7 @@ public class timerActivity extends AppCompatActivity {
             userID = null;
         }
 
+        Log.i(TAG, "cmon man" + AllTimeP);
 
         minutePicker = (NumberPicker) findViewById(R.id.minutePicker);
         minutePicker.setMinValue(0);
@@ -412,10 +413,11 @@ public class timerActivity extends AppCompatActivity {
                     AllTimeGP = Long.parseLong(porque2);
                     AllTimeTime = Long.parseLong(porque3);
 
+
+                    Log.i(TAG, "FUCK " + AllTimeP);
                     floatingActionButton.setTooltipText("Your all time pomodoros is: " + AllTimeP +
                             "\nAll time golden tomatoes is: " + AllTimeGP +
                             "\nTotal minute(s) spent focused: " + AllTimeTime);
-                    Log.i(TAG, "FUCK " + AllTimeP);
                 }
 //                Log.i(TAG, "already has user" + dataSnapshot + "plus this shit" + dataSnapshot.child("overallPomodoro").getValue());
             }
