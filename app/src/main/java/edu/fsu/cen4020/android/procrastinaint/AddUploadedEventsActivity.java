@@ -192,14 +192,31 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                     "\nEnd Date = " + item.getEventEndDate());
 
             // Saves these values into content provider
-            ContentValues values = new ContentValues();
-            values.put(MainCP.TITLE, item.getTitle());
-            values.put(MainCP.DTSTART, item.getDTSTART());
-            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-            values.put(MainCP.RRule, item.getRRULE());
-            values.put(MainCP.DURATION, item.getDuration());
-            values.put(MainCP.NEW, 0);
-            getContentResolver().insert(MainCP.CONTENT_URI, values);
+//            ContentValues values = new ContentValues();
+//            values.put(MainCP.TITLE, item.getTitle());
+//            values.put(MainCP.DTSTART, item.getDTSTART());
+//            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
+//            values.put(MainCP.RRule, item.getRRULE());
+//            values.put(MainCP.DURATION, item.getDuration());
+//            values.put(MainCP.NEW, 0);
+//            getContentResolver().insert(MainCP.CONTENT_URI, values);
+
+
+
+            if(item.isRecurring()){
+                ArrayList<Event> newEvents = item.recurringToSingular(currentTime);
+
+                for(Event item2 : newEvents) {
+
+                    ContentValues values = new ContentValues();
+                    values.put(MainCP.TITLE, item2.getTitle());
+                    values.put(MainCP.DTSTART, item2.getDTSTART());
+                    values.put(MainCP.DTEND, item2.getDTEND());
+                    values.put(MainCP.LAST_DATE, item2.getLAST_DATE());
+                    values.put(MainCP.NEW, 0);
+                    getContentResolver().insert(MainCP.CONTENT_URI, values);
+                }
+            }
         }else{
             Log.i(TAG, "saveButton singularEvent " +
                     "\nTitle =" + item.getTitle() +
