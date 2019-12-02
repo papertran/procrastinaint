@@ -122,7 +122,7 @@
                 </TextView>
 
                 <EditText
-                    android:id="@+id/mins"
+                    android:id="@+id/mins_wack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
