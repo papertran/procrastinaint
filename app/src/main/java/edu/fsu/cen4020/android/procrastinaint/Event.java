@@ -14,6 +14,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class Event {
 
+
     private static final String TAG = Event.class.getCanonicalName();
     String Title;
     String Description;

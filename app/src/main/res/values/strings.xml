@@ -22,10 +22,12 @@
     <string name="old_user">--------------------------- Already have an Account? ---------------------------</string>
 
     <string name="read_cal">Read From Local Calendar</string>
+    <string name="write_cal">Write To Local Calendar</string>
     <string name="AddBreak">Add Break</string>
     <string name="AddAssignment">Add Assignment</string>
     <string name="AddClass">Add New Class</string>
     <string name="menu_descriptor">Open Menu</string>
+    <string name="hent">HEN</string>
 
     <!--Slide Out Menu Strings-->
     <string name="menu_communication">Communication</string>

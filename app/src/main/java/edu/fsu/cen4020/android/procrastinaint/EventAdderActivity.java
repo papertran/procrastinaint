@@ -1,5 +1,6 @@
 package edu.fsu.cen4020.android.procrastinaint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -12,6 +13,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,6 +72,7 @@ public class EventAdderActivity extends AppCompatActivity implements DatePickerD
 
 
     FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

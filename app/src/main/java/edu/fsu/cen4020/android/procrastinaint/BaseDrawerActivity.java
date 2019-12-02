@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 
 
 //  replacement drawer implementation from: https://stackoverflow.com/questions/19442378/navigation-drawer-to-switch-activities-instead-of-fragments
+
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;

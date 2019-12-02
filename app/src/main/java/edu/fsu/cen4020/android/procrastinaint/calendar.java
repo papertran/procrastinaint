@@ -36,19 +36,22 @@ public class calendar extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 return true;
             case R.id.nav_newevent:
-                startActivity(new Intent(getApplicationContext(), Event.class));
+                startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
                 return true;
             case R.id.nav_read_cal:
                 startActivity(new Intent(getApplicationContext(), ReadCalendarActivity.class));
                 return true;
-            case R.id.nav_export:
-                startActivity(new Intent(getApplicationContext(), EventAdderActivity.class));
+            case R.id.nav_hentimer:
+                startActivity(new Intent(getApplicationContext(), HelperEventNagvigatorTimeActivityInterface.class));
                 return true;
             case R.id.nav_timer:
-                startActivity(new Intent(getApplicationContext(), Pomodoros.class));
+                startActivity(new Intent(getApplicationContext(), timerActivity.class));
                 return true;
             case R.id.nav_notes:
                 startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+                return true;
+            case R.id.nav_write_cal:
+                startActivity(new Intent(getApplicationContext(), WriteCalendar.class));
                 return true;
             default:
                     return super.onOptionsItemSelected(item);
@@ -59,6 +62,7 @@ public class calendar extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
+        setTitle("Home");
         my_calendarView = findViewById(R.id.calendarView);
 //        menuButton = (ImageButton) findViewById(R.id.menuButton);
         my_calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
