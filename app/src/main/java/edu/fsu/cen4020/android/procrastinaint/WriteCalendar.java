@@ -181,8 +181,8 @@ public class WriteCalendar extends AppCompatActivity {
                 MainCP.LAST_DATE};
 
         String selection =
-                MainCP.DTSTART + " == ? AND " +
-                        MainCP.DTSTART + " >= ?";
+                MainCP.NEW + " == ? AND (" +
+                        MainCP.DTSTART + " >= ? OR " + MainCP.DTEND + " <= ? )";
         String[] selectionArgs = new String[]{
                 "1",
                 currentTime.toString()
@@ -191,8 +191,8 @@ public class WriteCalendar extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(
                 MainCP.CONTENT_URI,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 MainCP.DTSTART
 
         );
@@ -249,12 +249,54 @@ public class WriteCalendar extends AppCompatActivity {
             resolver.update(MainCP.CONTENT_URI, values, "TITLE = ? AND DTSTART = ?", new String[]{event.getTitle(), event.getDTSTART().toString()});
 
         }
+
+        eventArrayList.clear();
         Toast.makeText(this, "Wrote to calendar", Toast.LENGTH_SHORT).show();
 
     }
 
 
     private void clearContentProvider(){
+
+        String[] projection = {
+                MainCP.TITLE,
+                MainCP.RRule,
+                MainCP.DURATION,
+                MainCP.DTSTART,
+                MainCP.DTEND,
+                MainCP.LAST_DATE};
+
+        Cursor cursor = getContentResolver().query(
+                MainCP.CONTENT_URI,
+                projection,
+                null,
+                null,
+                MainCP.DTSTART
+
+        );
+
+        if (cursor.getCount()!= 0){
+            if(cursor.moveToFirst()){
+                do{
+                    String title = cursor.getString(cursor.getColumnIndex(MainCP.TITLE));
+                    String rRule = cursor.getString(cursor.getColumnIndex(MainCP.RRule));
+                    String duration = cursor.getString(cursor.getColumnIndex(MainCP.DURATION));
+                    Long DTSTART = cursor.getLong(cursor.getColumnIndex(MainCP.DTSTART));
+                    Long DTEND = cursor.getLong(cursor.getColumnIndex(MainCP.DTEND));
+                    Long LAST_DATE = cursor.getLong(cursor.getColumnIndex(MainCP.LAST_DATE));
+                    Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
+                    event.setWrite(0);
+                    eventArrayList.add(event);
+                }while(cursor.moveToNext());
+            }
+        }
+
+
+
+
+        Log.i(TAG, "clearContentProvider: +" + eventArrayList.toString());
+
+
         for( Event event: eventArrayList) {
             String selection =
                     MainCP.TITLE + " == ? ";
@@ -262,7 +304,8 @@ public class WriteCalendar extends AppCompatActivity {
                 event.getTitle()
             };
 
-            getContentResolver().delete(MainCP.CONTENT_URI, selection, selectionArgs);
+            int i = getContentResolver().delete(MainCP.CONTENT_URI, selection, selectionArgs);
+            Log.i(TAG, "clearContentProvider: deleted = " + i);
         }
         Toast.makeText(this, "Database cleared", Toast.LENGTH_SHORT).show();
         eventArrayList.clear();

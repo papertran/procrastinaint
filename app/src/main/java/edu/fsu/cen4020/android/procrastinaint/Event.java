@@ -56,7 +56,7 @@ public class Event {
     }
 
     public Boolean isEqual(Event event){
-        return (this.getTitle() == event.getTitle() && this.getDTSTART() == event.getDTSTART());
+        return (this.getTitle().equals(event.getTitle()));
     }
 
 
@@ -72,14 +72,14 @@ public class Event {
         }
         Event p = (Event)o;
 
-        return (this.getTitle().equals(p.getTitle()) );
+        return (this.getTitle().equals(  (p.getTitle() )));
     }
 
 
     @Override
     public int hashCode() {
 
-        return this.getTitle().hashCode();
+        return this.getTitle().length() % 11;
     }
 
 

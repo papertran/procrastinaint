@@ -32,7 +32,7 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
 
     private static final String TAG = AddUploadedEventsActivity.class.getCanonicalName();
     private ArrayList<Event> eventArrayList = new ArrayList<Event>();
-    private HashMap<Event, Long> localEventHM= new HashMap<Event, Long>();
+    private HashMap<Event, Boolean> localEventHM= new HashMap<Event, Boolean>();
     private Long currentTime;
 
     private EditText searchEventEditText;
@@ -149,7 +149,6 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                 eventArrayList.clear();
                 for(DataSnapshot eventSnapShot : dataSnapshot.getChildren()){
                     Event event = eventSnapShot.getValue(Event.class);
-
                     if (localEventHM.containsKey(event)) {
                         continue;
                     }
@@ -194,8 +193,8 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(
                 MainCP.CONTENT_URI,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 MainCP.DTSTART
 
         );
@@ -210,7 +209,7 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
                     Long DTEND = cursor.getLong(cursor.getColumnIndex(MainCP.DTEND));
                     Long LAST_DATE = cursor.getLong(cursor.getColumnIndex(MainCP.LAST_DATE));
                     Event event = new Event(title, null, rRule, duration, DTSTART, DTEND, LAST_DATE);
-                    localEventHM.put(event, DTSTART);
+                    localEventHM.put(event, true);
                 }while(cursor.moveToNext());
             }
         }
@@ -225,44 +224,22 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
 
     public void saveEvent(Event item){
         // Track if event is reoccuring or singular
-        boolean flag = false;
-        if(item.getRRULE() == null){
-            flag = true;
-        }
-        if(flag) {
-            Log.i(TAG, "saveButton ReoccuringEvent " +
-                    "\nTitle =" + item.getTitle() +
-                    "\nDTStart = " + item.getDTSTART() +
-                    "\nRRule =" + item.getRRULE() +
-                    "\nDuration = " + item.getDuration() +
-                    "\nEnd Date = " + item.getEventEndDate());
-
-            // Saves these values into content provider
-//            ContentValues values = new ContentValues();
-//            values.put(MainCP.TITLE, item.getTitle());
-//            values.put(MainCP.DTSTART, item.getDTSTART());
-//            values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-//            values.put(MainCP.RRule, item.getRRULE());
-//            values.put(MainCP.DURATION, item.getDuration());
-//            values.put(MainCP.NEW, 0);
-//            getContentResolver().insert(MainCP.CONTENT_URI, values);
 
 
+        if(item.isRecurring()){
+            ArrayList<Event> newEvents = item.recurringToSingular(currentTime);
 
-            if(item.isRecurring()){
-                ArrayList<Event> newEvents = item.recurringToSingular(currentTime);
+            for(Event item2 : newEvents) {
 
-                for(Event item2 : newEvents) {
-
-                    ContentValues values = new ContentValues();
-                    values.put(MainCP.TITLE, item2.getTitle());
-                    values.put(MainCP.DTSTART, item2.getDTSTART());
-                    values.put(MainCP.DTEND, item2.getDTEND());
-                    values.put(MainCP.LAST_DATE, item2.getLAST_DATE());
-                    values.put(MainCP.NEW, 1);
-                    getContentResolver().insert(MainCP.CONTENT_URI, values);
-                }
+                ContentValues values = new ContentValues();
+                values.put(MainCP.TITLE, item2.getTitle());
+                values.put(MainCP.DTSTART, item2.getDTSTART());
+                values.put(MainCP.DTEND, item2.getDTEND());
+                values.put(MainCP.LAST_DATE, item2.getLAST_DATE());
+                values.put(MainCP.NEW, 1);
+                getContentResolver().insert(MainCP.CONTENT_URI, values);
             }
+
         }else{
             Log.i(TAG, "saveButton singularEvent " +
                     "\nTitle =" + item.getTitle() +
@@ -274,7 +251,7 @@ public class AddUploadedEventsActivity extends AppCompatActivity {
             values.put(MainCP.DTSTART, item.getDTSTART());
             values.put(MainCP.DTEND, item.getDTEND());
             values.put(MainCP.LAST_DATE, item.getLAST_DATE());
-            values.put(MainCP.NEW, 0);
+            values.put(MainCP.NEW, 1);
             getContentResolver().insert(MainCP.CONTENT_URI, values);
         }
 
