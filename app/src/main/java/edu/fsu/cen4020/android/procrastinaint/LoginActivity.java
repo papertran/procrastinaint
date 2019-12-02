@@ -81,13 +81,13 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_1);
 
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-        loginButton = (Button) findViewById(R.id.loginButton);
-        redirectSignUpButton = (Button) findViewById(R.id.redirectSignUpButton);
+        loginButton = (Button) findViewById(R.id.signUpButton);
+        redirectSignUpButton = (Button) findViewById(R.id.redirectLoginButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
