@@ -15,12 +15,55 @@
 
     </TextView>
 
-    <SeekBar
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seek_bar">
+        android:id="@+id/time_str"
+        android:textSize="16sp"
+        android:textAlignment="center">
 
-    </SeekBar>
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hour_id"
+            android:hint="@string/hour"
+            android:inputType="number"
+            android:textSize="16sp">
+
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="16dp">
+
+        </TextView>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/min_id"
+            android:hint="@string/min"
+            android:inputType="number"
+            android:textSize="16dp">
+
+        </EditText>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/AM_PM">
+
+        </Spinner>
+
+    </LinearLayout>
 
 
 </LinearLayout>
