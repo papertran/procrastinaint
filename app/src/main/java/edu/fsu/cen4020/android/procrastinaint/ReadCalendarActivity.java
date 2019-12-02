@@ -52,7 +52,7 @@ public class ReadCalendarActivity extends AppCompatActivity {
         calanderValues = getCalanders();
         getContentProviderEvents();
 
-        List<String> calandersNames = new ArrayList<String>();
+        final List<String> calandersNames = new ArrayList<String>();
 
         for(String Key : calanderValues.keySet()){
             calandersNames.add(Key);
@@ -71,13 +71,18 @@ public class ReadCalendarActivity extends AppCompatActivity {
                 // Clear the arraylist when a new calendar is read
                 eventArrayList.clear();
 
-                readEvent(view);
+                if(calandersNames.size() == 0){
+                    readCalander.setEnabled(false);
+                }
+                else {
+                    readEvent(view);
 
-                // Populate the eventRecyclerView after getting events
-                if(eventArrayList.size() == 0){
-                    Toast.makeText(ReadCalendarActivity.this, "No events found", Toast.LENGTH_SHORT ).show();
-                } else {
-                    initRecyclerView();
+                    // Populate the eventRecyclerView after getting events
+                    if (eventArrayList.size() == 0) {
+                        Toast.makeText(ReadCalendarActivity.this, "No events found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        initRecyclerView();
+                    }
                 }
             }
         });
