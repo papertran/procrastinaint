@@ -80,8 +80,7 @@ public class calendar extends AppCompatActivity {
                 c.set(Calendar.MONTH, i1);
                 c.set(Calendar.DAY_OF_MONTH, i2);
                 Long time = c.getTimeInMillis();
-                Log.i("LOL", "Time = " + ReadCalendarActivity.epochToDate(time) + " " + ReadCalendarActivity.epochToTime(time));
-
+                openDialog(time);
             }
         });
 
@@ -92,5 +91,14 @@ public class calendar extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+
+
+    }
+    public void openDialog(Long time){
+        Calendar_Dialog dialog = new Calendar_Dialog();
+        Bundle args = new Bundle();
+        args.putLong("TIME", time);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "Calendar Dialog");
     }
 }
