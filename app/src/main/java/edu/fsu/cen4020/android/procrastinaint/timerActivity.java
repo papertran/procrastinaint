@@ -48,8 +48,7 @@ public class timerActivity extends AppCompatActivity {
     private boolean mTimerRunning;
     private long mTimeLeft = 1500000; //25 minutes in milliSecs
     private long prevTime;
-//    private long breakTime = 300000;
-    private long breakTime = 5000;
+    private long breakTime = 300000;
     private long breakTime2 = 900000;
     private long breakTimeLeft = breakTime;
     public int pCounter = 0;
@@ -332,7 +331,7 @@ public class timerActivity extends AppCompatActivity {
         messageView.setVisibility(View.INVISIBLE);
         if(pCounter == 4)
         {
-            breakTimeLeft = 10000;
+            breakTimeLeft = breakTime2;
             pCounter = 0;
             messageView.setText("You earned a golden tomato!!!");
             messageView.setVisibility(View.VISIBLE);
