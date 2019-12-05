@@ -3,11 +3,22 @@ package edu.fsu.cen4020.android.procrastinaint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,16 +28,27 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import java.net.Inet4Address;
+import java.util.Calendar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "CalendarActivity";
     private CalendarView my_calendarView;
     private FirebaseAuth auth;
+
+    private NotificationManagerCompat builder;
+    public static final String CHANNEL_ID = "channel1";
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate and add items to actionbar
@@ -76,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
@@ -116,10 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-
-
-
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         auth = FirebaseAuth.getInstance();
@@ -133,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        };
-
-
 
         setContentView(R.layout.calendar_layout);
         setTitle("Home");
@@ -155,6 +170,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void wakeUpNotif(){
+        Date currentTime = Calendar.getInstance().getTime();
+
+        Calendar wakeupTime = Calendar.getInstance();
+        wakeupTime.set(Calendar.HOUR_OF_DAY, 12);
+        wakeupTime.set(Calendar.MINUTE, 49);
+        wakeupTime.set(Calendar.SECOND, 30);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, MyReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, wakeupTime.getTimeInMillis(), pendingIntent);
+
+        Log.i(TAG, "time after alarm should be: " + Calendar.getInstance().getTime());
+
+    }
+
+    protected void onStop(){
+        super.onStop();
+        wakeUpNotif();
     }
 
     public void openDialog(Long time){
