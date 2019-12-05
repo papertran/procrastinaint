@@ -32,8 +32,8 @@ public class MyReceiver extends BroadcastReceiver {
         createNotificationChannel(context);
         builder = NotificationManagerCompat.from(context);
 
-//        Intent result = new Intent(context, MainActivity.class);
-//        PendingIntent resultPending = PendingIntent.getActivity(context, 1, result, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent result = new Intent(context, MainActivity.class);
+        PendingIntent resultPending = PendingIntent.getActivity(context, 1, result, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
@@ -42,7 +42,7 @@ public class MyReceiver extends BroadcastReceiver {
                 .setContentTitle("Good morninig!")
                 .setContentText("It's a great day to be productive!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setContentIntent(resultPending)
+                .setContentIntent(resultPending)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
 

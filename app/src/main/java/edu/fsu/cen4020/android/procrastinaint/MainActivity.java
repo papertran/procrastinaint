@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar wakeupTime = Calendar.getInstance();
         wakeupTime.set(Calendar.HOUR_OF_DAY, 12);
-        wakeupTime.set(Calendar.MINUTE, 49);
-        wakeupTime.set(Calendar.SECOND, 30);
+        wakeupTime.set(Calendar.MINUTE, 57);
+        wakeupTime.set(Calendar.SECOND, 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
