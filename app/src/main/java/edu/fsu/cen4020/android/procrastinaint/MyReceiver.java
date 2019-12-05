@@ -15,11 +15,17 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 
 public class MyReceiver extends BroadcastReceiver {
     public static final String TAG = "channel";
     public static final String CHANNEL_ID = "channel_1";
     private NotificationManagerCompat builder;
+
+    List<String> Notification_Motivation;
 
 
 
@@ -27,6 +33,11 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG, "sasd");
         Toast.makeText(context, "FUUUCK", Toast.LENGTH_SHORT).show();
+
+
+        Notification_Motivation = Arrays.asList(context.getResources().getStringArray(R.array.Notification_Motivation));
+        Random rand = new Random();
+        String randomElement = Notification_Motivation.get(rand.nextInt(Notification_Motivation.size()));
 
 
         createNotificationChannel(context);
@@ -39,8 +50,8 @@ public class MyReceiver extends BroadcastReceiver {
 
                 Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.common_full_open_on_phone)
-                .setContentTitle("Good morninig!")
-                .setContentText("It's a great day to be productive!")
+                .setContentTitle("Good morning!")
+                .setContentText(randomElement)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(resultPending)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
